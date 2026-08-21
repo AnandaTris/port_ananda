@@ -1,13 +1,20 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach } from 'vitest'
+import { projects } from '@/content/projects'
 import { PortfolioExplorer } from './PortfolioExplorer'
+
+const featuredProjects = projects.filter((project) => project.featured)
 
 beforeEach(() => {
   window.history.replaceState(null, '', '/')
 })
 
+function renderExplorer() {
+  return render(<PortfolioExplorer projects={featuredProjects} />)
+}
+
 test('renders collaboration capabilities and an accessible lens control', () => {
-  render(<PortfolioExplorer />)
+  renderExplorer()
 
   expect(screen.getByRole('button', { name: 'All capabilities' })).toHaveAttribute(
     'aria-pressed',
@@ -23,9 +30,32 @@ test('renders collaboration capabilities and an accessible lens control', () => 
   expect(screen.getByRole('button', { name: 'Story' })).toHaveAttribute('aria-pressed', 'true')
 })
 
+test('owns only the URL-driven featured journey, leaving static profile regions to the page', () => {
+  renderExplorer()
+
+  expect(
+    screen.getByRole('heading', { name: 'Five products, one accountable through-line.' }),
+  ).toBeInTheDocument()
+  expect(
+    screen.queryByRole('heading', { name: 'Operating principles for accountable products' }),
+  ).not.toBeInTheDocument()
+  expect(
+    screen.queryByRole('heading', { name: 'Professional product work' }),
+  ).not.toBeInTheDocument()
+  expect(
+    screen.queryByRole('heading', { name: 'Every project, with its evidence boundary.' }),
+  ).not.toBeInTheDocument()
+  expect(
+    screen.queryByRole('heading', { name: 'Experience, research, awards, and leadership' }),
+  ).not.toBeInTheDocument()
+  expect(
+    screen.queryByRole('heading', { name: 'Build something useful together' }),
+  ).not.toBeInTheDocument()
+})
+
 test('provides an explicit URL-backed path to clear an active capability', () => {
   window.history.replaceState(null, '', '/?capability=ship#work')
-  render(<PortfolioExplorer />)
+  renderExplorer()
 
   fireEvent.click(screen.getByRole('button', { name: 'All capabilities' }))
 
@@ -35,7 +65,7 @@ test('provides an explicit URL-backed path to clear an active capability', () =>
 })
 
 test('replaces the shareable URL when a lens is selected', () => {
-  render(<PortfolioExplorer />)
+  renderExplorer()
 
   fireEvent.click(screen.getByRole('button', { name: 'Proof' }))
 
@@ -46,7 +76,7 @@ test('replaces the shareable URL when a lens is selected', () => {
 
 test('hydrates both controls from a shared URL and follows browser-back query changes', () => {
   window.history.replaceState(null, '', '/?lens=system&capability=ship#work')
-  render(<PortfolioExplorer />)
+  renderExplorer()
 
   expect(screen.getByRole('button', { name: 'System' })).toHaveAttribute('aria-pressed', 'true')
   expect(screen.getByRole('button', { name: 'Build and ship a product' })).toHaveAttribute(
@@ -65,7 +95,7 @@ test('hydrates both controls from a shared URL and follows browser-back query ch
 
 test('preserves the selected lens when a capability is chosen', () => {
   window.history.replaceState(null, '', '/?lens=proof#work')
-  render(<PortfolioExplorer />)
+  renderExplorer()
 
   fireEvent.click(screen.getByRole('button', { name: 'Price, launch, and grow' }))
 
@@ -76,7 +106,7 @@ test('preserves the selected lens when a capability is chosen', () => {
 
 test('preserves the selected capability when a lens is chosen', () => {
   window.history.replaceState(null, '', '/?capability=harden#work')
-  render(<PortfolioExplorer />)
+  renderExplorer()
 
   fireEvent.click(screen.getByRole('button', { name: 'System' }))
 

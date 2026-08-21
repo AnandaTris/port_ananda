@@ -1,9 +1,11 @@
 import { render, screen, within } from '@testing-library/react'
 import { generateMetadata, generateStaticParams } from '@/app/work/[slug]/page'
+import { projects } from '@/content/projects'
 import { SITE_URL } from '@/lib/site'
 import { FeaturedFieldbook } from './FeaturedFieldbook'
 
 const defaultOrder = ['Fix Yo Yap', 'CareKaki', 'DAS D.I.A.L.', 'FALSE POSITIVE', 'Cited']
+const featuredProjects = projects.filter((project) => project.featured)
 
 function cardNames() {
   return screen.getAllByRole('article').map((card) =>
@@ -12,7 +14,7 @@ function cardNames() {
 }
 
 test('keeps all five featured projects in the approved default order', () => {
-  render(<FeaturedFieldbook capability="all" lens="story" />)
+  render(<FeaturedFieldbook capability="all" lens="story" projects={featuredProjects} />)
 
   expect(cardNames()).toEqual(defaultOrder)
   expect(screen.getAllByRole('img')).toHaveLength(5)
@@ -21,11 +23,15 @@ test('keeps all five featured projects in the approved default order', () => {
 })
 
 test('stably prioritizes capability matches without filtering the fieldbook', () => {
-  const { rerender } = render(<FeaturedFieldbook capability="grow" lens="story" />)
+  const { rerender } = render(
+    <FeaturedFieldbook capability="grow" lens="story" projects={featuredProjects} />,
+  )
 
   expect(cardNames()).toEqual(['Cited', 'Fix Yo Yap', 'CareKaki', 'DAS D.I.A.L.', 'FALSE POSITIVE'])
 
-  rerender(<FeaturedFieldbook capability="prototype" lens="proof" />)
+  rerender(
+    <FeaturedFieldbook capability="prototype" lens="proof" projects={featuredProjects} />,
+  )
 
   expect(cardNames()).toEqual(['CareKaki', 'DAS D.I.A.L.', 'FALSE POSITIVE', 'Fix Yo Yap', 'Cited'])
   expect(screen.getAllByRole('article')).toHaveLength(5)

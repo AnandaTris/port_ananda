@@ -2,21 +2,13 @@ import Link from 'next/link'
 import { ProjectLensPanel } from '@/components/lens/ProjectLensPanel'
 import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
 import { StatusBadge } from '@/components/ui/StatusBadge'
-import { projects } from '@/content/projects'
 import type { Capability, Lens, Project, ProjectStatus } from '@/content/types'
 
 type FeaturedFieldbookProps = {
   capability: Capability | 'all'
   lens: Lens
+  projects: readonly Project[]
 }
-
-const featuredProjectSlugs = [
-  'fix-yo-yap',
-  'carekaki',
-  'das-dial',
-  'false-positive',
-  'cited',
-] as const
 
 const statusDetails: Record<
   ProjectStatus,
@@ -28,24 +20,19 @@ const statusDetails: Record<
   prototype: { label: 'Prototype', tone: 'coral' },
 }
 
-const featuredProjects = featuredProjectSlugs.map((slug) => {
-  const project = projects.find((item) => item.slug === slug)
-  if (!project || !project.featured) {
-    throw new Error(`Missing featured project: ${slug}`)
-  }
-  return project
-})
+export function orderFeaturedProjects(
+  projects: readonly Project[],
+  capability: Capability | 'all',
+): readonly Project[] {
+  if (capability === 'all') return projects
 
-export function orderFeaturedProjects(capability: Capability | 'all'): readonly Project[] {
-  if (capability === 'all') return featuredProjects
-
-  const matching = featuredProjects.filter((project) => project.capabilities.includes(capability))
-  const remaining = featuredProjects.filter((project) => !project.capabilities.includes(capability))
+  const matching = projects.filter((project) => project.capabilities.includes(capability))
+  const remaining = projects.filter((project) => !project.capabilities.includes(capability))
   return [...matching, ...remaining]
 }
 
-export function FeaturedFieldbook({ capability, lens }: FeaturedFieldbookProps) {
-  const orderedProjects = orderFeaturedProjects(capability)
+export function FeaturedFieldbook({ capability, lens, projects }: FeaturedFieldbookProps) {
+  const orderedProjects = orderFeaturedProjects(projects, capability)
 
   return (
     <section aria-labelledby="featured-fieldbook-title" className="featured-fieldbook">

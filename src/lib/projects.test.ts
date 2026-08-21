@@ -111,6 +111,38 @@ test('requires evidence-bearing arrays and at least two system blocks', () => {
   )
 })
 
+test('rejects a blank outcome source', () => {
+  const invalid = mutatedProject({
+    outcomes: [
+      {
+        ...validProject.outcomes[0],
+        source: '' as Project['outcomes'][number]['source'],
+      },
+    ],
+  })
+
+  expect(validateProjects([invalid])).toContain('blank outcome source: carekaki')
+})
+
+test('rejects blank media source and alt text', () => {
+  const invalid = mutatedProject({
+    media: [{ src: ' ', alt: '\t', width: 1200, height: 800 }],
+  })
+
+  expect(validateProjects([invalid])).toEqual(
+    expect.arrayContaining([
+      'blank media source: carekaki',
+      'blank media alt: carekaki',
+    ]),
+  )
+})
+
+test('rejects a blank optional contribution boundary when present', () => {
+  const invalid = mutatedProject({ contributionBoundary: '   ' })
+
+  expect(validateProjects([invalid])).toContain('blank contribution boundary: carekaki')
+})
+
 test.each([
   ['', 'invalid link: carekaki.live'],
   ['http://carekaki.test', 'invalid link: carekaki.live'],

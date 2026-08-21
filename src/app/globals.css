@@ -1183,7 +1183,9 @@ a {
 }
 
 .case-study-back {
-  display: inline-block;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   margin-bottom: clamp(2.5rem, 7vw, 6rem);
 }
 
@@ -1451,7 +1453,9 @@ a {
 }
 
 .excerpt-evidence-link {
-  display: inline-block;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   margin-top: 1.25rem;
 }
 
@@ -1559,8 +1563,15 @@ a {
 }
 
 .related-projects h3 a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
+}
+
+.related-projects h3 a:hover {
+  color: var(--coral);
 }
 
 .related-projects li > span {

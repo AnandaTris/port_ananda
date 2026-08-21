@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
-import { render, screen } from '@testing-library/react'
-import { vi } from 'vitest'
+import { fireEvent, render, screen, within } from '@testing-library/react'
+import { beforeEach, vi } from 'vitest'
 import { SiteFooter } from '@/components/shell/SiteFooter'
 import { SiteHeader } from '@/components/shell/SiteHeader'
 import { projects } from '@/content/projects'
@@ -11,6 +11,10 @@ const route = vi.hoisted(() => ({ pathname: '/' }))
 vi.mock('next/navigation', () => ({
   usePathname: () => route.pathname,
 }))
+
+beforeEach(() => {
+  window.history.replaceState(null, '', '/')
+})
 
 test('keeps one main landmark and one of each profile anchor alongside a route-neutral footer', () => {
   const { container } = render(
@@ -67,4 +71,26 @@ test('matches the approved homepage evidence order in real rendered output', () 
       orderedHeadings[index].compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy()
   })
+})
+
+test('synchronizes capability order across the featured and archive client islands', () => {
+  render(<HomePage />)
+
+  fireEvent.click(screen.getByRole('button', { name: 'Price, launch, and grow' }))
+
+  const featured = screen.getByRole('region', {
+    name: 'Five products, one accountable through-line.',
+  })
+  const archive = screen.getByRole('region', {
+    name: 'Every project, with its evidence boundary.',
+  })
+  expect(within(featured).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('Cited')
+  expect(within(archive).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('Cited')
+
+  window.history.replaceState(null, '', '/?lens=proof&capability=prototype#work')
+  fireEvent(window, new PopStateEvent('popstate'))
+
+  expect(screen.getByRole('button', { name: 'Proof' })).toHaveAttribute('aria-pressed', 'true')
+  expect(within(featured).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('CareKaki')
+  expect(within(archive).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('CareKaki')
 })

@@ -3,7 +3,9 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { CapabilityPicker } from './CapabilityPicker'
 import { FeaturedFieldbook } from './FeaturedFieldbook'
+import { ProjectArchive } from './ProjectArchive'
 import { LensControl } from '@/components/lens/LensControl'
+import { projects } from '@/content/projects'
 import type { Capability, Lens } from '@/content/types'
 import {
   buildPortfolioHref,
@@ -51,6 +53,7 @@ export function PortfolioExplorer() {
         <LensControl value={lens} onChange={handleLensChange} />
       </div>
       <FeaturedFieldbook capability={capability} lens={lens} />
+      <ProjectArchive projects={projects} capability={capability} />
     </section>
   )
 }

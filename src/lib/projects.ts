@@ -13,7 +13,14 @@ export function filterProjects(
   return source.filter((project) => {
     const capabilityMatch =
       filter.capability === 'all' || project.capabilities.includes(filter.capability)
-    const haystack = [project.name, project.oneLine, project.role, ...project.stack]
+    const haystack = [
+      project.name,
+      project.oneLine,
+      project.role,
+      project.status,
+      ...project.capabilities,
+      ...project.stack,
+    ]
       .join(' ')
       .toLocaleLowerCase()
     return capabilityMatch && (query === '' || haystack.includes(query))

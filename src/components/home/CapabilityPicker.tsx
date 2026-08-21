@@ -2,7 +2,8 @@
 
 import type { Capability } from '@/content/types'
 
-const capabilityOptions: readonly { value: Capability; label: string }[] = [
+const capabilityOptions: readonly { value: Capability | 'all'; label: string }[] = [
+  { value: 'all', label: 'All capabilities' },
   { value: 'ship', label: 'Build and ship a product' },
   { value: 'responsible-ai', label: 'Apply AI responsibly' },
   { value: 'harden', label: 'Evaluate and harden a system' },
@@ -12,7 +13,7 @@ const capabilityOptions: readonly { value: Capability; label: string }[] = [
 
 type CapabilityPickerProps = {
   value: Capability | 'all'
-  onChange: (capability: Capability) => void
+  onChange: (capability: Capability | 'all') => void
 }
 
 export function CapabilityPicker({ value, onChange }: CapabilityPickerProps) {

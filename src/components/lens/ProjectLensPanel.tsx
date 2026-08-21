@@ -138,6 +138,18 @@ function ProofContent({ project }: { project: Project }) {
       </dl>
 
       <div className="proof-evidence-groups">
+        <div className="proof-outcomes">
+          <p className="lens-label">Outcomes</p>
+          <ul aria-label="Verified project outcomes">
+            {project.outcomes.map((outcome) => (
+              <li key={`${outcome.label}-${outcome.value}`}>
+                <span>{outcome.label}</span>
+                <strong>{outcome.value}</strong>
+                <small>Source: {outcome.source}</small>
+              </li>
+            ))}
+          </ul>
+        </div>
         <div>
           <p className="lens-label">Owned contribution</p>
           <ul>

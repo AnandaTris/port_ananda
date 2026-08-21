@@ -1,7 +1,7 @@
 import { act } from 'react'
 import { hydrateRoot, type Root } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { afterEach, vi } from 'vitest'
 import { projects } from '@/content/projects'
 import { ProjectLensPanel } from './ProjectLensPanel'
@@ -43,6 +43,22 @@ test('renders only verified project links in proof', () => {
   expect(screen.getByRole('link', { name: /source/i })).toHaveAttribute('href', project.links.source)
   expect(screen.queryByRole('link', { name: /live product/i })).not.toBeInTheDocument()
   expect(screen.queryByRole('link', { name: /app store/i })).not.toBeInTheDocument()
+})
+
+test('renders every CareKaki outcome with its label, value, and source in proof', () => {
+  render(<ProjectLensPanel project={project} lens="proof" compact />)
+
+  const outcomes = screen.getByRole('list', { name: 'Verified project outcomes' })
+  expect(within(outcomes).getByText('Recognition')).toBeInTheDocument()
+  expect(
+    within(outcomes).getByText('Dell InnovateDash 2026 Top 5 Finalist'),
+  ).toBeInTheDocument()
+  expect(within(outcomes).getByText('Source: award')).toBeInTheDocument()
+  expect(within(outcomes).getByText('Offline verification')).toBeInTheDocument()
+  expect(
+    within(outcomes).getByText('208 backend tests designed to run without API keys'),
+  ).toBeInTheDocument()
+  expect(within(outcomes).getByText('Source: test')).toBeInTheDocument()
 })
 
 test('hydrates reduced-motion content from the same plain server wrapper', async () => {

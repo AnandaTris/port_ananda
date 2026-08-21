@@ -72,6 +72,41 @@ test('renders two research roles, selected awards, and SENTRE leadership', () =>
   ).toBeInTheDocument()
 })
 
+test('presents Brawnix and Ingatik as bounded professional product work', () => {
+  render(<ProfileSections />)
+
+  const professionalProducts = screen.getByRole('region', { name: 'Professional product work' })
+  expect(within(professionalProducts).getAllByText('Live product')).toHaveLength(2)
+  expect(within(professionalProducts).getByRole('heading', { name: 'Brawnix' })).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByRole('heading', { name: 'Ingatik: Recall' }),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByText('Technical growth product manager and product engineer'),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByText('Technical growth product manager and product contributor'),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByText(/parallel architecture branch did not ship to main/i),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByText(/do not present him as the principal app author/i),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByText('Live iOS product and public web presence'),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByText('195.5K views and about 60 registrations over seven days'),
+  ).toBeInTheDocument()
+  expect(
+    within(professionalProducts).getByRole('link', { name: 'Explore Brawnix case study' }),
+  ).toHaveAttribute('href', '/work/brawnix')
+  expect(
+    within(professionalProducts).getByRole('link', { name: 'Explore Ingatik: Recall case study' }),
+  ).toHaveAttribute('href', '/work/ingatik-recall')
+})
+
 test('offers the exact collaboration brief and approved public contact destinations', () => {
   render(<ProfileSections />)
 

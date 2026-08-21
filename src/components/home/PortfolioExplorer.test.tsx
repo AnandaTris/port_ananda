@@ -1,28 +1,18 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, vi } from 'vitest'
+import { beforeEach } from 'vitest'
 import { PortfolioExplorer } from './PortfolioExplorer'
 
-const navigation = vi.hoisted(() => ({
-  pathname: '/',
-  searchParams: new URLSearchParams(),
-  replace: vi.fn(),
-}))
-
-vi.mock('next/navigation', () => ({
-  usePathname: () => navigation.pathname,
-  useRouter: () => ({ replace: navigation.replace }),
-  useSearchParams: () => navigation.searchParams,
-}))
-
 beforeEach(() => {
-  navigation.pathname = '/'
-  navigation.searchParams = new URLSearchParams()
-  navigation.replace.mockReset()
+  window.history.replaceState(null, '', '/')
 })
 
 test('renders collaboration capabilities and an accessible lens control', () => {
   render(<PortfolioExplorer />)
 
+  expect(screen.getByRole('button', { name: 'All capabilities' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  )
   expect(screen.getByRole('button', { name: 'Build and ship a product' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Apply AI responsibly' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Evaluate and harden a system' })).toBeInTheDocument()
@@ -33,17 +23,30 @@ test('renders collaboration capabilities and an accessible lens control', () => 
   expect(screen.getByRole('button', { name: 'Story' })).toHaveAttribute('aria-pressed', 'true')
 })
 
-test('replaces the URL when a lens is selected', () => {
+test('provides an explicit URL-backed path to clear an active capability', () => {
+  window.history.replaceState(null, '', '/?capability=ship#work')
+  render(<PortfolioExplorer />)
+
+  fireEvent.click(screen.getByRole('button', { name: 'All capabilities' }))
+
+  expect(`${window.location.pathname}${window.location.search}${window.location.hash}`).toBe(
+    '/?lens=story#work',
+  )
+})
+
+test('replaces the shareable URL when a lens is selected', () => {
   render(<PortfolioExplorer />)
 
   fireEvent.click(screen.getByRole('button', { name: 'Proof' }))
 
-  expect(navigation.replace).toHaveBeenCalledWith('/?lens=proof#work', { scroll: false })
+  expect(`${window.location.pathname}${window.location.search}${window.location.hash}`).toBe(
+    '/?lens=proof#work',
+  )
 })
 
 test('hydrates both controls from a shared URL and follows browser-back query changes', () => {
-  navigation.searchParams = new URLSearchParams('lens=system&capability=ship')
-  const { rerender } = render(<PortfolioExplorer />)
+  window.history.replaceState(null, '', '/?lens=system&capability=ship#work')
+  render(<PortfolioExplorer />)
 
   expect(screen.getByRole('button', { name: 'System' })).toHaveAttribute('aria-pressed', 'true')
   expect(screen.getByRole('button', { name: 'Build and ship a product' })).toHaveAttribute(
@@ -51,8 +54,8 @@ test('hydrates both controls from a shared URL and follows browser-back query ch
     'true',
   )
 
-  navigation.searchParams = new URLSearchParams('lens=proof&capability=prototype')
-  rerender(<PortfolioExplorer />)
+  window.history.replaceState(null, '', '/?lens=proof&capability=prototype#work')
+  fireEvent(window, new PopStateEvent('popstate'))
 
   expect(screen.getByRole('button', { name: 'Proof' })).toHaveAttribute('aria-pressed', 'true')
   expect(
@@ -61,23 +64,23 @@ test('hydrates both controls from a shared URL and follows browser-back query ch
 })
 
 test('preserves the selected lens when a capability is chosen', () => {
-  navigation.searchParams = new URLSearchParams('lens=proof')
+  window.history.replaceState(null, '', '/?lens=proof#work')
   render(<PortfolioExplorer />)
 
   fireEvent.click(screen.getByRole('button', { name: 'Price, launch, and grow' }))
 
-  expect(navigation.replace).toHaveBeenCalledWith('/?lens=proof&capability=grow#work', {
-    scroll: false,
-  })
+  expect(`${window.location.pathname}${window.location.search}${window.location.hash}`).toBe(
+    '/?lens=proof&capability=grow#work',
+  )
 })
 
 test('preserves the selected capability when a lens is chosen', () => {
-  navigation.searchParams = new URLSearchParams('capability=harden')
+  window.history.replaceState(null, '', '/?capability=harden#work')
   render(<PortfolioExplorer />)
 
   fireEvent.click(screen.getByRole('button', { name: 'System' }))
 
-  expect(navigation.replace).toHaveBeenCalledWith('/?lens=system&capability=harden#work', {
-    scroll: false,
-  })
+  expect(`${window.location.pathname}${window.location.search}${window.location.hash}`).toBe(
+    '/?lens=system&capability=harden#work',
+  )
 })

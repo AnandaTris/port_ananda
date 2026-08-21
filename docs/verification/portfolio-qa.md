@@ -16,7 +16,7 @@ Baseline command:
 npm test && npm run typecheck && npm run lint && npm run build
 ```
 
-Result: pass. Vitest reported 20 test files and 74 tests passing. TypeScript and ESLint exited 0. Next.js 16.2.12 compiled and generated 22 static pages, including 17 `/work/[slug]` paths. The build emitted the existing informational warning that an edge-runtime page is not statically generated.
+Result at the recorded baseline: pass. Vitest reported 20 test files and 74 tests passing. TypeScript and ESLint exited 0. Next.js 16.2.12 compiled and generated 22 static pages, including 17 `/work/[slug]` paths. The build emitted the existing informational warning that an edge-runtime page is not statically generated.
 
 Focused regression after the only visual failure:
 
@@ -28,6 +28,14 @@ npm run build
 Result: pass. The focused file reported 2 tests passing, and the production rebuild completed.
 
 Final command and result are recorded after the browser checks in [Final verification](#final-verification).
+
+### Final review-fix automated evidence
+
+The final review wave changed capability handling, initial rendering, proof content, homepage order, professional-product presentation, validation, and link touch targets. The automated rerun reported 20 test files and 92 tests passing; TypeScript, ESLint, and the production build exited 0. The build again generated 22 static pages and classified `/` as statically prerendered.
+
+The emitted home artifact at `.next/server/app/index.html` contained one `Five products, one accountable through-line.` marker, one `Every project, with its evidence boundary.` marker, all 17 `archive-card` entries, and the final archive project `Personal Workout Tracker`. It contained zero `BAILOUT_TO_CLIENT_SIDE_RENDERING` markers.
+
+The browser evidence below predates this final review wave. It remains historical evidence only; the capability clear path, reordered homepage sections, Professional Product Work section, and revised link geometry require the fresh browser QA pass that follows this implementation. No browser result below is presented as a post-change check.
 
 ## Production server
 
@@ -51,7 +59,7 @@ All interactions used `/Users/anandatriharismaroso/.codex/skills/gstack/browse/d
 | CareKaki route | `/work/carekaki` returned `200`; warning-inclusive `browse console` after a separate clear/reload reported `(no console messages)`: 0 warnings, 0 errors |
 | CareKaki excerpt | Explicit load succeeded. Input containing an NRIC, email, and phone rendered all three redaction markers and `Human approval required`; Reset restored an empty value, `No message entered.`, and `No approval needed` |
 | Archive empty state | Search `definitely-no-such-evidence` produced `0 projects` and zero cards |
-| Archive reset | Restored empty query, `all` maturity, `17 projects`, and 17 cards |
+| Archive reset (superseded) | The prior entry claimed 17 cards but did not prove that reset cleared the selected global capability. That claim is withdrawn. Automated regression now verifies query and maturity reset plus `capability=all`; fresh browser verification is pending. |
 | Excluded route | `/work/docdeck` returned HTTP `404` and the branded `Missing field note · 404` experience with `Return to work` → `/#work` |
 | DocDeck console note | Its expected main-document 404 is logged as a failed resource; there was no application exception. It was cleared before the final home-console check |
 
@@ -120,10 +128,12 @@ A bounded gstack `chain` started with a fresh home navigation and used `Tab` and
 3. `Build and ship a product` capability button; Enter set `aria-pressed=true` and the shareable capability URL
 4. Story, System, and Proof lens buttons; Enter on System settled at `?lens=system&capability=ship#work` with `aria-pressed=true`
 5. featured `Explore case study` links
-6. archive search, maturity select, reset button, and all 17 archive project links
+6. archive search, maturity select, reset button, and the visible archive project links
 7. `Start a collaboration brief`, focused with `href=mailto:adotriharis@gmail.com`; Enter launched the mailto navigation
 
 Mobile keyboard flow at 375×812 separately verified: first Tab focused the skip link, then the site mark and menu toggle; Enter changed the toggle to `aria-expanded=true`, Tab reached `Work`, and Enter navigated to `#work`, closed the menu, and restored `aria-expanded=false`.
+
+The former keyboard note that all 17 links were present after selecting a capability is superseded because the earlier implementation filtered capability matches. The final implementation keeps 17 entries and ranks matches first by automated regression; keyboard/browser confirmation is pending the fresh pass.
 
 ## Security audit triage
 
@@ -135,7 +145,7 @@ npm audit
 
 Result: npm exited 1 with three high-severity transitive findings under Next 16.2.12: bundled PostCSS advisories and Sharp/libvips advisories. The independently installed PostCSS is 8.5.26; the affected tree is Next's PostCSS 8.4.31 and Sharp 0.34.5.
 
-No compatible in-range automated remediation exists for the exact approved `next@16.2.12` pin. npm offers only `npm audit fix --force`, which would install Next 16.3.2 outside that stated range. No dependency was changed. A planned Next upgrade must run the same complete suite and browser QA before landing.
+No compatible in-range automated remediation exists for the exact approved `next@16.2.12` pin. npm offers only `npm audit fix --force`, which would install Next 16.3.2 outside that stated range. No dependency was changed. This debt remains explicitly deferred to a planned Next upgrade and deploy QA pass, which must run the same complete suite and browser QA before landing.
 
 ## Final verification
 
@@ -143,7 +153,7 @@ No compatible in-range automated remediation exists for the exact approved `next
 npm test && npm run typecheck && npm run lint && npm run build && git diff --check
 ```
 
-Result: pass. Vitest reported 20 test files and 75 tests passing. TypeScript, ESLint, Next production build, and `git diff --check` all exited 0; `git diff --check` printed nothing. The build generated the same 22-page route set and only the existing edge-runtime informational warning.
+Result after the final review fixes: pass. Vitest reported 20 test files and 92 tests passing. TypeScript, ESLint, Next production build, and `git diff --check` all exited 0; `git diff --check` printed nothing. The build generated the same 22-page route set and only the existing edge-runtime informational warning.
 
 ## Completion boundary
 

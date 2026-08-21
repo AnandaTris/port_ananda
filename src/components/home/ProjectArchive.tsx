@@ -8,6 +8,7 @@ import type { Capability, Project, ProjectStatus } from '@/content/types'
 type ProjectArchiveProps = {
   projects: readonly Project[]
   capability: Capability | 'all'
+  onCapabilityChange?: (capability: Capability | 'all') => void
 }
 const statusOptions: readonly { value: ProjectStatus | 'all'; label: string }[] = [
   { value: 'all', label: 'All maturities' },
@@ -24,7 +25,7 @@ const statusLabels: Record<ProjectStatus, string> = {
   prototype: 'Prototype',
 }
 
-export function ProjectArchive({ projects, capability }: ProjectArchiveProps) {
+export function ProjectArchive({ projects, capability, onCapabilityChange }: ProjectArchiveProps) {
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState<ProjectStatus | 'all'>('all')
 
@@ -37,6 +38,7 @@ export function ProjectArchive({ projects, capability }: ProjectArchiveProps) {
   const resetFilters = () => {
     setQuery('')
     setStatus('all')
+    onCapabilityChange?.('all')
   }
 
   const resultLabel = `${matchingProjects.length} ${matchingProjects.length === 1 ? 'project' : 'projects'}`

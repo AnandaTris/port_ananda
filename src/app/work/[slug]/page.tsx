@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ProjectLensPanel } from '@/components/lens/ProjectLensPanel'
+import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { projects } from '@/content/projects'
 import type { Project, ProjectStatus } from '@/content/types'
@@ -36,47 +36,6 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
     title: project.name,
     description: project.oneLine,
   }
-}
-
-function ProjectVisual({ project }: { project: Project }) {
-  const media = project.media[0]
-
-  if (media) {
-    return (
-      <figure className="case-study-visual case-study-media">
-        <Image
-          alt={media.alt}
-          height={media.height}
-          priority
-          sizes="(max-width: 800px) 100vw, 58vw"
-          src={media.src}
-          width={media.width}
-        />
-        <figcaption>Verified project media · {media.alt}</figcaption>
-      </figure>
-    )
-  }
-
-  return (
-    <div
-      aria-label={`${project.name} system overview`}
-      className="case-study-visual case-study-diagram"
-      role="img"
-    >
-      <p>{project.problem}</p>
-      <span aria-hidden="true">↓</span>
-      <ol>
-        {project.system.map((block, index) => (
-          <li key={block.title}>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <strong>{block.title}</strong>
-          </li>
-        ))}
-      </ol>
-      <span aria-hidden="true">↓</span>
-      <p>{project.outcomes[0]?.value}</p>
-    </div>
-  )
 }
 
 function relatedProjects(project: Project): readonly Project[] {
@@ -127,7 +86,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
             ))}
           </ul>
         </div>
-        <ProjectVisual project={project} />
+        <ProjectMediaVisual priority project={project} variant="case-study" />
       </header>
 
       <div aria-label={`${project.name} case study`} className="case-study-lenses">

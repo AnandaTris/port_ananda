@@ -564,37 +564,70 @@ a {
 
 .fieldbook-diagram {
   display: grid;
-  grid-template-columns: auto 1fr;
   align-content: center;
-  gap: 0.65rem 1rem;
+  gap: 1.25rem;
   padding: clamp(1.25rem, 3vw, 2.5rem);
 }
 
-.fieldbook-diagram strong {
-  align-self: center;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.25rem, 2.3vw, 2.25rem);
-  letter-spacing: -0.045em;
-  line-height: 0.98;
+.project-media-fallback-heading {
+  display: grid;
+  gap: 0.45rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ink);
 }
 
-.diagram-index {
-  align-self: start;
-  padding: 0.3rem 0.38rem;
-  border: 1px solid var(--ink);
-  background: var(--white);
+.project-media-fallback-heading span {
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
 }
 
-.diagram-connector {
-  grid-column: 1 / -1;
-  padding-left: 0.45rem;
+.project-media-fallback-heading strong {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 2.5rem;
-  line-height: 1;
-  transform: rotate(90deg);
-  transform-origin: 1rem center;
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+}
+
+.fieldbook-diagram .project-media-fallback-heading strong {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+}
+
+.project-media-fallback-system {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-media-fallback-system li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border: 1px solid var(--ink);
+  background: var(--white);
+}
+
+.project-media-fallback-system li > span {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--ink);
+  background: var(--cyan);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.62rem;
+}
+
+.project-media-fallback-system li > strong {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1rem, 1.65vw, 1.35rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 .project-lens-panel {
@@ -956,42 +989,8 @@ a {
   padding: clamp(1.4rem, 4vw, 3.75rem);
 }
 
-.case-study-diagram > p {
-  max-width: 38rem;
-  margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.25rem, 2.5vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 1;
-}
-
-.case-study-diagram > span {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 2.5rem;
-}
-
-.case-study-diagram ol {
-  display: grid;
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.case-study-diagram li {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.8rem;
-  border: 1px solid var(--ink);
-  background: var(--white);
-}
-
-.case-study-diagram li span {
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.65rem;
+.case-study-diagram .project-media-fallback-heading strong {
+  font-size: clamp(2.7rem, 5.5vw, 6rem);
 }
 
 .case-study-lenses {
@@ -1332,6 +1331,7 @@ a {
   }
 
   .fieldbook-card-header,
+  .fieldbook-diagram,
   .project-lens-panel,
   .case-study-hero-copy,
   .case-study-diagram {

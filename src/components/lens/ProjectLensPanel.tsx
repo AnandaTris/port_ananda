@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import type { ReactNode } from 'react'
+import { useSyncExternalStore, type ReactNode } from 'react'
 import { ExternalLink } from '@/components/ui/ExternalLink'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import type { Lens, Project, ProjectStatus } from '@/content/types'
@@ -26,6 +26,18 @@ const linkLabels: Record<keyof Project['links'], string> = {
   live: 'Live product',
   appStore: 'App Store',
   source: 'Source',
+}
+
+const subscribeToHydration = () => () => undefined
+const getHydratedSnapshot = () => true
+const getServerHydratedSnapshot = () => false
+
+function useHasHydrated() {
+  return useSyncExternalStore(
+    subscribeToHydration,
+    getHydratedSnapshot,
+    getServerHydratedSnapshot,
+  )
 }
 
 function getProjectStatusDetails(status: ProjectStatus) {
@@ -187,7 +199,7 @@ function LensFrame({
   return (
     <motion.div
       animate={{ opacity: 1, y: 0 }}
-      className="lens-panel-frame"
+      className="lens-panel-frame lens-panel-frame-motion"
       initial={{ opacity: 0.96, y: 8 }}
       key={lens}
       transition={{ duration: 0.18, ease: 'easeOut' }}
@@ -199,6 +211,7 @@ function LensFrame({
 
 export function ProjectLensPanel({ project, lens, compact = false }: ProjectLensPanelProps) {
   const reduceMotion = useReducedMotion()
+  const hasHydrated = useHasHydrated()
   const headingId = `${project.slug}-${lens}-${compact ? 'compact' : 'full'}`
   const Heading = compact ? 'h4' : 'h2'
 
@@ -215,7 +228,7 @@ export function ProjectLensPanel({ project, lens, compact = false }: ProjectLens
           {lens === 'story' ? 'The product bet' : lens === 'system' ? 'How it works' : 'Evidence and boundaries'}
         </Heading>
       </header>
-      <LensFrame animate={compact && !reduceMotion} lens={lens}>
+      <LensFrame animate={compact && hasHydrated && reduceMotion === false} lens={lens}>
         <LensContent lens={lens} project={project} />
       </LensFrame>
     </section>

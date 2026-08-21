@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectLensPanel } from '@/components/lens/ProjectLensPanel'
+import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { projects } from '@/content/projects'
 import type { Capability, Lens, Project, ProjectStatus } from '@/content/types'
@@ -44,41 +44,6 @@ export function orderFeaturedProjects(capability: Capability | 'all'): readonly 
   return [...matching, ...remaining]
 }
 
-function ProjectVisual({ project }: { project: Project }) {
-  const media = project.media[0]
-
-  if (media) {
-    return (
-      <figure className="fieldbook-visual fieldbook-media">
-        <Image
-          alt={media.alt}
-          height={media.height}
-          sizes="(max-width: 700px) 100vw, (max-width: 1100px) 46vw, 38vw"
-          src={media.src}
-          width={media.width}
-        />
-        <figcaption>Verified project media</figcaption>
-      </figure>
-    )
-  }
-
-  return (
-    <div
-      aria-label={`${project.name} system diagram`}
-      className="fieldbook-visual fieldbook-diagram"
-      role="img"
-    >
-      <span className="diagram-index">01</span>
-      <strong>{project.system[0]?.title}</strong>
-      <span aria-hidden="true" className="diagram-connector">
-        →
-      </span>
-      <span className="diagram-index">02</span>
-      <strong>{project.system[1]?.title ?? project.hardDecision}</strong>
-    </div>
-  )
-}
-
 export function FeaturedFieldbook({ capability, lens }: FeaturedFieldbookProps) {
   const orderedProjects = orderFeaturedProjects(capability)
 
@@ -112,7 +77,7 @@ export function FeaturedFieldbook({ capability, lens }: FeaturedFieldbookProps) 
                   </p>
                 </header>
 
-                <ProjectVisual project={project} />
+                <ProjectMediaVisual project={project} variant="fieldbook" />
                 <ProjectLensPanel compact lens={lens} project={project} />
 
                 <footer className="fieldbook-card-footer">

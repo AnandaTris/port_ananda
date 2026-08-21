@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Instrument_Sans, Space_Grotesk } from 'next/font/google'
+import { SiteFooter } from '@/components/shell/SiteFooter'
+import { SiteHeader } from '@/components/shell/SiteHeader'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -28,8 +30,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${ibmPlexMono.variable}`}>
+      <body
+        className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${ibmPlexMono.variable} site-body`}
+      >
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   )

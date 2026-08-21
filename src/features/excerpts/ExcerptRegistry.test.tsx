@@ -1,18 +1,91 @@
+import { act } from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, vi } from 'vitest'
 import { ExcerptRegistry } from './ExcerptRegistry'
 
-test.each([
-  ['carekaki', 'CareKaki Guardian'],
-  ['das-dial', 'DAS D.I.A.L.'],
-  ['cited', 'Cited visibility score'],
-  ['fix-yo-yap', 'Fix Yo Yap persona card'],
-])('maps %s to its approved interactive excerpt', (slug, heading) => {
+let intersectionCallback: IntersectionObserverCallback | undefined
+let intersectionOptions: IntersectionObserverInit | undefined
+
+class MockIntersectionObserver {
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+    intersectionCallback = callback
+    intersectionOptions = options
+  }
+
+  disconnect = vi.fn()
+  observe = vi.fn()
+  unobserve = vi.fn()
+}
+
+beforeEach(() => {
+  intersectionCallback = undefined
+  intersectionOptions = undefined
+  vi.stubGlobal('IntersectionObserver', MockIntersectionObserver)
+})
+
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
+
+const approvedExcerpts = [
+  {
+    slug: 'carekaki',
+    heading: 'CareKaki Guardian',
+    loadLabel: 'Load CareKaki Guardian interactive excerpt',
+    evidenceLabel: 'See full CareKaki evidence and proof',
+    evidenceHref: '#carekaki-proof-full',
+  },
+  {
+    slug: 'das-dial',
+    heading: 'DAS D.I.A.L.',
+    loadLabel: 'Load DAS D.I.A.L. interactive excerpt',
+    evidenceLabel: 'See full DAS D.I.A.L. evidence and proof',
+    evidenceHref: '#das-dial-proof-full',
+  },
+  {
+    slug: 'cited',
+    heading: 'Cited visibility score',
+    loadLabel: 'Load Cited visibility score interactive excerpt',
+    evidenceLabel: 'See full Cited evidence and proof',
+    evidenceHref: '#cited-proof-full',
+  },
+  {
+    slug: 'fix-yo-yap',
+    heading: 'Fix Yo Yap persona card',
+    loadLabel: 'Load Fix Yo Yap persona card interactive excerpt',
+    evidenceLabel: 'See full Fix Yo Yap evidence and proof',
+    evidenceHref: '#fix-yo-yap-proof-full',
+  },
+] as const
+
+test.each(approvedExcerpts)(
+  'defers $slug until requested, then maps it to the approved excerpt and its proof link',
+  async ({ slug, heading, loadLabel, evidenceLabel, evidenceHref }) => {
   const { unmount } = render(<ExcerptRegistry slug={slug} />)
 
   expect(screen.getByText('Interactive excerpt')).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: heading })).not.toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: loadLabel }))
+
+  expect(await screen.findByRole('heading', { name: heading })).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: evidenceLabel })).toHaveAttribute('href', evidenceHref)
 
   unmount()
+  },
+)
+
+test('loads an approved excerpt when it approaches the viewport', async () => {
+  render(<ExcerptRegistry slug="carekaki" />)
+
+  expect(screen.queryByRole('heading', { name: 'CareKaki Guardian' })).not.toBeInTheDocument()
+  expect(intersectionOptions).toMatchObject({ rootMargin: '320px 0px' })
+  expect(intersectionCallback).toBeDefined()
+
+  act(() => {
+    intersectionCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver)
+  })
+
+  expect(await screen.findByRole('heading', { name: 'CareKaki Guardian' })).toBeInTheDocument()
 })
 
 test('returns no excerpt for an unapproved project slug', () => {
@@ -21,10 +94,11 @@ test('returns no excerpt for an unapproved project slug', () => {
   expect(container).toBeEmptyDOMElement()
 })
 
-test('redacts Guardian input locally and resets to its initial empty state', () => {
+test('redacts Guardian input locally and resets to its initial empty state', async () => {
   render(<ExcerptRegistry slug="carekaki" />)
 
-  const message = screen.getByRole('textbox', { name: 'Visitor message' })
+  fireEvent.click(screen.getByRole('button', { name: 'Load CareKaki Guardian interactive excerpt' }))
+  const message = await screen.findByRole('textbox', { name: 'Visitor message' })
   fireEvent.change(message, { target: { value: 'Email ada@example.com' } })
   expect(screen.getByRole('status')).toHaveTextContent('Email [EMAIL REDACTED]')
 
@@ -33,9 +107,11 @@ test('redacts Guardian input locally and resets to its initial empty state', () 
   expect(screen.getByRole('status')).toHaveTextContent('No approval needed')
 })
 
-test('shows the exact DAS disclaimer and resets the selected example', () => {
+test('shows the exact DAS disclaimer and resets the selected example', async () => {
   render(<ExcerptRegistry slug="das-dial" />)
 
+  fireEvent.click(screen.getByRole('button', { name: 'Load DAS D.I.A.L. interactive excerpt' }))
+  await screen.findByRole('heading', { name: 'DAS D.I.A.L.' })
   expect(
     screen.getByText('Screening aid only — this excerpt does not diagnose dyslexia.'),
   ).toBeInTheDocument()
@@ -46,9 +122,13 @@ test('shows the exact DAS disclaimer and resets the selected example', () => {
   expect(screen.getByRole('radio', { name: /enuf/i })).toBeChecked()
 })
 
-test('discloses Cited modelled data and resets its deterministic controls', () => {
+test('discloses Cited modelled data and resets its deterministic controls', async () => {
   render(<ExcerptRegistry slug="cited" />)
 
+  fireEvent.click(
+    screen.getByRole('button', { name: 'Load Cited visibility score interactive excerpt' }),
+  )
+  await screen.findByRole('heading', { name: 'Cited visibility score' })
   expect(screen.getByText(/modelled data/i)).toBeInTheDocument()
   fireEvent.change(screen.getByLabelText('Rank'), { target: { value: '2' } })
   fireEvent.change(screen.getByLabelText('Sentiment'), { target: { value: 'neutral' } })
@@ -59,9 +139,13 @@ test('discloses Cited modelled data and resets its deterministic controls', () =
   expect(screen.getByRole('status')).toHaveTextContent('100.00')
 })
 
-test('discloses fixed Fix Yo Yap rules and resets the persona preset', () => {
+test('discloses fixed Fix Yo Yap rules and resets the persona preset', async () => {
   render(<ExcerptRegistry slug="fix-yo-yap" />)
 
+  fireEvent.click(
+    screen.getByRole('button', { name: 'Load Fix Yo Yap persona card interactive excerpt' }),
+  )
+  await screen.findByRole('heading', { name: 'Fix Yo Yap persona card' })
   expect(
     screen.getByText(
       'These are fixed demonstration rules and not Fix Yo Yap’s production scoring service.',

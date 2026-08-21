@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { excerptDetails } from './excerpt-config'
 import { assignPersona, type SampleMetrics } from './yap'
 
 const personaPresets: readonly { label: string; metrics: SampleMetrics }[] = [
@@ -37,6 +38,9 @@ export function YapExcerpt() {
       <p className="excerpt-disclosure">
         No microphone input, recording, or production scoring is used in this excerpt.
       </p>
+      <a className="text-link excerpt-evidence-link" href={excerptDetails['fix-yo-yap'].evidenceHref}>
+        {excerptDetails['fix-yo-yap'].evidenceLabel}
+      </a>
 
       <div className="excerpt-form">
         <fieldset>

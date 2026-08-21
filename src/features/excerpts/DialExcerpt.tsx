@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { dialDisclaimer, dialExamples } from './dial'
+import { excerptDetails } from './excerpt-config'
 
 export function DialExcerpt() {
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -20,6 +21,9 @@ export function DialExcerpt() {
         provide a diagnosis.
       </p>
       <p className="excerpt-disclaimer">{dialDisclaimer}</p>
+      <a className="text-link excerpt-evidence-link" href={excerptDetails['das-dial'].evidenceHref}>
+        {excerptDetails['das-dial'].evidenceLabel}
+      </a>
 
       <div className="excerpt-form">
         <fieldset>

@@ -1141,11 +1141,14 @@ a {
 }
 
 .excerpt-approval {
-  color: var(--jade);
+  padding-left: 0.65rem;
+  border-left: 3px solid var(--jade);
+  color: var(--ink);
   font-weight: 700;
 }
 
-.excerpt-reset {
+.excerpt-reset,
+.excerpt-load {
   justify-self: start;
   min-height: 2.75rem;
   padding: 0.6rem 0.9rem;
@@ -1160,8 +1163,38 @@ a {
   text-transform: uppercase;
 }
 
-.excerpt-reset:hover {
+.excerpt-reset:hover,
+.excerpt-load:hover {
   background: var(--sunshine);
+}
+
+.interactive-excerpt-deferred {
+  box-shadow: 6px 6px 0 var(--sunshine);
+}
+
+.excerpt-deferred-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.25rem;
+  margin-top: 2rem;
+}
+
+.excerpt-evidence-link {
+  display: inline-block;
+  margin-top: 1.25rem;
+}
+
+.excerpt-deferred-actions .excerpt-evidence-link {
+  margin-top: 0;
+}
+
+.excerpt-load-error {
+  margin: 1rem 0 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--coral);
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .excerpt-control-grid {

@@ -5,6 +5,7 @@ import {
   calculateVisibilityScore,
   type CitationSentiment,
 } from './cited'
+import { excerptDetails } from './excerpt-config'
 
 type RankValue = '1' | '2' | '3' | 'absent'
 
@@ -34,6 +35,9 @@ export function CitedExcerpt() {
         This uses modelled data for one assistant mention. It is a simplified calculator, not a
         verified live Claude scan.
       </p>
+      <a className="text-link excerpt-evidence-link" href={excerptDetails.cited.evidenceHref}>
+        {excerptDetails.cited.evidenceLabel}
+      </a>
 
       <div className="excerpt-form excerpt-form-compact">
         <div className="excerpt-control-grid">

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { excerptDetails } from './excerpt-config'
 import { redactSensitiveText, requiresApproval } from './guardian'
 
 export function GuardianExcerpt() {
@@ -23,6 +24,9 @@ export function GuardianExcerpt() {
         Simplified local demonstration: it applies a small set of patterns and does not connect to
         CareKaki’s team-built production systems.
       </p>
+      <a className="text-link excerpt-evidence-link" href={excerptDetails.carekaki.evidenceHref}>
+        {excerptDetails.carekaki.evidenceLabel}
+      </a>
 
       <div className="excerpt-form">
         <label htmlFor="guardian-message">Visitor message</label>

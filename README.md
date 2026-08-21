@@ -59,9 +59,9 @@ npm start
 
 1. ChordGrab/ChordSnap
 2. DocDeck
-3. Pufferty
-4. Meowtivation
-5. Energy Regression
+3. Pufferty Fish Robot
+4. Meowtivation Task Manager
+5. Multi-Linear Regression Energy Model
 
 These records must not appear in typed content, generated routes, metadata, search results, or the sitemap without a new evidence review.
 

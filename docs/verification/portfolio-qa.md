@@ -44,16 +44,26 @@ All interactions used `/Users/anandatriharismaroso/.codex/skills/gstack/browse/d
 | Check | Result |
 | --- | --- |
 | Home response and work section | `200`; `#work` visible |
-| Home console | Clean: `(no console errors)` after clearing prior expected 404 navigation entries and reloading |
+| Home console | Warning-inclusive `browse console` after a separate clear/reload reported `(no console messages)`: 0 warnings, 0 errors |
 | Lens URL state | Proof control produced `http://localhost:3000/?lens=proof#work` |
 | Capability URL state | Keyboard Enter on Build and ship produced `?lens=story&capability=ship#work` |
 | Collaboration CTA | `mailto:adotriharis@gmail.com?subject=Building%20something%20together`; click exercised |
-| CareKaki route | `/work/carekaki` returned `200`; console clean |
+| CareKaki route | `/work/carekaki` returned `200`; warning-inclusive `browse console` after a separate clear/reload reported `(no console messages)`: 0 warnings, 0 errors |
 | CareKaki excerpt | Explicit load succeeded. Input containing an NRIC, email, and phone rendered all three redaction markers and `Human approval required`; Reset restored an empty value, `No message entered.`, and `No approval needed` |
 | Archive empty state | Search `definitely-no-such-evidence` produced `0 projects` and zero cards |
 | Archive reset | Restored empty query, `all` maturity, `17 projects`, and 17 cards |
 | Excluded route | `/work/docdeck` returned HTTP `404` and the branded `Missing field note · 404` experience with `Return to work` → `/#work` |
 | DocDeck console note | Its expected main-document 404 is logged as a failed resource; there was no application exception. It was cleared before the final home-console check |
+
+The warning-inclusive checks used the following sequence independently on `/` and `/work/carekaki`:
+
+```bash
+/Users/anandatriharismaroso/.codex/skills/gstack/browse/dist/browse console --clear
+/Users/anandatriharismaroso/.codex/skills/gstack/browse/dist/browse reload
+/Users/anandatriharismaroso/.codex/skills/gstack/browse/dist/browse console
+```
+
+Both final `console` commands returned `(no console messages)`, explicitly confirming zero warnings and zero errors on the valid routes. Expected `/work/docdeck` main-document 404 navigation noise remains recorded separately and was not included in either clean-route count.
 
 ## Responsive and visual evidence
 
@@ -74,7 +84,7 @@ Every generated image was opened with the image viewer after the final productio
 | 1280×720 | `/tmp/ananda-portfolio-desktop.png` | Asymmetric fieldbook remains coherent; final hero bottom `712.55px` and proof bottom `683.75px` fit within the `720px` viewport |
 | 1440×900 | `/tmp/ananda-portfolio-1440.png` | Bright Evidence Fieldbook composition remains editorial rather than a generic card wall; final hero bottom `772.52px` and proof bottom `736.52px` fit within the `900px` viewport |
 
-Additional sticky evidence: `/tmp/ananda-portfolio-mobile-sticky.png` was opened with the image viewer. At 375×812 the sticky lens uses `top: 72px` beside a measured `73px` header. Centered fieldbook-heading geometry was lens bottom `257.27px`, heading top `353.38px`, and overlap `0px`.
+Additional sticky evidence: `/tmp/ananda-portfolio-mobile-sticky.png` was recaptured and opened with the image viewer. At 375×812 and `scrollY: 1825px`, the lens was confirmed in its stuck position: computed top `72px`, measured top `72px`, bottom `169.875px`, and height `97.875px`, directly beneath the `73px` header. The next heading, `Five products, one accountable through-line.`, began at `265.375px`, leaving a `95.5px` gap and `0px` overlap.
 
 At a 640px CSS viewport, representing a 1280px desktop at 200% browser zoom, the document measured 640px wide with zero horizontal overflow and zero clipped text elements.
 

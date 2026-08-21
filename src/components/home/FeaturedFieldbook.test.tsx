@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import { generateMetadata, generateStaticParams } from '@/app/work/[slug]/page'
+import { SITE_URL } from '@/lib/site'
 import { FeaturedFieldbook } from './FeaturedFieldbook'
 
 const defaultOrder = ['Fix Yo Yap', 'CareKaki', 'DAS D.I.A.L.', 'FALSE POSITIVE', 'Cited']
@@ -53,10 +54,40 @@ test('generates the complete approved project route manifest', () => {
   ])
 })
 
-test('generates project-specific metadata from async route params', async () => {
-  await expect(generateMetadata({ params: Promise.resolve({ slug: 'carekaki' }) })).resolves.toEqual({
+test('generates canonical project metadata without an image when no local media exists', async () => {
+  await expect(generateMetadata({ params: Promise.resolve({ slug: 'carekaki' }) })).resolves.toMatchObject({
     title: 'CareKaki',
     description:
       'A trilingual care navigator that keeps high-consequence actions behind deterministic safeguards and human gates.',
+    alternates: { canonical: '/work/carekaki' },
+    openGraph: {
+      title: 'CareKaki',
+      description:
+        'A trilingual care navigator that keeps high-consequence actions behind deterministic safeguards and human gates.',
+      url: '/work/carekaki',
+    },
+  })
+
+  const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'carekaki' }) })
+  expect(metadata.openGraph).not.toHaveProperty('images')
+})
+
+test('uses the canonical local featured media URL for project Open Graph metadata', async () => {
+  await expect(generateMetadata({ params: Promise.resolve({ slug: 'fix-yo-yap' }) })).resolves.toMatchObject({
+    title: 'Fix Yo Yap',
+    description: 'An impromptu speaking game that turns an auditable score into a memorable persona.',
+    alternates: { canonical: '/work/fix-yo-yap' },
+    openGraph: {
+      title: 'Fix Yo Yap',
+      description: 'An impromptu speaking game that turns an auditable score into a memorable persona.',
+      url: '/work/fix-yo-yap',
+      images: [
+        {
+          url: `${SITE_URL}/projects/fix-yo-yap/meet-your-yapper.png`,
+          width: 1284,
+          height: 2778,
+        },
+      ],
+    },
   })
 })

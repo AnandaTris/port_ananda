@@ -8,6 +8,7 @@ import { projects } from '@/content/projects'
 import type { Project, ProjectStatus } from '@/content/types'
 import { ExcerptRegistry } from '@/features/excerpts/ExcerptRegistry'
 import { getProject } from '@/lib/projects'
+import { SITE_URL } from '@/lib/site'
 
 type WorkPageProps = {
   params: Promise<{ slug: string }>
@@ -33,9 +34,28 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
 
   if (!project) notFound()
 
+  const canonicalPath = `/work/${project.slug}`
+  const featuredMedia = project.media[0]
+  const featuredImage = featuredMedia?.src.startsWith('/')
+    ? {
+        url: new URL(featuredMedia.src, SITE_URL).toString(),
+        width: featuredMedia.width,
+        height: featuredMedia.height,
+        alt: featuredMedia.alt,
+      }
+    : undefined
+
   return {
     title: project.name,
     description: project.oneLine,
+    alternates: { canonical: canonicalPath },
+    openGraph: {
+      type: 'website',
+      url: canonicalPath,
+      title: project.name,
+      description: project.oneLine,
+      ...(featuredImage ? { images: [featuredImage] } : {}),
+    },
   }
 }
 

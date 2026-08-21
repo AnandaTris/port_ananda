@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Instrument_Sans, Space_Grotesk } from 'next/font/google'
 import { SiteFooter } from '@/components/shell/SiteFooter'
 import { SiteHeader } from '@/components/shell/SiteHeader'
+import { profile } from '@/content/profile'
+import { SITE_URL } from '@/lib/site'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -21,9 +23,27 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Ananda Triharis Maroso — AI Product Builder',
     template: '%s — Ananda Triharis Maroso',
+  },
+  description: profile.hero,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'en_SG',
+    url: '/',
+    siteName: profile.name,
+    title: 'Ananda Triharis Maroso — AI Product Builder',
+    description: profile.hero,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Evidence Fieldbook' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ananda Triharis Maroso — AI Product Builder',
+    description: profile.hero,
+    images: ['/opengraph-image'],
   },
 }
 

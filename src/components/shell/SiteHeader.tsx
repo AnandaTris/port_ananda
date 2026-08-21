@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 const navigation = [
   { href: '#work', label: 'Work' },
@@ -11,6 +12,8 @@ const navigation = [
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const homeAnchor = (anchor: string) => (pathname === '/' ? anchor : `/${anchor}`)
 
   return (
     <>
@@ -19,7 +22,7 @@ export function SiteHeader() {
       </a>
       <header className="site-header">
         <div className="header-inner">
-          <a className="site-mark" href="#main-content">
+          <a className="site-mark" href={homeAnchor('#main-content')}>
             <span>ANANDA</span>
             <span aria-hidden="true">/</span>
             <span>PRODUCT + AI BUILDER</span>
@@ -40,7 +43,7 @@ export function SiteHeader() {
             id="primary-navigation"
           >
             {navigation.map((item) => (
-              <a href={item.href} key={item.href} onClick={() => setIsOpen(false)}>
+              <a href={homeAnchor(item.href)} key={item.href} onClick={() => setIsOpen(false)}>
                 {item.label}
               </a>
             ))}

@@ -4,10 +4,7 @@ export function SiteFooter() {
       <div className="footer-inner">
         <p className="eyebrow">Evidence fieldbook / close</p>
         <div className="footer-content">
-          <p>
-            The fieldbook closes here. The collaboration brief above is the right place to start
-            the next useful experiment.
-          </p>
+          <p>Fieldbook closed. Bring an ambitious problem worth testing.</p>
         </div>
       </div>
     </footer>

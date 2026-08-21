@@ -1,5 +1,46 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { beforeEach, vi } from 'vitest'
 import { SiteHeader } from './SiteHeader'
+
+const route = vi.hoisted(() => ({ pathname: '/' }))
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => route.pathname,
+}))
+
+beforeEach(() => {
+  route.pathname = '/'
+})
+
+test('keeps local content anchors when rendered on the home route', () => {
+  render(<SiteHeader />)
+
+  expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '#work')
+  expect(screen.getByRole('link', { name: 'Principles' })).toHaveAttribute('href', '#principles')
+  expect(screen.getByRole('link', { name: 'Experience' })).toHaveAttribute('href', '#experience')
+  expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '#contact')
+  expect(screen.getByRole('link', { name: /ANANDA/i })).toHaveAttribute('href', '#main-content')
+})
+
+test('qualifies every home anchor when rendered on a project route', () => {
+  route.pathname = '/work/fix-yo-yap'
+  render(<SiteHeader />)
+
+  expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '/#work')
+  expect(screen.getByRole('link', { name: 'Principles' })).toHaveAttribute(
+    'href',
+    '/#principles',
+  )
+  expect(screen.getByRole('link', { name: 'Experience' })).toHaveAttribute(
+    'href',
+    '/#experience',
+  )
+  expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/#contact')
+  expect(screen.getByRole('link', { name: /ANANDA/i })).toHaveAttribute(
+    'href',
+    '/#main-content',
+  )
+})
 
 test('exposes the mobile menu state and controls relationship', () => {
   render(<SiteHeader />)

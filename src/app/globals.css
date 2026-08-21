@@ -299,6 +299,21 @@ a {
   line-height: 1.35;
 }
 
+@media (min-width: 64.0625rem) {
+  .hero {
+    padding: clamp(1.75rem, 4vh, 4.5rem) 0 clamp(1.75rem, 4vh, 4rem);
+  }
+
+  .hero h1 {
+    font-size: clamp(4rem, 5vw, 5.25rem);
+  }
+
+  .hero-actions,
+  .hero-collaboration-line {
+    margin-top: 1.5rem;
+  }
+}
+
 .portfolio-explorer {
   padding: clamp(4.5rem, 8vw, 8rem) 0 clamp(5rem, 9vw, 9rem);
   border-top: 1px solid var(--ink);

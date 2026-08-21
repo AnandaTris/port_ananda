@@ -6,6 +6,7 @@ import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { projects } from '@/content/projects'
 import type { Project, ProjectStatus } from '@/content/types'
+import { ExcerptRegistry } from '@/features/excerpts/ExcerptRegistry'
 import { getProject } from '@/lib/projects'
 
 type WorkPageProps = {
@@ -94,6 +95,8 @@ export default async function WorkPage({ params }: WorkPageProps) {
         <ProjectLensPanel lens="system" project={project} />
         <ProjectLensPanel lens="proof" project={project} />
       </div>
+
+      <ExcerptRegistry slug={project.slug} />
 
       <aside aria-labelledby="related-projects-title" className="related-projects">
         <p className="eyebrow">Shared capabilities</p>

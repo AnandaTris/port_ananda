@@ -58,3 +58,18 @@ test('exposes one evidence route for every approved project', () => {
     projects.map((project) => `/work/${project.slug}`),
   )
 })
+
+test('reports empty results and reset restores the full roster', async () => {
+  const user = userEvent.setup()
+  render(<ProjectArchive projects={projects} capability="all" />)
+
+  await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'no-such-project')
+
+  expect(screen.getByText('0 projects')).toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: /View evidence/i })).not.toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: 'Reset filters' }))
+
+  expect(screen.getByText('17 projects')).toBeInTheDocument()
+  expect(screen.getAllByRole('link', { name: /View evidence/i })).toHaveLength(projects.length)
+})

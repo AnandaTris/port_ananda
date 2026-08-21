@@ -9,7 +9,6 @@ type ProjectArchiveProps = {
   projects: readonly Project[]
   capability: Capability | 'all'
 }
-
 const statusOptions: readonly { value: ProjectStatus | 'all'; label: string }[] = [
   { value: 'all', label: 'All maturities' },
   { value: 'live', label: 'Live' },
@@ -127,4 +126,3 @@ export function ProjectArchive({ projects, capability }: ProjectArchiveProps) {
     </section>
   )
 }
-

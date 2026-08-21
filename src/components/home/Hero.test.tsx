@@ -9,7 +9,7 @@ test('leads with the approved thesis and collaboration action', () => {
   )
   expect(screen.getByRole('link', { name: 'Build something together' })).toHaveAttribute(
     'href',
-    expect.stringMatching(/^mailto:adotriharis@gmail\.com/),
+    'mailto:adotriharis@gmail.com?subject=Building%20something%20together',
   )
   expect(screen.getByText('Live on the App Store')).toBeInTheDocument()
   expect(screen.getByText('Dell Top 5 finalist')).toBeInTheDocument()

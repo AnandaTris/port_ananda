@@ -3,8 +3,25 @@ import { filterProjects, getProject, validateProjects } from './projects'
 
 test('contains only the approved roster with unique slugs', () => {
   expect(validateProjects(projects)).toEqual([])
-  expect(projects).toHaveLength(17)
-  expect(new Set(projects.map((project) => project.slug)).size).toBe(17)
+  expect(projects.map((project) => project.slug)).toEqual([
+    'fix-yo-yap',
+    'carekaki',
+    'das-dial',
+    'false-positive',
+    'cited',
+    'brawnix',
+    'ingatik-recall',
+    'fames',
+    'hypecast',
+    'steady',
+    'rekap',
+    'spike-responder',
+    'math-me-home',
+    'onesearch',
+    'aegis',
+    'hydrun',
+    'personal-workout-tracker',
+  ])
 })
 
 test('keeps excluded work out of the content layer', () => {

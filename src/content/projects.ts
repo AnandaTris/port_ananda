@@ -43,7 +43,26 @@ export const projects: readonly Project[] = [
       live: 'https://fixyoyap.com',
       appStore: 'https://apps.apple.com/us/app/fix-yo-yap/id6797952951',
     },
-    media: [],
+    media: [
+      {
+        src: '/projects/fix-yo-yap/meet-your-yapper.png',
+        alt: 'Fix Yo Yap App Store screenshot introducing the Yapper persona',
+        width: 1284,
+        height: 2778,
+      },
+      {
+        src: '/projects/fix-yo-yap/proof-not-vibes.png',
+        alt: 'Fix Yo Yap App Store screenshot showing proof behind the score',
+        width: 1284,
+        height: 2778,
+      },
+      {
+        src: '/projects/fix-yo-yap/progress.png',
+        alt: 'Fix Yo Yap App Store screenshot showing speaking progress',
+        width: 1284,
+        height: 2778,
+      },
+    ],
     lastVerified,
   },
   {
@@ -161,7 +180,20 @@ export const projects: readonly Project[] = [
     ],
     stack: ['Unity', 'C#', 'FastAPI', 'Python', 'Google Cloud', 'Gemini', 'HuBERT', 'ElevenLabs'],
     links: { source: 'https://github.com/stormragemc/FALSE-POSITIVE' },
-    media: [],
+    media: [
+      {
+        src: '/projects/false-positive/interrogation-room.webp',
+        alt: 'FALSE POSITIVE interrogation room scene',
+        width: 1280,
+        height: 720,
+      },
+      {
+        src: '/projects/false-positive/detective-silhouette.webp',
+        alt: 'FALSE POSITIVE detective silhouette scene',
+        width: 1280,
+        height: 720,
+      },
+    ],
     lastVerified,
   },
   {
@@ -242,7 +274,14 @@ export const projects: readonly Project[] = [
       live: 'https://brawnix-web.vercel.app',
       appStore: 'https://apps.apple.com/app/id6790144862',
     },
-    media: [],
+    media: [
+      {
+        src: '/projects/brawnix/feature-graphic.png',
+        alt: 'Brawnix hybrid-athlete coaching feature graphic',
+        width: 1024,
+        height: 500,
+      },
+    ],
     lastVerified,
   },
   {
@@ -285,7 +324,14 @@ export const projects: readonly Project[] = [
       live: 'https://ingatikrecall.com',
       appStore: 'https://apps.apple.com/us/app/ingatik-recall/id6788639514',
     },
-    media: [],
+    media: [
+      {
+        src: '/projects/ingatik/whizzy-celebrating.png',
+        alt: 'Ingatik Recall mascot Whizzy celebrating',
+        width: 2048,
+        height: 2048,
+      },
+    ],
     lastVerified,
   },
   {
@@ -398,7 +444,14 @@ export const projects: readonly Project[] = [
     ],
     stack: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Stripe', 'Vitest'],
     links: { source: 'https://github.com/AnandaTris/steady' },
-    media: [],
+    media: [
+      {
+        src: '/projects/steady/ollie-cheer.png',
+        alt: 'Steady mascot Ollie cheering',
+        width: 656,
+        height: 720,
+      },
+    ],
     lastVerified,
   },
   {
@@ -434,7 +487,14 @@ export const projects: readonly Project[] = [
     ],
     stack: ['Expo', 'React Native', 'TypeScript', 'Kotlin', 'SQLite', 'Reanimated'],
     links: {},
-    media: [],
+    media: [
+      {
+        src: '/projects/rekap/feature-graphic.png',
+        alt: 'Rekap screen-time reveal feature graphic',
+        width: 1024,
+        height: 500,
+      },
+    ],
     lastVerified,
   },
   {
@@ -505,7 +565,20 @@ export const projects: readonly Project[] = [
     limitations: ['The source-backed game requires the Alchitry Au FPGA hardware for execution.'],
     stack: ['Lucid HDL', 'Alchitry Au', 'Vivado', 'FPGA'],
     links: {},
-    media: [],
+    media: [
+      {
+        src: '/projects/math-me-home/fsm.png',
+        alt: 'Math Me Home finite-state machine diagram',
+        width: 1920,
+        height: 1080,
+      },
+      {
+        src: '/projects/math-me-home/datapath.png',
+        alt: 'Math Me Home datapath architecture diagram',
+        width: 2066,
+        height: 1133,
+      },
+    ],
     lastVerified,
   },
   {
@@ -572,7 +645,14 @@ export const projects: readonly Project[] = [
     limitations: ['A configured Supabase database is required for the full application; no verified public deployment is linked.'],
     stack: ['Hono', 'React', 'TanStack Router', 'TypeScript', 'Supabase', 'Postgres', 'Vitest'],
     links: { source: 'https://github.com/AnandaTris/Illinois-ARCS-Take-Home-Assessment' },
-    media: [],
+    media: [
+      {
+        src: '/projects/aegis/login.png',
+        alt: 'Aegis risk assessment console login screen',
+        width: 1280,
+        height: 720,
+      },
+    ],
     lastVerified,
   },
   {
@@ -639,7 +719,14 @@ export const projects: readonly Project[] = [
     limitations: ['Data is local to one browser profile and is not synchronized across devices.'],
     stack: ['React', 'Vite', 'JavaScript', 'PWA', 'Workbox', 'localStorage'],
     links: { source: 'https://github.com/AnandaTris/Personal-Workout-Tracker' },
-    media: [],
+    media: [
+      {
+        src: '/projects/personal-workout-tracker/hero.png',
+        alt: 'Personal Workout Tracker hero illustration',
+        width: 343,
+        height: 361,
+      },
+    ],
     lastVerified,
   },
 ]

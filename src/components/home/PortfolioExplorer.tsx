@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { CapabilityPicker } from './CapabilityPicker'
+import { FeaturedFieldbook } from './FeaturedFieldbook'
 import { LensControl } from '@/components/lens/LensControl'
 import type { Capability, Lens } from '@/content/types'
 import {
@@ -39,16 +40,17 @@ export function PortfolioExplorer() {
   }
 
   return (
-    <section aria-labelledby="work-title" id="work">
-      <div>
-        <p>What do you need?</p>
+    <section aria-labelledby="work-title" className="portfolio-explorer" id="work">
+      <div className="explorer-capabilities">
+        <p className="eyebrow">What do you need?</p>
         <h2 id="work-title">Choose a path through the work.</h2>
         <CapabilityPicker value={capability} onChange={handleCapabilityChange} />
       </div>
-      <div>
-        <p>Read the evidence through a lens.</p>
+      <div className="explorer-lenses">
+        <p className="eyebrow">Read the evidence through a lens.</p>
         <LensControl value={lens} onChange={handleLensChange} />
       </div>
+      <FeaturedFieldbook capability={capability} lens={lens} />
     </section>
   )
 }

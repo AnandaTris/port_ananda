@@ -35,8 +35,8 @@ export function CitedExcerpt() {
         This uses modelled data for one assistant mention. It is a simplified calculator, not a
         verified live Claude scan.
       </p>
-      <a className="text-link excerpt-evidence-link" href={excerptDetails.cited.evidenceHref}>
-        {excerptDetails.cited.evidenceLabel}
+      <a className="text-link excerpt-results-link" href={excerptDetails.cited.resultsHref}>
+        {excerptDetails.cited.resultsLabel}
       </a>
 
       <div className="excerpt-form excerpt-form-compact">

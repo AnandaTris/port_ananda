@@ -6,7 +6,6 @@ import type { Project, ProjectStatus } from '@/content/types'
 
 type ProjectMediaVisualProps = {
   project: Project
-  variant: 'fieldbook' | 'case-study'
   priority?: boolean
 }
 
@@ -17,43 +16,28 @@ const statusLabels: Record<ProjectStatus, string> = {
   prototype: 'Prototype',
 }
 
-const visualClasses = {
-  fieldbook: {
-    diagram: 'fieldbook-visual fieldbook-diagram',
-    media: 'fieldbook-visual fieldbook-media',
-    sizes: '(max-width: 700px) 100vw, (max-width: 1100px) 46vw, 38vw',
-  },
-  'case-study': {
-    diagram: 'case-study-visual case-study-diagram',
-    media: 'case-study-visual case-study-media',
-    sizes: '(max-width: 800px) 100vw, 58vw',
-  },
-} as const
+const IMAGE_SIZES = '(max-width: 800px) 100vw, 58vw'
 
-export function ProjectMediaVisual({
-  project,
-  variant,
-  priority = false,
-}: ProjectMediaVisualProps) {
-  const media = project.media[0]
-  const [failedSource, setFailedSource] = useState<string | null>(null)
-  const classes = visualClasses[variant]
+export function ProjectMediaVisual({ project, priority = false }: ProjectMediaVisualProps) {
+  const [failedSources, setFailedSources] = useState<readonly string[]>([])
+  const visibleMedia = project.media.filter((item) => !failedSources.includes(item.src))
 
-  if (media && failedSource !== media.src) {
+  if (visibleMedia.length > 0) {
     return (
-      <figure className={classes.media}>
-        <Image
-          alt={media.alt}
-          height={media.height}
-          onError={() => setFailedSource(media.src)}
-          priority={priority}
-          sizes={classes.sizes}
-          src={media.src}
-          width={media.width}
-        />
-        <figcaption>
-          Verified project media{variant === 'case-study' ? ` · ${media.alt}` : ''}
-        </figcaption>
+      <figure className="case-study-visual case-study-media" data-count={visibleMedia.length}>
+        {visibleMedia.map((item, index) => (
+          <Image
+            alt={item.alt}
+            height={item.height}
+            key={item.src}
+            onError={() => setFailedSources((sources) => [...sources, item.src])}
+            priority={priority && index === 0}
+            sizes={IMAGE_SIZES}
+            src={item.src}
+            width={item.width}
+          />
+        ))}
+        <figcaption>{visibleMedia.map((item) => item.alt).join(' · ')}</figcaption>
       </figure>
     )
   }
@@ -61,7 +45,7 @@ export function ProjectMediaVisual({
   return (
     <div
       aria-label={`${project.name} media fallback`}
-      className={`${classes.diagram} project-media-fallback`}
+      className="case-study-visual case-study-diagram project-media-fallback"
       role="img"
     >
       <div className="project-media-fallback-heading">

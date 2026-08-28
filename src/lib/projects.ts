@@ -1,39 +1,8 @@
 import { projects } from '@/content/projects'
-import type { Capability, Project } from '@/content/types'
+import type { Project } from '@/content/types'
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug)
-}
-
-export function filterProjects(
-  source: readonly Project[],
-  filter: { capability: Capability | 'all'; query: string }
-): Project[] {
-  const query = filter.query.trim().toLocaleLowerCase()
-  const matchingQuery = source.filter((project) => {
-    const haystack = [
-      project.name,
-      project.oneLine,
-      project.role,
-      project.status,
-      ...project.capabilities,
-      ...project.stack,
-    ]
-      .join(' ')
-      .toLocaleLowerCase()
-    return query === '' || haystack.includes(query)
-  })
-
-  if (filter.capability === 'all') return matchingQuery
-
-  const capability = filter.capability
-  const matchingCapability = matchingQuery.filter((project) =>
-    project.capabilities.includes(capability),
-  )
-  const remaining = matchingQuery.filter(
-    (project) => !project.capabilities.includes(capability),
-  )
-  return [...matchingCapability, ...remaining]
 }
 
 function hasText(value: unknown): value is string {

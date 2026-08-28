@@ -1,6 +1,6 @@
-# Ananda Evidence Fieldbook
+# Ananda Triharis Maroso — Portfolio
 
-A bright, static portfolio for inspecting Ananda Triharis Maroso's product, AI, and technical-growth work through Story, System, and Proof lenses.
+A bright, static portfolio of Ananda Triharis Maroso's product, AI, and technical-growth work. Every project has a page with three sections: Overview, Build, and Results.
 
 ## Prerequisite
 
@@ -35,7 +35,7 @@ npm start
 ## Content rules
 
 - Project content belongs in `src/content/projects.ts` and must satisfy the `Project` type in `src/content/types.ts`.
-- Every project needs an honest status, role, ownership boundary, problem, hard decision, system description, outcome evidence, limitations, stack, media list, and verification date.
+- Every project needs an honest status, role, ownership boundary, problem, hard decision, system description, outcomes, limitations, stack, media list, and verification date.
 - Team work must use team language and must not turn a bounded contribution into a solo-ownership claim.
 - Public URLs are entered once in the typed `links` object and only after the destination has been verified.
 - Empty strings, placeholder URLs, speculative deployments, and unavailable repositories are not valid links.
@@ -49,7 +49,7 @@ npm start
 
 ## Add a project safely
 
-1. Add a unique typed record to `src/content/projects.ts` with every required evidence field.
+1. Add a unique typed record to `src/content/projects.ts` with every required field.
 2. Add approved media and provenance entries, if any.
 3. Add `live`, `appStore`, or `source` only when its exact public URL has been verified.
 4. Leave an unavailable link property absent. The UI must never render an unverified button.
@@ -63,7 +63,7 @@ npm start
 4. Meowtivation Task Manager
 5. Multi-Linear Regression Energy Model
 
-These records must not appear in typed content, generated routes, metadata, search results, or the sitemap without a new evidence review.
+These records must not appear in typed content, generated routes, metadata, search results, or the sitemap without a new content review.
 
 ## Deployment boundary
 

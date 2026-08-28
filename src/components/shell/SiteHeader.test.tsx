@@ -12,13 +12,23 @@ beforeEach(() => {
   route.pathname = '/'
 })
 
+// The nav is the table of contents for the page, so it is spelled out here in
+// full: a section that gets renamed or dropped has to be renamed or dropped in
+// both places or this fails.
+const anchors = [
+  ['Projects', '#projects'],
+  ['Experience', '#experience'],
+  ['Stack', '#stack'],
+  ['Research', '#research'],
+  ['Contact', '#contact'],
+] as const
+
 test('keeps local content anchors when rendered on the home route', () => {
   render(<SiteHeader />)
 
-  expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '#work')
-  expect(screen.getByRole('link', { name: 'Principles' })).toHaveAttribute('href', '#principles')
-  expect(screen.getByRole('link', { name: 'Experience' })).toHaveAttribute('href', '#experience')
-  expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '#contact')
+  for (const [label, href] of anchors) {
+    expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', href)
+  }
   expect(screen.getByRole('link', { name: /ANANDA/i })).toHaveAttribute('href', '#main-content')
 })
 
@@ -26,20 +36,19 @@ test('qualifies every home anchor when rendered on a project route', () => {
   route.pathname = '/work/fix-yo-yap'
   render(<SiteHeader />)
 
-  expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '/#work')
-  expect(screen.getByRole('link', { name: 'Principles' })).toHaveAttribute(
-    'href',
-    '/#principles',
-  )
-  expect(screen.getByRole('link', { name: 'Experience' })).toHaveAttribute(
-    'href',
-    '/#experience',
-  )
-  expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/#contact')
+  for (const [label, href] of anchors) {
+    expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', `/${href}`)
+  }
   expect(screen.getByRole('link', { name: /ANANDA/i })).toHaveAttribute(
     'href',
     '/#main-content',
   )
+})
+
+test('carries the name and the place in the site mark, and no job title', () => {
+  render(<SiteHeader />)
+
+  expect(screen.getByRole('link', { name: /ANANDA/i })).toHaveTextContent('ANANDA/SINGAPORE')
 })
 
 test('exposes the mobile menu state and controls relationship', () => {
@@ -73,7 +82,7 @@ test('closes the mobile menu after selecting a navigation anchor', () => {
   render(<SiteHeader />)
 
   fireEvent.click(screen.getByRole('button', { name: 'Open menu' }))
-  fireEvent.click(screen.getByRole('link', { name: 'Work' }))
+  fireEvent.click(screen.getByRole('link', { name: 'Projects' }))
 
   expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute(
     'aria-expanded',

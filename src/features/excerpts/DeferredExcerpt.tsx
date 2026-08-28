@@ -87,8 +87,8 @@ export function DeferredExcerpt({ slug }: { slug: ApprovedExcerptSlug }) {
         <button className="excerpt-load" disabled={isLoading} onClick={requestLoad} type="button">
           {isLoading ? 'Loading interactive excerpt…' : details.loadLabel}
         </button>
-        <a className="text-link excerpt-evidence-link" href={details.evidenceHref}>
-          {details.evidenceLabel}
+        <a className="text-link excerpt-results-link" href={details.resultsHref}>
+          {details.resultsLabel}
         </a>
       </div>
 

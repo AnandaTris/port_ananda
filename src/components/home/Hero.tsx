@@ -1,62 +1,42 @@
+import Image from 'next/image'
+import { ExternalLink } from '@/components/ui/ExternalLink'
 import { profile } from '@/content/profile'
 
-const proofTiles = [
-  {
-    label: 'Product evidence',
-    value: 'Live on the App Store',
-    detail: 'Fix Yo Yap — a shipped, auditable speaking-score product.',
-    tone: 'cyan',
-  },
-  {
-    label: 'Independent review',
-    value: 'Dell Top 5 finalist',
-    detail: 'CareKaki — selected with a community-care problem statement.',
-    tone: 'coral',
-  },
-  {
-    label: 'Engineering breadth',
-    value: '1,141 automated tests',
-    detail: 'System behavior checked before a confident release decision.',
-    tone: 'sunshine',
-  },
-] as const
-
+/**
+ * Name, where I am, how to reach me. The hero used to carry a thesis line, a
+ * supporting paragraph, two calls to action and three statistic tiles before the
+ * reader reached a single project; the projects are the argument, so they now
+ * start one screen earlier.
+ */
 export function Hero() {
-  const email = profile.links.find((link) => link.label === 'Email')
-
-  if (!email) {
-    return null
-  }
-
-  const collaborationHref = `${email.href}?subject=Building%20something%20together`
-
   return (
     <section aria-labelledby="hero-title" className="hero" id="hero">
       <div className="hero-inner">
+        <figure className="hero-portrait">
+          <Image
+            alt={`Portrait of ${profile.name}`}
+            height={540}
+            priority
+            sizes="(min-width: 64.0625rem) 13rem, 8rem"
+            src="/profile/ananda-portrait.jpg"
+            width={420}
+          />
+        </figure>
         <div className="hero-copy">
-          <p className="eyebrow">Evidence Fieldbook / 01</p>
-          <h1 id="hero-title">{profile.hero}</h1>
-          <p className="hero-supporting-line">{profile.supportingLine}</p>
-          <div className="hero-actions">
-            <a className="button button-primary" href={collaborationHref}>
-              Build something together
-            </a>
-            <a className="text-link" href="#work">
-              Explore the work <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-          <p className="hero-collaboration-line">{profile.collaborationLine}</p>
+          <h1 id="hero-title">{profile.name}</h1>
+          <p className="hero-tagline">{profile.location}</p>
+          <ul aria-label="Contact and profiles" className="hero-links">
+            {profile.links.map((link) => (
+              <li key={link.label}>
+                {link.href.startsWith('mailto:') ? (
+                  <a href={link.href}>{link.href.replace('mailto:', '')}</a>
+                ) : (
+                  <ExternalLink href={link.href}>{link.label}</ExternalLink>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <aside aria-label="Immediate proof" className="hero-proof">
-          {proofTiles.map((tile) => (
-            <article className={`proof-tile proof-tile-${tile.tone}`} key={tile.value}>
-              <p className="proof-label">{tile.label}</p>
-              <p className="proof-value">{tile.value}</p>
-              <p className="proof-detail">{tile.detail}</p>
-            </article>
-          ))}
-        </aside>
       </div>
     </section>
   )

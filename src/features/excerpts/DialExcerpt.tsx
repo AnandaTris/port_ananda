@@ -21,8 +21,8 @@ export function DialExcerpt() {
         provide a diagnosis.
       </p>
       <p className="excerpt-disclaimer">{dialDisclaimer}</p>
-      <a className="text-link excerpt-evidence-link" href={excerptDetails['das-dial'].evidenceHref}>
-        {excerptDetails['das-dial'].evidenceLabel}
+      <a className="text-link excerpt-results-link" href={excerptDetails['das-dial'].resultsHref}>
+        {excerptDetails['das-dial'].resultsLabel}
       </a>
 
       <div className="excerpt-form">

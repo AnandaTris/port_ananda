@@ -1,6 +1,6 @@
 import { projects } from '@/content/projects'
 import type { Project } from '@/content/types'
-import { filterProjects, getProject, validateProjects } from './projects'
+import { getProject, validateProjects } from './projects'
 
 const validProject = projects.find((project) => project.slug === 'carekaki')!
 
@@ -24,6 +24,7 @@ test('contains only the approved roster with unique slugs', () => {
     'rekap',
     'spike-responder',
     'math-me-home',
+    'cseshell',
     'onesearch',
     'aegis',
     'hydrun',
@@ -41,25 +42,6 @@ test('resolves verified Ingatik links', () => {
     live: 'https://ingatikrecall.com',
     appStore: 'https://apps.apple.com/us/app/ingatik-recall/id6788639514',
   })
-})
-
-test('ranks capability matches first without hiding the archive', () => {
-  const result = filterProjects(projects, { capability: 'responsible-ai', query: '' })
-  const firstNonMatch = result.findIndex(
-    (project) => !project.capabilities.includes('responsible-ai'),
-  )
-
-  expect(result).toHaveLength(17)
-  expect(firstNonMatch).toBeGreaterThan(0)
-  expect(result.slice(0, firstNonMatch).every((project) =>
-    project.capabilities.includes('responsible-ai'),
-  )).toBe(true)
-  expect(result.slice(firstNonMatch).every((project) =>
-    !project.capabilities.includes('responsible-ai'),
-  )).toBe(true)
-  expect(result.map((project) => project.slug)).toEqual(
-    expect.arrayContaining(['carekaki', 'das-dial', 'cited', 'ingatik-recall']),
-  )
 })
 
 test('rejects blank required project and nested strings', () => {

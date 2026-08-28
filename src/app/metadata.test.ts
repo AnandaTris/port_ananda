@@ -13,6 +13,7 @@ import OpenGraphImage, { contentType, size } from './opengraph-image'
 import robots from './robots'
 import sitemap from './sitemap'
 import { SITE_URL } from '@/lib/site'
+import { projects } from '@/content/projects'
 
 const expectedOrigin = 'https://anandatriharis.com'
 
@@ -30,6 +31,7 @@ const approvedSlugs = [
   'rekap',
   'spike-responder',
   'math-me-home',
+  'cseshell',
   'onesearch',
   'aegis',
   'hydrun',
@@ -44,7 +46,7 @@ test('publishes home and every approved project route', () => {
     `${expectedOrigin}/`,
     ...approvedSlugs.map((slug) => `${expectedOrigin}/work/${slug}`),
   ])
-  expect(urls).toHaveLength(18)
+  expect(urls).toHaveLength(19)
   expect(urls).not.toEqual(expect.arrayContaining([
     expect.stringMatching(/chord|docdeck|pufferty|meowtivation/i),
   ]))
@@ -64,8 +66,9 @@ test('publishes coherent canonical Open Graph and Twitter defaults', () => {
     type: 'website',
     url: '/',
     siteName: 'Ananda Triharis Maroso',
-    title: 'Ananda Triharis Maroso — AI Product Builder',
-    description: 'I build AI products people can understand, trust, and use.',
+    title: 'Ananda Triharis Maroso — Portfolio',
+    description:
+      'Ananda Triharis Maroso in Singapore. Shipped iOS apps, working web products, and research tooling.',
     images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
   })
   expect(metadata.twitter).toMatchObject({
@@ -88,7 +91,7 @@ function collectStyleValues(node: ReactNode): unknown[] {
   ]
 }
 
-test('passes the exact Evidence Fieldbook copy and palette to ImageResponse', () => {
+test('passes the exact share-card copy and palette to ImageResponse', () => {
   imageResponse.mockClear()
 
   OpenGraphImage()
@@ -99,8 +102,9 @@ test('passes the exact Evidence Fieldbook copy and palette to ImageResponse', ()
 
   expect(imageOptions).toEqual({ width: 1200, height: 630 })
   expect(screen.getByText('Ananda Triharis Maroso', { exact: true })).toBeInTheDocument()
-  expect(screen.getByText('I build AI products people can understand, trust, and use.', { exact: true })).toBeInTheDocument()
-  expect(screen.getByText('Product × AI × Growth', { exact: true })).toBeInTheDocument()
+  expect(screen.getByText(`${projects.length} projects`, { exact: true })).toBeInTheDocument()
+  expect(screen.getByText('Singapore', { exact: true })).toBeInTheDocument()
+  expect(screen.getByText('anandatriharis.com', { exact: true })).toBeInTheDocument()
   expect(collectStyleValues(image)).toEqual(expect.arrayContaining([
     '#FFF8ED',
     '#111318',

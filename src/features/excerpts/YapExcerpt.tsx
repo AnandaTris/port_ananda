@@ -2,34 +2,85 @@
 
 import { useState } from 'react'
 import { excerptDetails } from './excerpt-config'
-import { assignPersona, type SampleMetrics } from './yap'
+import { matchPersona, type SampleMetrics } from './yap'
 
+/**
+ * Presets are named for what was measured, never for the yapper they produce.
+ * The rule has to be the thing that picks the persona, or the excerpt is a
+ * lookup table wearing a rule's clothes.
+ */
 const personaPresets: readonly { label: string; metrics: SampleMetrics }[] = [
   {
-    label: 'Closer sample',
-    metrics: { pace: 152, fillers: 1, pauses: 2, energy: 0.82 },
+    label: 'Fast, almost no gaps',
+    metrics: {
+      wordsPerMinute: 188,
+      finishedSentences: 0.95,
+      wordVariety: 0.71,
+      pitchSwing: 2.1,
+      longestPause: 0.9,
+      stumbles: 0,
+    },
   },
   {
-    label: 'Restarter sample',
-    metrics: { pace: 98, fillers: 8, pauses: 9, energy: 0.38 },
+    label: 'Slow, long silences',
+    metrics: {
+      wordsPerMinute: 112,
+      finishedSentences: 0.92,
+      wordVariety: 0.72,
+      pitchSwing: 1.8,
+      longestPause: 3.4,
+      stumbles: 0,
+    },
   },
   {
-    label: 'Builder sample',
-    metrics: { pace: 126, fillers: 3, pauses: 4, energy: 0.58 },
+    label: 'Wide vocabulary, unfinished thoughts',
+    metrics: {
+      wordsPerMinute: 148,
+      finishedSentences: 0.72,
+      wordVariety: 0.82,
+      pitchSwing: 2.3,
+      longestPause: 1.4,
+      stumbles: 0,
+    },
+  },
+  {
+    label: 'Restarted sentences',
+    metrics: {
+      wordsPerMinute: 141,
+      finishedSentences: 0.64,
+      wordVariety: 0.74,
+      pitchSwing: 2.4,
+      longestPause: 1.6,
+      stumbles: 2,
+    },
+  },
+  {
+    label: 'Nothing stands out',
+    metrics: {
+      wordsPerMinute: 138,
+      finishedSentences: 1,
+      wordVariety: 0.75,
+      pitchSwing: 3,
+      longestPause: 1.5,
+      stumbles: 0,
+    },
   },
 ]
 
 export function YapExcerpt() {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const selectedPreset = personaPresets[selectedIndex]
-  const persona = assignPersona(selectedPreset.metrics)
+  const match = matchPersona(selectedPreset.metrics)
 
   return (
     <section aria-labelledby="yap-excerpt-title" className="interactive-excerpt">
       <header className="interactive-excerpt-heading">
         <p className="eyebrow">Interactive excerpt</p>
         <h2 id="yap-excerpt-title">Fix Yo Yap persona card</h2>
-        <p>Switch between fixed metric presets to see the resulting demonstration persona.</p>
+        <p>
+          Switch between fixed metric presets to see which of the five yappers the labelling rule
+          names, and the measurements it names them on.
+        </p>
       </header>
 
       <p className="excerpt-disclosure">
@@ -38,8 +89,8 @@ export function YapExcerpt() {
       <p className="excerpt-disclosure">
         No microphone input, recording, or production scoring is used in this excerpt.
       </p>
-      <a className="text-link excerpt-evidence-link" href={excerptDetails['fix-yo-yap'].evidenceHref}>
-        {excerptDetails['fix-yo-yap'].evidenceLabel}
+      <a className="text-link excerpt-results-link" href={excerptDetails['fix-yo-yap'].resultsHref}>
+        {excerptDetails['fix-yo-yap'].resultsLabel}
       </a>
 
       <div className="excerpt-form">
@@ -66,24 +117,39 @@ export function YapExcerpt() {
         </fieldset>
 
         <div aria-live="polite" className="excerpt-result excerpt-persona" role="status">
-          <p className="excerpt-result-label">Demonstration persona</p>
-          <strong>{persona}</strong>
+          <p className="excerpt-result-label">
+            {match.confident ? 'This round is' : 'Nothing crossed the line, so it landed closest to'}
+          </p>
+          <strong>{match.persona}</strong>
+          <ul className="excerpt-receipts">
+            {match.because.map((receipt) => (
+              <li key={receipt}>{receipt}</li>
+            ))}
+          </ul>
           <dl>
             <div>
-              <dt>Pace</dt>
-              <dd>{selectedPreset.metrics.pace} wpm</dd>
+              <dt>Talking speed</dt>
+              <dd>{selectedPreset.metrics.wordsPerMinute} wpm</dd>
             </div>
             <div>
-              <dt>Fillers</dt>
-              <dd>{selectedPreset.metrics.fillers}</dd>
+              <dt>Finished sentences</dt>
+              <dd>{Math.round(selectedPreset.metrics.finishedSentences * 100)}%</dd>
             </div>
             <div>
-              <dt>Pauses</dt>
-              <dd>{selectedPreset.metrics.pauses}</dd>
+              <dt>Word variety</dt>
+              <dd>{Math.round(selectedPreset.metrics.wordVariety * 100)}%</dd>
             </div>
             <div>
-              <dt>Energy</dt>
-              <dd>{Math.round(selectedPreset.metrics.energy * 100)}%</dd>
+              <dt>Voice movement</dt>
+              <dd>{selectedPreset.metrics.pitchSwing.toFixed(1)} semitones</dd>
+            </div>
+            <div>
+              <dt>Dead air</dt>
+              <dd>{selectedPreset.metrics.longestPause.toFixed(1)}s</dd>
+            </div>
+            <div>
+              <dt>Stumbles</dt>
+              <dd>{selectedPreset.metrics.stumbles}</dd>
             </div>
           </dl>
         </div>

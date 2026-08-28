@@ -2,7 +2,20 @@ import '@testing-library/jest-dom/vitest'
 import { vi } from 'vitest'
 
 vi.mock('next/font/google', () => ({
-  IBM_Plex_Mono: () => ({ variable: '--font-ibm-plex-mono' }),
-  Instrument_Sans: () => ({ variable: '--font-instrument-sans' }),
-  Space_Grotesk: () => ({ variable: '--font-space-grotesk' }),
+  Instrument_Serif: () => ({ variable: '--font-display' }),
+  Archivo: () => ({ variable: '--font-body' }),
 }))
+
+class IntersectionObserverStub implements IntersectionObserver {
+  readonly root = null
+  readonly rootMargin = ''
+  readonly thresholds: readonly number[] = []
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return []
+  }
+}
+
+vi.stubGlobal('IntersectionObserver', IntersectionObserverStub)

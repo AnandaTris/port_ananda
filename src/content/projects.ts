@@ -7,6 +7,7 @@ export const projects: readonly Project[] = [
     slug: 'fix-yo-yap',
     name: 'Fix Yo Yap',
     oneLine: 'An impromptu speaking game that turns an auditable score into a memorable persona.',
+    logo: { kind: 'icon', src: '/projects/fix-yo-yap/logo.png', alt: 'Fix Yo Yap app icon' },
     status: 'live',
     featured: true,
     accent: 'coral',
@@ -17,7 +18,7 @@ export const projects: readonly Project[] = [
       'Designed the deterministic scoring contract and persona system.',
       'Sole-authored the repository history across all refs.',
     ],
-    contributionBoundary: 'Solo product: 484 of 484 commits across all refs are attributed to Ananda.',
+    contributionBoundary: 'Solo product: every commit across all refs is attributed to Ananda.',
     problem: 'Speaking feedback is easy to ignore when it arrives as an opaque number with no memorable meaning.',
     hardDecision: 'The persona may be read from an existing score, but is structurally unable to change that score.',
     system: [
@@ -32,7 +33,7 @@ export const projects: readonly Project[] = [
     ],
     outcomes: [
       { label: 'Release', value: 'Live on the App Store', source: 'live' },
-      { label: 'Authorship', value: '484 of 484 commits across all refs', source: 'git' },
+      { label: 'Authorship', value: 'Sole author across every ref', source: 'git' },
       { label: 'Verification', value: 'Five automated test layers documented green', source: 'test' },
     ],
     limitations: [
@@ -45,22 +46,10 @@ export const projects: readonly Project[] = [
     },
     media: [
       {
-        src: '/projects/fix-yo-yap/meet-your-yapper.png',
-        alt: 'Fix Yo Yap App Store screenshot introducing the Yapper persona',
-        width: 1284,
-        height: 2778,
-      },
-      {
-        src: '/projects/fix-yo-yap/proof-not-vibes.png',
-        alt: 'Fix Yo Yap App Store screenshot showing proof behind the score',
-        width: 1284,
-        height: 2778,
-      },
-      {
-        src: '/projects/fix-yo-yap/progress.png',
-        alt: 'Fix Yo Yap App Store screenshot showing speaking progress',
-        width: 1284,
-        height: 2778,
+        src: '/projects/fix-yo-yap/app-store-listing.png',
+        alt: 'Fix Yo Yap App Store listing showing the published app page',
+        width: 1179,
+        height: 2226,
       },
     ],
     lastVerified,
@@ -69,6 +58,7 @@ export const projects: readonly Project[] = [
     slug: 'carekaki',
     name: 'CareKaki',
     oneLine: 'A trilingual care navigator that keeps high-consequence actions behind deterministic safeguards and human gates.',
+    logo: { kind: 'icon', src: '/projects/carekaki/logo.svg', alt: 'CareKaki app icon' },
     status: 'working-demo',
     featured: true,
     accent: 'jade',
@@ -102,14 +92,22 @@ export const projects: readonly Project[] = [
       'The verified experience is a local and offline-safe demo; without model credentials it degrades to synthetic data.',
     ],
     stack: ['Next.js', 'React', 'FastAPI', 'Python', 'OpenAI', 'Docker', 'GitHub Actions', 'pytest'],
-    links: { source: 'https://github.com/stormragemc/CareKaki-repo' },
-    media: [],
+    links: { live: 'https://aimao.vercel.app', source: 'https://github.com/stormragemc/CareKaki-repo' },
+    media: [
+      {
+        src: '/projects/carekaki/live-home.png',
+        alt: 'CareKaki live homepage with the AiMao care companion greeting visitors in three languages',
+        width: 1440,
+        height: 900,
+      },
+    ],
     lastVerified,
   },
   {
     slug: 'das-dial',
     name: 'DAS D.I.A.L.',
     oneLine: 'A dyslexia screening and error-pattern system with transparent verdict rules, abstention, and local NLP.',
+    logo: { kind: 'mark', name: 'reading-slip' },
     status: 'source-backed',
     featured: true,
     accent: 'cyan',
@@ -151,6 +149,7 @@ export const projects: readonly Project[] = [
     slug: 'false-positive',
     name: 'FALSE POSITIVE',
     oneLine: 'A psychological mystery prototype where a voice-driven detective reads meaning and vocal affect without claiming lie detection.',
+    logo: { kind: 'mark', name: 'waveform' },
     status: 'source-backed',
     featured: true,
     accent: 'violet',
@@ -172,7 +171,8 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source evidence', value: 'Public team repository with a documented hosted backend', source: 'git' },
+      { label: 'Recognition', value: 'Garena shortlisted team; did not win', source: 'award' },
+      { label: 'Source', value: 'Public team repository with a documented hosted backend', source: 'git' },
       { label: 'Offline verification', value: '105-test sidecar suite documented passing', source: 'test' },
     ],
     limitations: [
@@ -200,6 +200,7 @@ export const projects: readonly Project[] = [
     slug: 'cited',
     name: 'Cited',
     oneLine: 'An AI-search visibility product that publishes its score formula and labels modelled data as modelled.',
+    logo: { kind: 'mark', name: 'bracketed-score' },
     status: 'working-demo',
     featured: true,
     accent: 'sunshine',
@@ -238,6 +239,7 @@ export const projects: readonly Project[] = [
     slug: 'brawnix',
     name: 'Brawnix',
     oneLine: 'A live hybrid-athlete coach with deterministic workout parsing and explicit training-interference rules.',
+    logo: { kind: 'icon', src: '/projects/brawnix/logo.png', alt: 'Brawnix app icon' },
     status: 'live',
     featured: false,
     accent: 'coral',
@@ -288,6 +290,7 @@ export const projects: readonly Project[] = [
     slug: 'ingatik-recall',
     name: 'Ingatik: Recall',
     oneLine: 'A live Pomodoro study product shaped through subscriptions, localization, analytics, and creator-led funnel diagnosis.',
+    logo: { kind: 'icon', src: '/projects/ingatik/logo.png', alt: 'Ingatik: Recall app icon' },
     status: 'live',
     featured: false,
     accent: 'cyan',
@@ -314,7 +317,7 @@ export const projects: readonly Project[] = [
     ],
     outcomes: [
       { label: 'Release', value: 'Live on the App Store', source: 'live' },
-      { label: 'Campaign evidence', value: '195.5K views and about 60 registrations over seven days', source: 'documented' },
+      { label: 'Campaign results', value: '195.5K views and about 60 registrations over seven days', source: 'documented' },
     ],
     limitations: [
       'Creators reported English-only content and missing tablet fullscreen support as blockers, but neither cause has been shipped and re-measured as an experiment.',
@@ -338,6 +341,7 @@ export const projects: readonly Project[] = [
     slug: 'fames',
     name: 'Fames.com',
     oneLine: 'An indie-game discovery platform whose current AI Mentor slice critiques store presence with explicit grounding and cost boundaries.',
+    logo: { kind: 'mark', name: 'joystick' },
     status: 'source-backed',
     featured: false,
     accent: 'violet',
@@ -363,7 +367,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source evidence', value: 'Public source with the AI Mentor slice and shared architecture', source: 'git' },
+      { label: 'Source', value: 'Public source with the AI Mentor slice and shared architecture', source: 'git' },
       { label: 'Offline path', value: 'Produces a complete contract-valid report without a model key', source: 'test' },
     ],
     limitations: [
@@ -378,6 +382,7 @@ export const projects: readonly Project[] = [
     slug: 'hypecast',
     name: 'HypeCast',
     oneLine: 'A local gameplay-casting prototype that grounds commentary in visible match events before generating voice.',
+    logo: { kind: 'mark', name: 'broadcast' },
     status: 'prototype',
     featured: false,
     accent: 'sunshine',
@@ -415,6 +420,7 @@ export const projects: readonly Project[] = [
     slug: 'steady',
     name: 'Steady',
     oneLine: 'A source-backed Singapore money calculator and 30-year decision simulator with versioned, cited rules.',
+    logo: { kind: 'icon', src: '/projects/steady/logo.svg', alt: 'Steady app icon' },
     status: 'source-backed',
     featured: false,
     accent: 'jade',
@@ -437,7 +443,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source evidence', value: 'Public repository with CI quality gates', source: 'git' },
+      { label: 'Source', value: 'Public repository with CI quality gates', source: 'git' },
     ],
     limitations: [
       'Steady is an educational calculator, not personalized financial advice, and some graduated CPF rules are intentionally unavailable.',
@@ -458,6 +464,7 @@ export const projects: readonly Project[] = [
     slug: 'rekap',
     name: 'Rekap',
     oneLine: 'An offline Android prototype that turns daily screen time into an animated, shareable reveal.',
+    logo: { kind: 'icon', src: '/projects/rekap/logo.png', alt: 'Rekap app icon' },
     status: 'prototype',
     featured: false,
     accent: 'coral',
@@ -480,7 +487,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Prototype evidence', value: 'Android prototype plus browser design harness', source: 'documented' },
+      { label: 'Prototype', value: 'Android prototype plus browser design harness', source: 'documented' },
     ],
     limitations: [
       'A physical Android device and a custom development build are required to verify the real mechanic; an emulator has no meaningful history.',
@@ -501,6 +508,7 @@ export const projects: readonly Project[] = [
     slug: 'spike-responder',
     name: 'Spike Responder',
     oneLine: 'A local resilience tool that notices real traffic spikes and checks whether users can still finish a critical journey.',
+    logo: { kind: 'mark', name: 'spike' },
     status: 'prototype',
     featured: false,
     accent: 'cyan',
@@ -537,6 +545,7 @@ export const projects: readonly Project[] = [
     slug: 'math-me-home',
     name: 'Math Me Home',
     oneLine: 'A two-player math quiz implemented as a finite-state machine on an FPGA board.',
+    logo: { kind: 'mark', name: 'chip-plus' },
     status: 'source-backed',
     featured: false,
     accent: 'sunshine',
@@ -560,7 +569,7 @@ export const projects: readonly Project[] = [
     ],
     outcomes: [
       { label: 'Recognition', value: '2nd Place, Outstanding Project among approximately 30 teams', source: 'award' },
-      { label: 'Evidence', value: 'Source and architecture diagrams retained', source: 'documented' },
+      { label: 'Source', value: 'Source and architecture diagrams retained', source: 'documented' },
     ],
     limitations: ['The source-backed game requires the Alchitry Au FPGA hardware for execution.'],
     stack: ['Lucid HDL', 'Alchitry Au', 'Vivado', 'FPGA'],
@@ -582,9 +591,64 @@ export const projects: readonly Project[] = [
     lastVerified,
   },
   {
+    slug: 'cseshell',
+    name: 'CSEShell',
+    oneLine: 'A Unix shell written in C, with its own command loop, startup file, and line editor.',
+    logo: { kind: 'mark', name: 'prompt' },
+    status: 'source-backed',
+    featured: false,
+    accent: 'jade',
+    capabilities: ['prototype', 'harden'],
+    role: 'Shell core owner in a three-person team',
+    teamSize: 3,
+    ownership: [
+      'Built the read-evaluate-print loop, argument parsing, and the fork, exec, and wait path every external command travels.',
+      'Implemented the startup configuration file, PATH resolution, command history, runtime English and Russian message switching, and the interactive prompt and line editor.',
+    ],
+    contributionBoundary:
+      'The shell core and its startup, history, and input handling are mine; the bundled system programs were shared work across the team.',
+    problem:
+      'A shell has to keep accepting commands after every kind of bad input — a blank line, an unknown program, a directory change — without leaking memory or dying.',
+    hardDecision:
+      'The shell records its launch directory at startup and resolves bundled program paths against it, so its own commands keep working after the user changes directory.',
+    system: [
+      {
+        title: 'Command loop',
+        detail:
+          'Builtins dispatch in process; anything else is a fork, an execvp, and a blocking waitpid, with the parsed arguments freed on every iteration.',
+      },
+      {
+        title: 'Startup and session state',
+        detail:
+          'A startup file sets PATH and runs commands before the first prompt, while history and the message language live in shell state that a builtin can change without recompiling.',
+      },
+    ],
+    outcomes: [
+      {
+        label: 'Tests',
+        value: 'Unit tests over the parser and permission helpers, plus six integration scripts driving the built shell',
+        source: 'test',
+      },
+      {
+        label: 'Source',
+        value: 'Private coursework repository with build, command, and test documentation',
+        source: 'documented',
+      },
+    ],
+    limitations: [
+      'The repository is a private university submission, so no public source link is published.',
+      'One bundled program reads /proc and needs Linux; the shell itself runs on any POSIX system.',
+    ],
+    stack: ['C', 'GNU Make', 'Bash', 'POSIX'],
+    links: {},
+    media: [],
+    lastVerified,
+  },
+  {
     slug: 'onesearch',
     name: 'OneSearch',
     oneLine: 'A source-backed search engine that fans out across providers and returns one ranked answer.',
+    logo: { kind: 'mark', name: 'fan-in' },
     status: 'source-backed',
     featured: false,
     accent: 'violet',
@@ -617,6 +681,7 @@ export const projects: readonly Project[] = [
     slug: 'aegis',
     name: 'Aegis Risk Assessment Console',
     oneLine: 'A source-backed full-stack console for project risk tables and organization-wide risk oversight.',
+    logo: { kind: 'mark', name: 'shield' },
     status: 'source-backed',
     featured: false,
     accent: 'jade',
@@ -639,7 +704,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source evidence', value: 'Public assessment repository with screenshots and diagrams', source: 'git' },
+      { label: 'Source', value: 'Public assessment repository with screenshots and diagrams', source: 'git' },
       { label: 'Offline checks', value: 'Core backend tests run without database credentials', source: 'test' },
     ],
     limitations: ['A configured Supabase database is required for the full application; no verified public deployment is linked.'],
@@ -659,6 +724,7 @@ export const projects: readonly Project[] = [
     slug: 'hydrun',
     name: 'Hydrun',
     oneLine: 'A team-built geolocation app for finding and contributing public water-fountain locations.',
+    logo: { kind: 'mark', name: 'droplet' },
     status: 'source-backed',
     featured: false,
     accent: 'cyan',
@@ -680,7 +746,7 @@ export const projects: readonly Project[] = [
     ],
     outcomes: [
       { label: 'Recognition', value: '3rd Place at SUTD What The Hack among 50 teams', source: 'award' },
-      { label: 'Source evidence', value: 'Public team repository', source: 'git' },
+      { label: 'Source', value: 'Public team repository', source: 'git' },
     ],
     limitations: ['The former deployment has not been re-verified, so the archive publishes source only.'],
     stack: ['React', 'Flask', 'Python', 'Leaflet', 'OpenStreetMap'],
@@ -692,6 +758,7 @@ export const projects: readonly Project[] = [
     slug: 'personal-workout-tracker',
     name: 'Personal Workout Tracker',
     oneLine: 'A source-backed offline PWA for remembering sessions and tracking progressive overload.',
+    logo: { kind: 'icon', src: '/projects/personal-workout-tracker/logo.png', alt: 'Personal Workout Tracker app icon' },
     status: 'source-backed',
     featured: false,
     accent: 'coral',
@@ -714,7 +781,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source evidence', value: 'Public source-backed PWA with a simple local run path', source: 'git' },
+      { label: 'Source', value: 'Public source-backed PWA with a simple local run path', source: 'git' },
     ],
     limitations: ['Data is local to one browser profile and is not synchronized across devices.'],
     stack: ['React', 'Vite', 'JavaScript', 'PWA', 'Workbox', 'localStorage'],

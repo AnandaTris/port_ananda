@@ -32,35 +32,35 @@ const approvedExcerpts = [
     slug: 'carekaki',
     heading: 'CareKaki Guardian',
     loadLabel: 'Load CareKaki Guardian interactive excerpt',
-    evidenceLabel: 'See full CareKaki evidence and proof',
-    evidenceHref: '#carekaki-proof-full',
+    resultsLabel: 'See CareKaki results',
+    resultsHref: '#carekaki-results',
   },
   {
     slug: 'das-dial',
     heading: 'DAS D.I.A.L.',
     loadLabel: 'Load DAS D.I.A.L. interactive excerpt',
-    evidenceLabel: 'See full DAS D.I.A.L. evidence and proof',
-    evidenceHref: '#das-dial-proof-full',
+    resultsLabel: 'See DAS D.I.A.L. results',
+    resultsHref: '#das-dial-results',
   },
   {
     slug: 'cited',
     heading: 'Cited visibility score',
     loadLabel: 'Load Cited visibility score interactive excerpt',
-    evidenceLabel: 'See full Cited evidence and proof',
-    evidenceHref: '#cited-proof-full',
+    resultsLabel: 'See Cited results',
+    resultsHref: '#cited-results',
   },
   {
     slug: 'fix-yo-yap',
     heading: 'Fix Yo Yap persona card',
     loadLabel: 'Load Fix Yo Yap persona card interactive excerpt',
-    evidenceLabel: 'See full Fix Yo Yap evidence and proof',
-    evidenceHref: '#fix-yo-yap-proof-full',
+    resultsLabel: 'See Fix Yo Yap results',
+    resultsHref: '#fix-yo-yap-results',
   },
 ] as const
 
 test.each(approvedExcerpts)(
-  'defers $slug until requested, then maps it to the approved excerpt and its proof link',
-  async ({ slug, heading, loadLabel, evidenceLabel, evidenceHref }) => {
+  'defers $slug until requested, then maps it to the approved excerpt and its results link',
+  async ({ slug, heading, loadLabel, resultsLabel, resultsHref }) => {
   const { unmount } = render(<ExcerptRegistry slug={slug} />)
 
   expect(screen.getByText('Interactive excerpt')).toBeInTheDocument()
@@ -68,7 +68,7 @@ test.each(approvedExcerpts)(
   fireEvent.click(screen.getByRole('button', { name: loadLabel }))
 
   expect(await screen.findByRole('heading', { name: heading })).toBeInTheDocument()
-  expect(screen.getByRole('link', { name: evidenceLabel })).toHaveAttribute('href', evidenceHref)
+  expect(screen.getByRole('link', { name: resultsLabel })).toHaveAttribute('href', resultsHref)
 
   unmount()
   },
@@ -151,10 +151,14 @@ test('discloses fixed Fix Yo Yap rules and resets the persona preset', async () 
       'These are fixed demonstration rules and not Fix Yo Yap’s production scoring service.',
     ),
   ).toBeInTheDocument()
-  fireEvent.click(screen.getByRole('radio', { name: /restarter sample/i }))
+  fireEvent.click(screen.getByRole('radio', { name: /restarted sentences/i }))
   expect(screen.getByRole('status')).toHaveTextContent('The Restarter')
+  expect(screen.getByRole('status')).toHaveTextContent('64% of sentences finished')
+
+  fireEvent.click(screen.getByRole('radio', { name: /nothing stands out/i }))
+  expect(screen.getByRole('status')).toHaveTextContent('landed closest to')
 
   fireEvent.click(screen.getByRole('button', { name: 'Reset' }))
-  expect(screen.getByRole('radio', { name: /closer sample/i })).toBeChecked()
-  expect(screen.getByRole('status')).toHaveTextContent('The Closer')
+  expect(screen.getByRole('radio', { name: /fast, almost no gaps/i })).toBeChecked()
+  expect(screen.getByRole('status')).toHaveTextContent('The Fast Talker')
 })

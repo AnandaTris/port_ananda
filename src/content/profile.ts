@@ -2,18 +2,15 @@ import type { Profile } from './types'
 
 export const profile: Profile = {
   name: 'Ananda Triharis Maroso',
-  hero: 'I build AI products people can understand, trust, and use.',
-  supportingLine:
-    'From deterministic safeguards and evaluation harnesses to subscriptions, launch campaigns, and kill-or-scale decisions, I turn ambitious ideas into accountable products.',
-  collaborationLine:
-    'Bring an ambitious problem. I can help turn it into a working system, a validated product, and a team ready to carry it forward.',
-  principles: [
-    'LLMs for understanding, rules for action',
-    'Evidence before claims',
-    'Fail visibly instead of faking success',
-    'Product economics are part of engineering',
-    'Every irreversible action deserves a human gate',
-  ],
+  // The page used to open on a pitch — a thesis line, a supporting line, and a
+  // collaboration line, all before the reader saw a single project. Then it
+  // opened on a job title. What is left is the one fact a stranger needs and
+  // cannot infer: where I am. The projects say the rest.
+  location: 'Singapore',
+  // Not shown on the page. This is the meta description and the Open Graph
+  // subtitle, where a plain sentence is the only thing that renders usefully.
+  summary:
+    'Ananda Triharis Maroso in Singapore. Shipped iOS apps, working web products, and research tooling.',
   links: [
     { label: 'Email', href: 'mailto:adotriharis@gmail.com' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ananda-trimar/' },
@@ -78,14 +75,26 @@ export const profile: Profile = {
       date: 'Jun 2026',
     },
     {
+      name: 'Math Me Home FPGA Game — 2nd Place, Outstanding Project',
+      detail: 'Placed second among approximately 30 teams.',
+      date: 'Apr 2026',
+    },
+    {
+      name: 'Meowtivation Task Manager — 3rd Place, Outstanding Project',
+      detail:
+        'Placed third for an Android task manager built with Firebase authentication and real-time Firestore sync.',
+      date: 'Apr 2026',
+    },
+    {
       name: 'SUTD What The Hack Hackathon — 3rd Place',
       detail: 'Placed third among 50 teams, approximately 250 participants.',
       date: 'Sep 2025',
     },
     {
-      name: 'Math Me Home FPGA Game — 2nd Place, Outstanding Project',
-      detail: 'Placed second among approximately 30 teams.',
-      date: 'Apr 2026',
+      name: 'Baby Shark Fund Award — Pufferty Fish Robot',
+      detail:
+        'First of two Baby Shark Fund grants: S$6,000 for an autonomous underwater rescue robot.',
+      date: 'May 2025',
     },
     {
       name: 'UROP Grant — Fames.com',
@@ -93,7 +102,13 @@ export const profile: Profile = {
     },
     {
       name: 'Baby Shark Fund Award — Fames.com',
-      detail: 'Received a S$2,000 grant; the award date is not yet recorded.',
+      detail:
+        'Second of two Baby Shark Fund grants: S$2,000; the award date is not yet recorded.',
+    },
+    {
+      name: 'Garena Competition — Shortlisted Team, FALSE POSITIVE',
+      detail:
+        'The team reached the shortlist and did not win; the competition edition and date are not yet recorded.',
     },
   ],
   leadership: [

@@ -1,16 +1,24 @@
 @import 'tailwindcss';
 
 :root {
-  --paper: #fff8ed;
-  --white: #ffffff;
-  --ink: #111318;
-  --muted-ink: #5e626b;
-  --volt: #dfff00;
-  --coral: #ff5d3a;
-  --cyan: #28c9ff;
-  --sunshine: #ffc93d;
-  --jade: #00a77e;
-  --violet: #7057ff;
+  /* "Peranakan tiles" palette — token names are legacy, values are the glaze set. */
+  --paper: #e9f0e4;
+  --white: #fdfcf7;
+  --ink: #1f3231;
+  --muted-ink: #516560;
+  --volt: #f7c948;
+  --coral: #e05d7a;
+  --cyan: #3a5fc4;
+  --sunshine: #f2a93b;
+  --jade: #2e9e77;
+  --violet: #8b5fbf;
+  /* Labels used to be IBM Plex Mono. They are now the body grotesque set
+     uppercase and tracked, so they read as small caps rather than as code. */
+  --font-label: var(--font-body);
+  --radius-card: 1.4rem;
+  --radius-field: 0.85rem;
+  --shadow-soft: 0 1px 2px rgb(31 50 49 / 5%), 0 10px 26px -12px rgb(31 50 49 / 16%);
+  --shadow-lift: 0 2px 4px rgb(31 50 49 / 7%), 0 22px 44px -16px rgb(31 50 49 / 24%);
 }
 
 html {
@@ -27,7 +35,7 @@ body {
   min-height: 100vh;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-instrument-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
 }
 
 a {
@@ -49,12 +57,12 @@ a {
   top: 0.75rem;
   left: 0.75rem;
   z-index: 100;
-  transform: translateY(-180%);
-  padding: 0.75rem 1rem;
+  transform: translateY(-320%);
+  padding: 0.75rem 1.1rem;
   background: var(--volt);
-  border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  border-radius: 999px;
+  box-shadow: var(--shadow-lift);
+  font-family: var(--font-label), sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   text-decoration: none;
@@ -69,8 +77,8 @@ a {
   position: sticky;
   top: 0;
   z-index: 50;
-  border-bottom: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
-  background: rgb(255 248 237 / 94%);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  background: rgb(233 240 228 / 90%);
   backdrop-filter: blur(12px);
 }
 
@@ -95,7 +103,7 @@ a {
   flex-wrap: wrap;
   gap: 0.38rem;
   max-width: 16.5rem;
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.67rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -104,7 +112,7 @@ a {
 }
 
 .site-mark span:first-child {
-  color: var(--coral);
+  color: var(--cyan);
 }
 
 .header-nav {
@@ -114,9 +122,8 @@ a {
 }
 
 .header-nav a,
-.footer-links a,
 .text-link {
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.73rem;
   font-weight: 600;
   letter-spacing: 0.045em;
@@ -127,34 +134,46 @@ a {
 
 .site-mark,
 .header-nav a,
-.hero-actions .text-link,
-.archive-link,
-.proof-links .text-link,
-.professional-product-public-links a,
+.hero-links a,
+.project-card-link,
+.result-links .text-link,
 .collaboration-links a {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
 }
 
+/* The cards already ease under the cursor; these links used to flip colour on
+   the same frame as the pointer arrived. Against eased neighbours an instant
+   swap reads as a rendering glitch rather than a response, so every hover on
+   the page now moves at a speed a hand could have chosen. */
+.site-mark,
+.header-nav a,
+.hero-links a,
+.text-link,
+.project-card-link,
+.collaboration-links a {
+  transition: color 140ms ease;
+}
+
 .site-mark:hover,
 .header-nav a:hover,
-.footer-links a:hover,
+.hero-links a:hover,
 .text-link:hover,
-.archive-link:hover,
-.professional-product-public-links a:hover {
+.project-card-link:hover {
   color: var(--coral);
 }
 
 .menu-toggle {
   display: none;
   min-height: 2.75rem;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid var(--ink);
-  border-radius: 0;
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
   background: var(--white);
+  box-shadow: var(--shadow-soft);
   color: var(--ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -167,18 +186,20 @@ a {
   padding: clamp(4.25rem, 9vw, 8.75rem) 0 clamp(4.5rem, 8vw, 7rem);
 }
 
+/* Portrait first, then the name. The old hero balanced a headline against a
+   column of statistic tiles; there is no second column any more, so the picture
+   sits beside the type at its own width instead of stretching to fill a track. */
 .hero-inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.13fr) minmax(19rem, 0.87fr);
-  align-items: end;
-  gap: clamp(2.5rem, 7vw, 7rem);
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.75rem, 5vw, 3.5rem);
 }
 
-.eyebrow,
-.proof-label {
+.eyebrow {
   margin: 0;
   color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -186,31 +207,70 @@ a {
   text-transform: uppercase;
 }
 
+.hero-portrait {
+  width: clamp(8rem, 22vw, 13rem);
+  margin: 0;
+  overflow: clip;
+  border: 5px solid var(--white);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  /* The one piece of hand on an otherwise square page — the same tilt the
+     status tiles used to carry, moved to the only photograph on the site. */
+  transform: rotate(-1.6deg);
+  transition: transform 220ms ease;
+}
+
+.hero-portrait:hover {
+  transform: rotate(0deg);
+}
+
+.hero-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .hero h1 {
-  max-width: 9.8ch;
-  margin: 1rem 0 1.5rem;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(3.5rem, 7.2vw, 7.65rem);
-  font-weight: 700;
-  letter-spacing: -0.078em;
-  line-height: 0.89;
+  /* Instrument Serif runs narrower and optically lighter than the 800-weight
+     grotesque this replaced, so the measure widens and the type scales up to
+     hold the same presence. */
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.9rem, 6.5vw, 6.5rem);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 0.94;
   text-wrap: balance;
 }
 
-.hero-supporting-line {
+/* Role and city on one line. This is the whole pitch now: the projects below
+   are the argument, so the hero only has to say who is making it. */
+.hero-tagline {
   max-width: 37rem;
-  margin: 0;
+  margin: 1rem 0 0;
   color: var(--muted-ink);
-  font-size: clamp(1.1rem, 1.4vw, 1.28rem);
-  line-height: 1.48;
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  line-height: 1.4;
 }
 
-.hero-actions {
+.hero-links {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 1.15rem 1.6rem;
-  margin-top: 2rem;
+  gap: 0.25rem 1.5rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-links a {
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  text-decoration-thickness: 1px;
+  text-transform: uppercase;
+  text-underline-offset: 0.25em;
 }
 
 .button {
@@ -218,11 +278,13 @@ a {
   align-items: center;
   justify-content: center;
   min-height: 3.25rem;
-  padding: 0.8rem 1.15rem;
-  border: 2px solid var(--ink);
-  border-radius: 0;
-  box-shadow: 5px 5px 0 var(--ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  padding: 0.8rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  font-family: var(--font-label), sans-serif;
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -237,380 +299,112 @@ a {
 }
 
 .button:hover {
-  box-shadow: 2px 2px 0 var(--ink);
-  transform: translate(3px, 3px);
-}
-
-.hero-collaboration-line {
-  max-width: 37rem;
-  margin: 2.3rem 0 0;
-  padding-top: 1rem;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
-  font-size: 0.96rem;
-  line-height: 1.45;
-}
-
-.hero-proof {
-  position: relative;
-  display: grid;
-  gap: 0.8rem;
-  isolation: isolate;
-}
-
-.hero-proof::before {
-  position: absolute;
-  z-index: -1;
-  top: 48%;
-  left: -16%;
-  width: 132%;
-  height: 1px;
-  background: var(--ink);
-  content: '';
-  opacity: 0.45;
-  transform: rotate(-14deg);
-  transform-origin: center;
-}
-
-.proof-tile {
-  display: grid;
-  min-height: 9.25rem;
-  align-content: start;
-  gap: 0.65rem;
-  padding: 1.1rem 1.15rem 1.2rem;
-  border: 1.5px solid var(--ink);
-  background: var(--white);
-  box-shadow: 4px 4px 0 rgb(17 19 24 / 12%);
-}
-
-.proof-tile-cyan {
-  background: var(--cyan);
-}
-
-.proof-tile-coral {
-  background: var(--coral);
-}
-
-.proof-tile-sunshine {
-  background: var(--sunshine);
-}
-
-.proof-value,
-.proof-detail {
-  margin: 0;
-}
-
-.proof-value {
-  max-width: 17ch;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.4rem, 2.25vw, 2.05rem);
-  font-weight: 700;
-  letter-spacing: -0.055em;
-  line-height: 0.95;
-}
-
-.proof-detail {
-  max-width: 38ch;
-  font-size: 0.86rem;
-  line-height: 1.35;
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-2px) rotate(-0.5deg);
 }
 
 @media (min-width: 64.0625rem) {
   .hero {
-    padding: clamp(1.75rem, 4vh, 4.5rem) 0 clamp(1.75rem, 4vh, 4rem);
-  }
-
-  .hero h1 {
-    font-size: clamp(4rem, 5vw, 5.25rem);
-  }
-
-  .hero-actions,
-  .hero-collaboration-line {
-    margin-top: 1.5rem;
+    padding: clamp(2.5rem, 6vh, 5.5rem) 0 clamp(2.5rem, 6vh, 5rem);
   }
 }
 
-.portfolio-explorer {
-  border-top: 1px solid var(--ink);
-}
-
-.explorer-featured-journey {
-  padding: clamp(4.5rem, 8vw, 8rem) 0 clamp(5rem, 9vw, 9rem);
-}
-
-.explorer-capabilities,
-.explorer-lenses,
-.featured-fieldbook,
 .case-study,
 .not-found {
   width: min(100% - 2.5rem, 76rem);
   margin-inline: auto;
 }
 
-.explorer-capabilities {
-  display: grid;
-  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
-  align-items: end;
-  gap: 1.5rem clamp(2rem, 7vw, 7rem);
-}
-
-.explorer-capabilities > .eyebrow {
-  grid-column: 1 / -1;
-}
-
-.explorer-capabilities h2,
-.fieldbook-heading h2,
 .related-projects h2,
 .not-found h1 {
   margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(2.35rem, 5vw, 5rem);
-  letter-spacing: -0.06em;
-  line-height: 0.94;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
-.explorer-capabilities [role='group'] {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
-
-.explorer-capabilities button,
-.explorer-lenses button {
-  min-height: 2.85rem;
-  padding: 0.65rem 0.8rem;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  line-height: 1.25;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.explorer-capabilities button:hover,
-.explorer-capabilities button[aria-pressed='true'] {
-  background: var(--volt);
-  box-shadow: 3px 3px 0 var(--ink);
-  transform: translate(-1px, -1px);
-}
-
-.explorer-lenses {
-  display: grid;
-  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
-  align-items: center;
-  gap: 1.5rem clamp(2rem, 7vw, 7rem);
-  margin-top: 3rem;
-  padding-block: 1rem;
-  border-block: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
-}
-
-.explorer-lenses [role='group'] {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--ink);
-  background: var(--white);
-}
-
-.explorer-lenses button {
-  border: 0;
-  border-right: 1px solid var(--ink);
-  text-align: center;
-}
-
-.explorer-lenses button:last-child {
-  border-right: 0;
-}
-
-.explorer-lenses button[aria-pressed='true']:nth-child(1) {
-  background: var(--coral);
-}
-
-.explorer-lenses button[aria-pressed='true']:nth-child(2) {
-  background: var(--cyan);
-}
-
-.explorer-lenses button[aria-pressed='true']:nth-child(3) {
-  background: var(--sunshine);
-}
-
-.featured-fieldbook {
-  margin-top: clamp(4rem, 8vw, 7.5rem);
-}
-
-.fieldbook-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
-  align-items: end;
-  gap: 1rem clamp(2rem, 7vw, 7rem);
-  margin-bottom: 2.5rem;
-}
-
-.fieldbook-heading .eyebrow {
-  grid-column: 1 / -1;
-}
-
-.fieldbook-heading > p:last-child {
-  max-width: 34rem;
-  margin: 0;
-  color: var(--muted-ink);
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
-.fieldbook-list {
-  display: grid;
-  gap: clamp(2rem, 4vw, 4rem);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fieldbook-card {
+/* One accent per project, set from the content file and read by every surface
+   that shows the project: its card in the index, and its case-study header. */
+.project-card,
+.case-study-hero {
   --project-accent: var(--coral);
-  display: grid;
-  grid-template-areas:
-    'header visual'
-    'lens lens'
-    'footer footer';
-  grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.72fr);
-  min-width: 0;
-  overflow: clip;
-  border: 1.5px solid var(--ink);
-  background: var(--white);
-  box-shadow: 8px 8px 0 color-mix(in srgb, var(--project-accent) 72%, var(--ink));
 }
 
-.fieldbook-card[data-accent='cyan'],
+.project-card[data-accent='cyan'],
 .case-study-hero[data-accent='cyan'] {
   --project-accent: var(--cyan);
 }
 
-.fieldbook-card[data-accent='sunshine'],
+.project-card[data-accent='sunshine'],
 .case-study-hero[data-accent='sunshine'] {
   --project-accent: var(--sunshine);
 }
 
-.fieldbook-card[data-accent='jade'],
+.project-card[data-accent='jade'],
 .case-study-hero[data-accent='jade'] {
   --project-accent: var(--jade);
 }
 
-.fieldbook-card[data-accent='violet'],
+.project-card[data-accent='violet'],
 .case-study-hero[data-accent='violet'] {
   --project-accent: var(--violet);
 }
 
-.fieldbook-card-header {
-  grid-area: header;
-  min-width: 0;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
-  border-top: 0.7rem solid var(--project-accent);
-}
-
-.fieldbook-index,
-.fieldbook-role,
-.lens-kicker,
-.lens-label,
-.case-study-status,
-.case-study-capabilities,
-.fieldbook-card-footer > span,
-.case-study-visual figcaption,
-.related-projects li > p {
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.055em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.fieldbook-index {
-  margin: 0 0 1rem;
-  color: var(--muted-ink);
-}
-
-.fieldbook-card h3 {
-  max-width: 12ch;
-  margin: 1.5rem 0 0;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2.65rem, 5.5vw, 5.75rem);
-  letter-spacing: -0.075em;
-  line-height: 0.86;
-  overflow-wrap: anywhere;
-}
-
-.fieldbook-one-line {
-  max-width: 42rem;
-  margin: 1.35rem 0 0;
-  color: var(--muted-ink);
-  font-size: clamp(1rem, 1.35vw, 1.18rem);
-  line-height: 1.48;
-}
-
-.fieldbook-role {
+/* Both logo kinds are the same square so the grid keeps one optical rhythm
+   whether a project shipped a real icon or gets a lettermark. */
+.project-logo {
   display: grid;
-  gap: 0.25rem;
-  max-width: 44rem;
-  margin: 1.5rem 0 0;
-  padding-top: 0.8rem;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
-  text-transform: none;
+  width: var(--project-logo-size, 44px);
+  height: var(--project-logo-size, 44px);
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border-radius: calc(var(--project-logo-size, 44px) * 0.24);
 }
 
-.fieldbook-role span {
-  color: var(--muted-ink);
-  text-transform: uppercase;
+.project-logo-icon {
+  /* App icons carry their own background, so the tile only clips them and
+     draws a hairline to keep a dark icon from bleeding into a light card. */
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent);
 }
 
-.fieldbook-visual {
-  grid-area: visual;
-  min-width: 0;
-  min-height: 23rem;
-  margin: 0;
-  border-bottom: 1px solid var(--ink);
-  border-left: 1px solid var(--ink);
-  background: color-mix(in srgb, var(--project-accent) 28%, var(--paper));
-}
-
-.fieldbook-media {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-}
-
-.fieldbook-media img {
+.project-logo-icon img {
   width: 100%;
-  height: 25rem;
+  height: 100%;
   object-fit: cover;
-  object-position: top center;
 }
 
-.fieldbook-media figcaption {
-  padding: 0.65rem 0.8rem;
-  border-top: 1px solid var(--ink);
-  background: var(--white);
+.project-logo-mark {
+  background: color-mix(in srgb, var(--project-accent) 16%, var(--white));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--project-accent) 34%, transparent);
+  color: color-mix(in srgb, var(--project-accent) 78%, var(--ink));
 }
 
-.fieldbook-diagram {
-  display: grid;
-  align-content: center;
-  gap: 1.25rem;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
+.project-logo-mark svg {
+  width: 58%;
+  height: 58%;
+  fill: none;
+  stroke: currentColor;
+  /* Unitless, so it is 1.7 of the 24 viewBox units and scales with the tile.
+     A px value would have held one weight at 44px in the grid and looked thin
+     at the 56px a case study draws. */
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .project-media-fallback-heading {
   display: grid;
   gap: 0.45rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }
 
 .project-media-fallback-heading span {
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.055em;
@@ -618,13 +412,10 @@ a {
 }
 
 .project-media-fallback-heading strong {
-  font-family: var(--font-space-grotesk), sans-serif;
-  letter-spacing: -0.065em;
-  line-height: 0.9;
-}
-
-.fieldbook-diagram .project-media-fallback-heading strong {
-  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-family: var(--font-display), serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .project-media-fallback-system {
@@ -641,8 +432,9 @@ a {
   align-items: center;
   gap: 0.7rem;
   padding: 0.8rem;
-  border: 1px solid var(--ink);
+  border-radius: 1rem;
   background: var(--white);
+  box-shadow: var(--shadow-soft);
 }
 
 .project-media-fallback-system li > span {
@@ -650,88 +442,81 @@ a {
   width: 2rem;
   height: 2rem;
   place-items: center;
-  border: 1px solid var(--ink);
-  background: var(--cyan);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--cyan) 15%, var(--white));
+  color: var(--cyan);
+  font-family: var(--font-label), sans-serif;
   font-size: 0.62rem;
+  font-weight: 600;
 }
 
 .project-media-fallback-system li > strong {
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
   font-size: clamp(1rem, 1.65vw, 1.35rem);
   letter-spacing: -0.03em;
   line-height: 1.05;
 }
 
-.project-lens-panel {
-  --lens-accent: var(--coral);
+.project-detail-panel {
+  --detail-accent: var(--coral);
   min-width: 0;
   padding: clamp(1.35rem, 3vw, 2.75rem);
-  border-top: 1px solid var(--ink);
-  background: color-mix(in srgb, var(--lens-accent) 7%, var(--white));
+  background: color-mix(in srgb, var(--detail-accent) 8%, var(--white));
 }
 
-.fieldbook-card > .project-lens-panel {
-  grid-area: lens;
+.project-detail-panel[data-section='build'] {
+  --detail-accent: var(--cyan);
 }
 
-.project-lens-panel[data-lens='system'] {
-  --lens-accent: var(--cyan);
+.project-detail-panel[data-section='results'] {
+  --detail-accent: var(--sunshine);
 }
 
-.project-lens-panel[data-lens='proof'] {
-  --lens-accent: var(--sunshine);
-}
-
-.lens-panel-heading {
+.detail-panel-heading {
   display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 1rem;
+  align-items: start;
+  flex-direction: column;
+  gap: 0.7rem;
   margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 3px solid var(--lens-accent);
 }
 
-.lens-kicker,
-.lens-panel-heading h2,
-.lens-panel-heading h4 {
+.detail-kicker,
+.detail-panel-heading h2 {
   margin: 0;
 }
 
-.lens-kicker {
-  color: var(--muted-ink);
+.detail-kicker {
+  display: inline-flex;
+  align-self: start;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--detail-accent) 18%, var(--white));
+  transform: rotate(-1.5deg);
 }
 
-.lens-panel-heading h2,
-.lens-panel-heading h4 {
-  font-family: var(--font-space-grotesk), sans-serif;
-  letter-spacing: -0.045em;
-  line-height: 1;
+.detail-panel-heading h2 {
+  font-family: var(--font-display), serif;
+  font-size: clamp(1.85rem, 3.4vw, 3.1rem);
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  line-height: 1.05;
 }
 
-.lens-panel-heading h2 {
-  font-size: clamp(2rem, 4vw, 3.8rem);
-}
-
-.lens-panel-heading h4 {
-  font-size: clamp(1.45rem, 2.4vw, 2.2rem);
-}
-
-.lens-panel-frame,
-.lens-story-grid,
-.lens-system-grid,
-.lens-proof-grid {
+.detail-panel-frame,
+.detail-story-grid,
+.detail-system-grid,
+.detail-proof-grid {
   min-width: 0;
 }
 
-.lens-facts,
-.proof-facts {
+.detail-facts,
+.result-facts {
   margin: 0;
 }
 
-.lens-facts > div,
-.proof-facts > div {
+.detail-facts > div,
+.result-facts > div {
   display: grid;
   grid-template-columns: minmax(6.5rem, 0.28fr) minmax(0, 1fr);
   gap: 1rem;
@@ -739,11 +524,11 @@ a {
   border-bottom: 1px solid color-mix(in srgb, var(--ink) 17%, transparent);
 }
 
-.lens-facts dt,
-.proof-facts dt,
-.lens-label {
+.detail-facts dt,
+.result-facts dt,
+.detail-label {
   color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.67rem;
   font-weight: 600;
   letter-spacing: 0.055em;
@@ -751,63 +536,41 @@ a {
   text-transform: uppercase;
 }
 
-.lens-facts dd,
-.proof-facts dd {
+.detail-facts dd,
+.result-facts dd {
   margin: 0;
   line-height: 1.5;
 }
 
-.lens-story-grid,
-.lens-system-grid,
-.lens-proof-grid {
+.detail-story-grid,
+.detail-system-grid,
+.detail-proof-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(16rem, 0.88fr);
   gap: clamp(1.5rem, 4vw, 4rem);
 }
 
-.lens-evidence > .lens-label,
-.lens-stack > .lens-label,
-.proof-evidence-groups .lens-label {
+/* Overview holds one column now, so it takes a measure instead of the panel's
+   full width — a definition list stretched across 1440px is unreadable. */
+.detail-story-grid {
+  max-width: 48rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.detail-stack > .detail-label,
+.result-groups .detail-label {
   margin: 0 0 0.75rem;
 }
 
-.lens-evidence ul,
 .system-decisions,
-.lens-stack ul,
-.proof-evidence-groups ul,
-.proof-links ul,
+.detail-stack ul,
+.result-groups ul,
+.result-links ul,
 .case-study-capabilities,
 .related-projects ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.lens-evidence ul {
-  display: grid;
-  gap: 0.6rem;
-}
-
-.lens-evidence li {
-  display: grid;
-  gap: 0.25rem;
-  padding: 0.8rem;
-  border: 1px solid var(--ink);
-  background: var(--white);
-}
-
-.lens-evidence li > span {
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.64rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.lens-evidence li > strong {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 1.05rem;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
 }
 
 .system-decisions {
@@ -831,14 +594,17 @@ a {
   width: 2.25rem;
   height: 2.25rem;
   place-items: center;
-  border: 1px solid var(--ink);
-  background: var(--cyan);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--cyan) 15%, var(--white));
+  color: var(--cyan);
+  font-family: var(--font-label), sans-serif;
   font-size: 0.65rem;
+  font-weight: 600;
 }
 
 .system-decisions strong {
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
   font-size: 1.13rem;
   letter-spacing: -0.025em;
 }
@@ -849,318 +615,257 @@ a {
   line-height: 1.5;
 }
 
-.lens-stack ul {
+.detail-stack ul {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
 
-.lens-stack li,
+.detail-stack li,
 .case-study-capabilities li {
-  padding: 0.42rem 0.55rem;
-  border: 1px solid var(--ink);
-  background: var(--white);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 7%, var(--white));
+  font-family: var(--font-label), sans-serif;
   font-size: 0.64rem;
   line-height: 1.2;
 }
 
-.proof-evidence-groups {
+.result-groups {
   display: grid;
   gap: 1.4rem;
 }
 
-.proof-evidence-groups li {
+/* The facts list is short and the groups beside it are long, so on a wide screen
+   the two-column split left half the panel empty. `display: contents` drops this
+   wrapper's box and lets the groups place themselves in the panel's own grid,
+   which fills the row instead of stacking everything down one side. */
+@media (min-width: 75rem) {
+  .detail-proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+    row-gap: 2rem;
+  }
+
+  .result-groups {
+    display: contents;
+  }
+}
+
+.result-groups li {
   position: relative;
   padding-left: 1rem;
   color: var(--muted-ink);
   line-height: 1.48;
 }
 
-.proof-evidence-groups li + li {
+.result-groups li + li {
   margin-top: 0.5rem;
 }
 
-.proof-evidence-groups li::before {
+.result-groups li::before {
   position: absolute;
   top: 0.58em;
   left: 0;
   width: 0.42rem;
   height: 0.42rem;
-  border: 1px solid var(--ink);
+  border-radius: 50%;
   background: var(--sunshine);
   content: '';
 }
 
-.proof-outcomes ul {
+.result-outcomes ul {
   display: grid;
   gap: 0.55rem;
 }
 
-.proof-outcomes li {
+.result-outcomes li {
   position: static;
   display: grid;
   gap: 0.2rem;
-  padding: 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  padding: 0.75rem 0.9rem;
+  border-radius: 1rem;
   background: var(--white);
+  box-shadow: var(--shadow-soft);
   color: var(--ink);
 }
 
-.proof-outcomes li::before {
+.result-outcomes li::before {
   display: none;
 }
 
-.proof-outcomes li > span,
-.proof-outcomes li > small {
+.result-outcomes li > span,
+.result-outcomes li > small {
   color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.62rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.proof-outcomes li > strong {
-  font-family: var(--font-space-grotesk), sans-serif;
+.result-outcomes li > strong {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
   line-height: 1.2;
 }
 
-.proof-links ul {
+.result-links ul {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.75rem 1rem;
 }
 
-.proof-links li {
+.result-links li {
   padding-left: 0;
 }
 
-.proof-links li::before {
+/* This row spaces itself with `gap`, so the stacked-list margin the other result
+   groups use would only push the second link out of line with the first. */
+.result-links li + li {
+  margin-top: 0;
+}
+
+.result-links li::before {
   display: none;
 }
 
-.fieldbook-card-footer {
-  grid-area: footer;
+/* The project index is the page: one section, every project, no filters. Three
+   dense columns because 17 cards need the density, at display type size so the
+   list reads as the main event rather than as an appendix to something else. */
+.project-index {
+  background: color-mix(in srgb, var(--white) 45%, var(--paper));
+}
+
+/* Heading on the left, the count on the right, sharing one baseline. */
+.section-heading-counted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+.section-count {
+  margin: 0;
+  color: var(--muted-ink);
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Tight columns, looser rows: the cards lift on hover, and a row gap as tight
+   as the column gap makes the lifted card look like it is touching the one
+   above it. */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 1rem;
+  row-gap: 1.5rem;
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The mascot hangs off the top edge of its card, so every cell is a positioning
+   context and the row leaves headroom for the one card that uses it. */
+.project-grid > li {
+  position: relative;
+  display: grid;
+  padding-top: 2.7rem;
+  margin-top: -2.7rem;
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+}
+
+.project-card-header,
+.project-card-footer {
+  padding: 1.15rem;
+}
+
+.project-card-header {
+  flex: 1;
+}
+
+/* The logo and the status label share one row so the tile costs the card no
+   extra vertical space — the status line already reserved that band. */
+.project-card-identity {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.15rem clamp(1.35rem, 3vw, 2.75rem) 1.4rem;
-  border-top: 1px solid var(--ink);
-  background: var(--paper);
+  gap: 0.7rem;
+  margin: 0 0 1.25rem;
 }
 
-.fieldbook-link {
-  background: var(--project-accent);
-}
-
-.fieldbook-card-footer > span {
-  color: var(--muted-ink);
-  text-align: right;
-}
-
-.project-archive {
-  width: min(100% - 2.5rem, 76rem);
-  margin: clamp(5rem, 10vw, 9rem) auto 0;
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(5rem, 9vw, 8rem);
-  border-top: 1px solid var(--ink);
-}
-
-.archive-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
-  align-items: end;
-  gap: 1rem clamp(2rem, 7vw, 7rem);
-}
-
-.archive-heading h2 {
-  max-width: 17ch;
-  margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2.35rem, 5vw, 5rem);
-  letter-spacing: -0.06em;
-  line-height: 0.94;
-  text-wrap: balance;
-}
-
-.archive-heading > p {
-  max-width: 34rem;
+.project-card-status {
   margin: 0;
   color: var(--muted-ink);
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
-.archive-controls {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(13rem, 0.7fr) auto;
-  align-items: end;
-  gap: 0.75rem;
-  margin-top: 2.5rem;
-  padding: 1rem;
-  border: 1px solid var(--ink);
-  background: var(--white);
-}
-
-.archive-control {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.archive-control label,
-.archive-status,
-.archive-role span,
-.archive-result-count {
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.archive-control input,
-.archive-control select {
-  width: 100%;
-  min-height: 2.85rem;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font: inherit;
-  padding: 0.65rem 0.75rem;
-}
-
-.archive-control input:focus-visible,
-.archive-control select:focus-visible,
-.archive-reset:focus-visible,
-.archive-link:focus-visible {
-  outline: 3px solid var(--volt);
-  outline-offset: 2px;
-}
-
-.archive-reset {
-  min-height: 2.85rem;
-  white-space: nowrap;
-}
-
-.archive-result-count {
-  margin: 1.5rem 0 0.75rem;
-}
-
-.archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+.project-card h3 {
   margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.archive-card {
-  --project-accent: var(--coral);
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  border: 1.5px solid var(--ink);
-  background: var(--white);
-  box-shadow: 4px 4px 0 color-mix(in srgb, var(--project-accent) 72%, var(--ink));
-}
-
-.archive-card[data-accent='cyan'] {
-  --project-accent: var(--cyan);
-}
-
-.archive-card[data-accent='sunshine'] {
-  --project-accent: var(--sunshine);
-}
-
-.archive-card[data-accent='jade'] {
-  --project-accent: var(--jade);
-}
-
-.archive-card[data-accent='violet'] {
-  --project-accent: var(--violet);
-}
-
-.archive-card-header,
-.archive-card-body,
-.archive-card-footer {
-  padding: 1.15rem;
-}
-
-.archive-card-header {
-  border-bottom: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
-}
-
-.archive-status {
-  margin: 0 0 1.25rem;
-  color: var(--muted-ink);
-}
-
-.archive-card h3 {
-  margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(1.65rem, 2.8vw, 2.45rem);
-  letter-spacing: -0.055em;
-  line-height: 0.96;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
 }
 
-.archive-summary {
+.project-card-summary {
   margin: 0.8rem 0 0;
   color: var(--muted-ink);
   font-size: 0.9rem;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
-.archive-card-body {
-  display: grid;
-  gap: 1rem;
-  flex: 1;
-}
-
-.archive-role {
-  display: grid;
-  gap: 0.3rem;
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.4;
-}
-
-.archive-role span {
-  color: var(--muted-ink);
-}
-
-.archive-tags {
+.project-card-footer {
   display: flex;
   flex-wrap: wrap;
-  align-content: start;
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.archive-tags li {
-  padding: 0.3rem 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
-  color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.archive-card-footer {
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
   border-top: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
 }
 
-.archive-link {
+.project-card-role {
+  max-width: 22ch;
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.project-card-link {
   color: var(--ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The "read more" link owns the whole card, so the entire tile is one target
+   and the visible link stays the thing a screen reader announces. */
+.project-card-link::after {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+  content: '';
 }
 
 .case-study {
@@ -1168,18 +873,22 @@ a {
 }
 
 .case-study-hero {
-  --project-accent: var(--coral);
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(21rem, 1.1fr);
-  border: 1.5px solid var(--ink);
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+  overflow: clip;
+  border-radius: var(--radius-card);
   background: var(--white);
-  box-shadow: 8px 8px 0 color-mix(in srgb, var(--project-accent) 72%, var(--ink));
+  box-shadow: var(--shadow-lift);
 }
 
 .case-study-hero-copy {
+  /* The title is sized in cqi against this box, so the display type tracks the
+     column it actually lives in instead of the viewport. Those two used to
+     disagree: at 1920 the column was 427px wide while the clamp had grown the
+     title to 92px, which is wider than the column for "Assessment". */
+  container-type: inline-size;
   min-width: 0;
   padding: clamp(1.4rem, 4vw, 3.75rem);
-  border-top: 0.8rem solid var(--project-accent);
 }
 
 .case-study-back {
@@ -1203,14 +912,29 @@ a {
   color: var(--muted-ink);
 }
 
+/* The tile rides with the eyebrow, not the h1: the title wraps to two or three
+   lines in this column, and a tile centred against a wrapped title drifts away
+   from the words it is meant to label. */
+.case-study-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
 .case-study h1 {
-  max-width: 10ch;
+  /* 13.5cqi keeps the longest title word ("Assessment", 6.1x the font size in
+     Rubik 800) at ~82% of the column at every width, so it never has to break.
+     A display title never breaks mid-word — it gets a box wide enough to hold
+     its longest word instead, which is why overflow-wrap stays normal. */
   margin: 0.8rem 0 1.3rem;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(3.8rem, 8vw, 8.5rem);
-  letter-spacing: -0.085em;
-  line-height: 0.84;
-  overflow-wrap: anywhere;
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.6rem, 13.5cqi, 4.75rem);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 0.98;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: balance;
 }
 
 .case-study-deck {
@@ -1231,8 +955,7 @@ a {
 .case-study-visual {
   min-width: 0;
   margin: 0;
-  border-left: 1px solid var(--ink);
-  background: color-mix(in srgb, var(--project-accent) 26%, var(--paper));
+  background: color-mix(in srgb, var(--project-accent) 20%, var(--paper));
 }
 
 .case-study-media {
@@ -1248,10 +971,18 @@ a {
 }
 
 .case-study-media figcaption {
-  padding: 0.7rem 0.8rem;
-  border-top: 1px solid var(--ink);
+  padding: 0.7rem 0.9rem;
   background: var(--white);
   color: var(--muted-ink);
+}
+
+.case-study-media[data-count='2'] {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.9rem;
+}
+
+.case-study-media[data-count='2'] figcaption {
+  grid-column: 1 / -1;
 }
 
 .case-study-diagram {
@@ -1265,23 +996,23 @@ a {
   font-size: clamp(2.7rem, 5.5vw, 6rem);
 }
 
-.case-study-lenses {
+.case-study-details {
   display: grid;
   gap: 1.25rem;
   margin-top: clamp(3rem, 7vw, 7rem);
 }
 
-.case-study-lenses .project-lens-panel {
-  border: 1px solid var(--ink);
-  background: color-mix(in srgb, var(--lens-accent) 8%, var(--white));
+.case-study-details .project-detail-panel {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
 }
 
 .interactive-excerpt {
   margin-top: clamp(3rem, 7vw, 7rem);
   padding: clamp(1.35rem, 3vw, 2.75rem);
-  border: 1px solid var(--ink);
+  border-radius: var(--radius-card);
   background: var(--white);
-  box-shadow: 6px 6px 0 var(--cyan);
+  box-shadow: var(--shadow-soft);
 }
 
 .interactive-excerpt-heading {
@@ -1292,10 +1023,11 @@ a {
 
 .interactive-excerpt-heading h2 {
   margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(2rem, 4vw, 3.5rem);
-  letter-spacing: -0.055em;
-  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: -0.016em;
+  line-height: 1.02;
 }
 
 .interactive-excerpt-heading p:last-child,
@@ -1310,13 +1042,14 @@ a {
 .excerpt-disclaimer {
   max-width: 48rem;
   margin-top: 1.3rem;
-  padding-left: 0.85rem;
-  border-left: 3px solid var(--cyan);
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-field);
+  background: color-mix(in srgb, var(--cyan) 9%, var(--white));
   font-size: 0.92rem;
 }
 
 .excerpt-disclaimer {
-  border-color: var(--coral);
+  background: color-mix(in srgb, var(--coral) 12%, var(--white));
   color: var(--ink);
   font-weight: 600;
 }
@@ -1330,7 +1063,7 @@ a {
 
 .excerpt-form label,
 .excerpt-form legend {
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.055em;
@@ -1341,9 +1074,9 @@ a {
 .excerpt-form textarea,
 .excerpt-form select {
   width: 100%;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  border-radius: var(--radius-field);
+  background: var(--white);
   color: var(--ink);
   font: inherit;
 }
@@ -1377,9 +1110,9 @@ a {
   align-items: center;
   gap: 0.65rem;
   min-height: 2.8rem;
-  padding: 0.6rem 0.75rem;
-  border: 1px solid var(--ink);
-  background: var(--paper);
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-field);
+  background: color-mix(in srgb, var(--ink) 5%, var(--white));
   cursor: pointer;
   text-transform: none;
 }
@@ -1391,9 +1124,9 @@ a {
 }
 
 .excerpt-result {
-  padding: 1rem;
-  border: 1px solid var(--ink);
-  background: color-mix(in srgb, var(--cyan) 10%, var(--white));
+  padding: 1.1rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--cyan) 9%, var(--white));
 }
 
 .excerpt-result p {
@@ -1405,7 +1138,7 @@ a {
 }
 
 .excerpt-result-label {
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.055em;
@@ -1413,8 +1146,9 @@ a {
 }
 
 .excerpt-approval {
-  padding-left: 0.65rem;
-  border-left: 3px solid var(--jade);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-field);
+  background: color-mix(in srgb, var(--jade) 14%, var(--white));
   color: var(--ink);
   font-weight: 700;
 }
@@ -1423,25 +1157,27 @@ a {
 .excerpt-load {
   justify-self: start;
   min-height: 2.75rem;
-  padding: 0.6rem 0.9rem;
-  border: 1px solid var(--ink);
-  border-radius: 0;
+  padding: 0.6rem 1.15rem;
+  border: 0;
+  border-radius: 999px;
   background: var(--volt);
+  box-shadow: var(--shadow-soft);
   color: var(--ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
 }
 
+.excerpt-reset,
+.excerpt-load {
+  transition: background 140ms ease;
+}
+
 .excerpt-reset:hover,
 .excerpt-load:hover {
   background: var(--sunshine);
-}
-
-.interactive-excerpt-deferred {
-  box-shadow: 6px 6px 0 var(--sunshine);
 }
 
 .excerpt-deferred-actions {
@@ -1452,21 +1188,22 @@ a {
   margin-top: 2rem;
 }
 
-.excerpt-evidence-link {
+.excerpt-results-link {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
   margin-top: 1.25rem;
 }
 
-.excerpt-deferred-actions .excerpt-evidence-link {
+.excerpt-deferred-actions .excerpt-results-link {
   margin-top: 0;
 }
 
 .excerpt-load-error {
   margin: 1rem 0 0;
-  padding-left: 0.75rem;
-  border-left: 3px solid var(--coral);
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-field);
+  background: color-mix(in srgb, var(--coral) 12%, var(--white));
   color: var(--ink);
   font-weight: 600;
 }
@@ -1486,15 +1223,35 @@ a {
 .excerpt-persona > strong {
   display: block;
   margin-top: 0.35rem;
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(2.35rem, 6vw, 4.75rem);
-  letter-spacing: -0.07em;
-  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+/* The measurements the rule actually read, in the round's own numbers. */
+.excerpt-receipts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.excerpt-receipts li {
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--white) 72%, transparent);
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
 .excerpt-persona dl {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.65rem;
   margin: 1rem 0 0;
 }
@@ -1512,7 +1269,7 @@ a {
 
 .excerpt-persona dt {
   color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.63rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -1528,7 +1285,7 @@ a {
 .related-projects {
   margin-top: clamp(4rem, 8vw, 8rem);
   padding-top: 2rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }
 
 .related-projects h2 {
@@ -1543,10 +1300,23 @@ a {
 }
 
 .related-projects li {
+  position: relative;
   min-width: 0;
-  padding: 1.1rem;
-  border: 1px solid var(--ink);
+  padding: 1.25rem;
+  border-radius: var(--radius-card);
   background: var(--white);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.related-projects li:hover {
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-3px);
+}
+
+.related-projects li:has(a:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
 }
 
 .related-projects li > p {
@@ -1556,10 +1326,11 @@ a {
 
 .related-projects h3 {
   margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-display), serif;
   font-size: 1.5rem;
-  letter-spacing: -0.04em;
-  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
 }
 
 .related-projects h3 a {
@@ -1570,7 +1341,20 @@ a {
   text-underline-offset: 0.18em;
 }
 
-.related-projects h3 a:hover {
+/* The title link owns the whole card, so the entire box is one target. */
+.related-projects h3 a::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+.related-projects h3 a:focus-visible {
+  outline: none;
+}
+
+.related-projects li:hover h3 a {
   color: var(--coral);
 }
 
@@ -1606,7 +1390,6 @@ a {
 .site-footer {
   margin-top: auto;
   padding: 2.5rem 0;
-  border-top: 1px solid var(--ink);
   background: var(--white);
 }
 
@@ -1627,7 +1410,6 @@ a {
 
 .profile-section {
   padding: clamp(4.5rem, 9vw, 8rem) 0;
-  border-top: 1px solid var(--ink);
 }
 
 .profile-section-inner {
@@ -1635,234 +1417,99 @@ a {
   margin-inline: auto;
 }
 
-.profile-principles {
-  background: color-mix(in srgb, var(--sunshine) 20%, var(--paper));
+/* Alternating section fills keep seven plain-headed sections from reading as
+   one undifferentiated column. The names are structural, not thematic. */
+.profile-stack,
+.profile-awards {
+  background: color-mix(in srgb, var(--white) 45%, var(--paper));
 }
 
-.professional-products {
-  background: color-mix(in srgb, var(--cyan) 10%, var(--paper));
-}
-
-.professional-product-grid {
+.stack-groups {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
-  padding: 0;
-  list-style: none;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
 }
 
-.professional-product-card {
-  --project-accent: var(--coral);
-  display: grid;
-  height: 100%;
-  border: 1.5px solid var(--ink);
+.stack-group {
+  padding: 1.25rem;
+  border-radius: var(--radius-card);
   background: var(--white);
-  box-shadow: 5px 5px 0 color-mix(in srgb, var(--project-accent) 72%, var(--ink));
+  box-shadow: var(--shadow-soft);
 }
 
-.professional-product-card[data-accent='cyan'] {
-  --project-accent: var(--cyan);
-}
-
-.professional-product-card > header,
-.professional-product-boundary,
-.professional-product-outcomes,
-.professional-product-card > footer {
-  padding: 1.2rem;
-}
-
-.professional-product-card > header {
-  border-bottom: 1px solid var(--ink);
-}
-
-.professional-product-card h3 {
-  margin: 1rem 0 0;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  letter-spacing: -0.055em;
-  line-height: 0.95;
-}
-
-.professional-product-card header > p {
-  margin: 0.8rem 0 0;
+.stack-group h3 {
+  margin: 0 0 0.9rem;
   color: var(--muted-ink);
-  line-height: 1.45;
-}
-
-.professional-product-boundary {
-  display: grid;
-  gap: 0.9rem;
-  margin: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-}
-
-.professional-product-boundary > div {
-  display: grid;
-  gap: 0.3rem;
-}
-
-.professional-product-boundary dt,
-.professional-product-outcomes li > span {
-  color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-}
-
-.professional-product-boundary dd {
-  margin: 0;
-  line-height: 1.5;
-}
-
-.professional-product-outcomes {
-  border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-}
-
-.professional-product-outcomes > .lens-label {
-  margin: 0 0 0.75rem;
-}
-
-.professional-product-outcomes ul {
-  display: grid;
-  gap: 0.65rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.professional-product-outcomes li {
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
-  background: var(--paper);
-}
-
-.professional-product-outcomes li > strong {
-  line-height: 1.35;
-}
-
-.professional-product-card > footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-}
-
-.professional-product-link {
-  background: var(--project-accent);
-}
-
-.professional-product-public-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.principles-list {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.principles-list li {
-  display: grid;
-  align-content: space-between;
-  gap: 2.5rem;
-  min-height: 14rem;
-  padding: 1rem;
-  border: 1px solid var(--ink);
-  background: var(--white);
-  box-shadow: 4px 4px 0 color-mix(in srgb, var(--ink) 18%, transparent);
-}
-
-.principles-list li:nth-child(2) {
-  background: var(--cyan);
-}
-
-.principles-list li:nth-child(3) {
-  background: var(--coral);
-}
-
-.principles-list li:nth-child(4) {
-  background: var(--volt);
-}
-
-.principles-list li:nth-child(5) {
-  background: var(--sunshine);
-}
-
-.principles-list span,
-.experience-entry-meta > p,
-.profile-compact-list > li > p {
-  margin: 0;
-  color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.66rem;
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.055em;
-  line-height: 1.4;
   text-transform: uppercase;
 }
 
-.principles-list strong {
-  max-width: 13ch;
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: clamp(1.25rem, 1.75vw, 1.7rem);
-  letter-spacing: -0.04em;
-  line-height: 1;
+.stack-group ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack-group li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.5rem 0.4rem 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 7%, var(--white));
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+/* Sized against the label rather than in absolute units, so the mark stays the
+   optical weight of the word beside it. `flex: none` keeps a wide glyph from
+   being squashed when a long chip wraps. */
+.stack-icon {
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: -0.1rem;
+}
+
+/* How many projects on the site use the tool. It is a count, not a rating, so
+   it sits in a quiet chip rather than reading as a score out of anything. */
+.stack-group li > span {
+  display: grid;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  padding-inline: 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cyan) 16%, var(--white));
+  color: var(--cyan);
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
 }
 
 .profile-experience {
   background: var(--white);
 }
 
-.profile-records {
-  display: grid;
-  gap: clamp(3rem, 7vw, 6rem);
-  margin-top: clamp(3rem, 7vw, 6rem);
-}
-
-.profile-record {
-  min-width: 0;
-}
-
-.profile-record-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1.58fr);
-  align-items: baseline;
-  gap: 1rem;
-  padding-bottom: 0.9rem;
-  border-bottom: 3px solid var(--ink);
-}
-
-.profile-record-heading h3,
-.experience-entry h4,
-.profile-compact-list h4 {
+.experience-entry h3,
+.profile-compact-list h3 {
   margin: 0;
-  font-family: var(--font-space-grotesk), sans-serif;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-}
-
-.profile-record-heading h3 {
-  font-size: clamp(1.75rem, 3vw, 2.9rem);
+  font-family: var(--font-display), serif;
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  line-height: 1.05;
 }
 
 .experience-timeline,
 .profile-compact-list {
-  margin: 0;
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -1885,7 +1532,7 @@ a {
 .profile-compact-list > li > strong {
   margin: 0 0 0.45rem;
   color: var(--muted-ink);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.045em;
@@ -1893,7 +1540,7 @@ a {
   text-transform: uppercase;
 }
 
-.experience-entry h4 {
+.experience-entry h3 {
   max-width: 35rem;
   font-size: clamp(1.45rem, 2.2vw, 2.25rem);
 }
@@ -1929,15 +1576,9 @@ a {
   left: 0;
   width: 0.4rem;
   height: 0.4rem;
-  border: 1px solid var(--ink);
+  border-radius: 50%;
   background: var(--cyan);
   content: '';
-}
-
-.profile-record-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(2rem, 5vw, 5rem);
 }
 
 .profile-compact-list > li {
@@ -1949,7 +1590,7 @@ a {
   margin-bottom: 0.8rem;
 }
 
-.profile-compact-list h4 {
+.profile-compact-list h3 {
   font-size: clamp(1.2rem, 1.75vw, 1.55rem);
 }
 
@@ -1958,7 +1599,7 @@ a {
   margin-top: 0.45rem;
 }
 
-.profile-awards-list h4 {
+.profile-awards-list h3 {
   margin-bottom: 0.7rem;
 }
 
@@ -1967,74 +1608,44 @@ a {
   color: var(--white);
 }
 
-.profile-contact .eyebrow,
-.profile-contact .section-heading-description,
-.collaboration-brief-intro {
-  color: color-mix(in srgb, var(--paper) 78%, var(--muted-ink));
-}
-
 .profile-contact .section-heading h2 {
   color: var(--volt);
 }
 
-.collaboration-brief {
+.contact-details {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1.4rem clamp(2rem, 7vw, 7rem);
-  margin-top: clamp(2.5rem, 6vw, 5rem);
+  justify-items: start;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
 }
 
-.collaboration-brief-intro {
-  max-width: 35rem;
-  margin: 0;
-  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
-  line-height: 1.45;
+/* The address itself, at display size. The section used to open on a paragraph
+   about what makes a good collaboration; the address was three lines below it. */
+.contact-email {
+  font-family: var(--font-display), serif;
+  font-size: clamp(1.6rem, 4.5vw, 3.25rem);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 140ms ease;
 }
 
-.collaboration-brief > ul {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.collaboration-brief > ul li {
-  padding: 0.8rem;
-  border: 1px solid color-mix(in srgb, var(--white) 74%, transparent);
-  color: var(--white);
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.035em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-
-.collaboration-actions {
-  display: flex;
-  grid-column: 1 / -1;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.4rem;
-  margin-top: 1rem;
-}
-
-.collaboration-actions .button {
-  background: var(--volt);
-  color: var(--ink);
+.contact-email:hover {
+  color: var(--volt);
 }
 
 .collaboration-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1rem 1.5rem;
 }
 
 .collaboration-links a {
   color: var(--white);
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.73rem;
   font-weight: 600;
   letter-spacing: 0.045em;
@@ -2047,44 +1658,27 @@ a {
   color: var(--volt);
 }
 
-.profile-contact .collaboration-actions .button:focus-visible {
-  outline-color: var(--white);
-  outline-offset: 4px;
-}
-
-.profile-contact .collaboration-links a:focus-visible {
+.profile-contact a:focus-visible {
   outline-color: var(--volt);
   outline-offset: 4px;
 }
 
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: end;
-  gap: 1rem;
-}
-
 .section-heading h2 {
   max-width: 18ch;
-  margin: 0.55rem 0 0;
-  font-family: var(--font-space-grotesk), sans-serif;
+  margin: 0;
+  font-family: var(--font-display), serif;
   font-size: clamp(2rem, 4vw, 4rem);
-  letter-spacing: -0.055em;
-  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: -0.016em;
+  line-height: 1.02;
 }
 
-.section-heading-description {
-  max-width: 42rem;
-  margin-top: 1rem;
-  color: var(--muted-ink);
-  line-height: 1.5;
-}
 
 .status-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-label), sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -2094,7 +1688,7 @@ a {
 .status-badge-mark {
   width: 0.55rem;
   height: 0.55rem;
-  border: 1px solid var(--ink);
+  border-radius: 50%;
   background: var(--jade);
 }
 
@@ -2137,9 +1731,10 @@ a {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    border: 1px solid var(--ink);
+    overflow: clip;
+    border-radius: 1.1rem;
     background: var(--white);
-    box-shadow: 5px 5px 0 var(--ink);
+    box-shadow: var(--shadow-lift);
   }
 
   .header-nav.is-open {
@@ -2165,38 +1760,17 @@ a {
     font-size: clamp(3.35rem, 15.5vw, 5.8rem);
   }
 
-  .hero-proof {
-    gap: 0.7rem;
-  }
-
-  .proof-tile {
-    min-height: auto;
-  }
-
-  .explorer-capabilities,
-  .fieldbook-heading,
-  .archive-heading,
-  .lens-story-grid,
-  .lens-system-grid,
-  .lens-proof-grid,
-  .profile-record-grid,
-  .collaboration-brief {
-    grid-template-columns: 1fr;
-  }
-
-  .principles-list {
+  .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .professional-product-grid {
+  .stack-groups,
+  .detail-story-grid,
+  .detail-system-grid,
+  .detail-proof-grid {
     grid-template-columns: 1fr;
   }
 
-  .principles-list li {
-    min-height: 10rem;
-  }
-
-  .profile-record-heading,
   .experience-entry {
     grid-template-columns: 1fr;
     gap: 0.7rem;
@@ -2207,63 +1781,9 @@ a {
     align-items: center;
   }
 
-  .collaboration-actions {
-    grid-column: auto;
-  }
-
-  .explorer-lenses {
-    position: sticky;
-    z-index: 40;
-    top: 4.5rem;
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-    padding: 0.75rem 0;
-    background: var(--paper);
-  }
-
-  .explorer-lenses .eyebrow {
-    font-size: 0.62rem;
-  }
-
-  .fieldbook-card {
-    grid-template-areas:
-      'header'
-      'visual'
-      'lens'
-      'footer';
-    grid-template-columns: 1fr;
-  }
-
-  .fieldbook-visual {
-    min-height: 19rem;
-    border-top: 1px solid var(--ink);
-    border-left: 0;
-  }
-
-  .fieldbook-media img {
-    height: 22rem;
-  }
-
-  .lens-panel-heading {
+  .detail-panel-heading {
     align-items: start;
     flex-direction: column;
-  }
-
-  .fieldbook-card-footer {
-    align-items: start;
-    flex-direction: column;
-  }
-
-  .fieldbook-card-footer > span {
-    text-align: left;
-  }
-
-  .archive-controls {
-    grid-template-columns: 1fr;
-  }
-
-  .archive-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .case-study-hero {
@@ -2276,8 +1796,6 @@ a {
 
   .case-study-visual {
     min-height: 22rem;
-    border-top: 1px solid var(--ink);
-    border-left: 0;
   }
 
   .related-projects > ul {
@@ -2288,20 +1806,12 @@ a {
     flex-direction: column;
     align-items: start;
   }
-
-  .footer-links {
-    justify-content: start;
-  }
 }
 
 @media (max-width: 28rem) {
   .header-inner,
   .hero-inner,
   .footer-inner,
-  .explorer-capabilities,
-  .explorer-lenses,
-  .featured-fieldbook,
-  .project-archive,
   .case-study,
   .not-found,
   .profile-section-inner {
@@ -2312,64 +1822,18 @@ a {
     max-width: 12rem;
   }
 
-  .hero-actions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .hero-actions .button {
-    width: 100%;
-  }
-
-  .explorer-capabilities [role='group'] {
-    display: grid;
+  .project-grid {
     grid-template-columns: 1fr;
   }
 
-  .explorer-capabilities button {
-    width: 100%;
-  }
-
-  .archive-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .principles-list,
-  .collaboration-brief > ul {
-    grid-template-columns: 1fr;
-  }
-
-  .principles-list li {
-    min-height: auto;
-    gap: 1.5rem;
-  }
-
-  .archive-reset {
-    width: 100%;
-  }
-
-  .fieldbook-card-header,
-  .fieldbook-diagram,
-  .project-lens-panel,
+  .project-detail-panel,
   .case-study-hero-copy,
   .case-study-diagram {
     padding-inline: 1rem;
   }
 
-  .fieldbook-card h3 {
-    font-size: clamp(2.55rem, 14vw, 4.5rem);
-  }
-
-  .fieldbook-card-footer {
-    padding-inline: 1rem;
-  }
-
-  .fieldbook-card-footer .button {
-    width: 100%;
-  }
-
-  .lens-facts > div,
-  .proof-facts > div {
+  .detail-facts > div,
+  .result-facts > div {
     grid-template-columns: 1fr;
     gap: 0.35rem;
   }
@@ -2382,6 +1846,40 @@ a {
   .excerpt-persona dl {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+::selection {
+  background: var(--volt);
+  color: var(--ink);
+}
+
+.project-card {
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.project-card:hover {
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-4px) rotate(-0.4deg);
+}
+
+/* The accent underline grows out of the card's own colour, so each project
+   highlights in its own hue rather than a shared brand one. */
+.project-card h3 {
+  width: fit-content;
+  background: linear-gradient(
+      color-mix(in srgb, var(--project-accent) 40%, transparent),
+      color-mix(in srgb, var(--project-accent) 40%, transparent)
+    )
+    no-repeat left 88% / 0% 0.42em;
+  transition: background-size 260ms ease;
+}
+
+.project-card:hover h3 {
+  background-size: 100% 0.42em;
+}
+
+.project-detail-panel .detail-kicker {
+  color: color-mix(in srgb, var(--detail-accent) 68%, var(--ink));
 }
 
 @media (prefers-reduced-motion: reduce) {

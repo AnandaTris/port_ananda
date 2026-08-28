@@ -1,23 +1,28 @@
+/**
+ * Each excerpt is a small live piece of a project, so it links back to that
+ * project's Results section. The href is the heading id `ProjectDetailPanel`
+ * builds — `${slug}-results` — and has to stay in step with it.
+ */
 export const excerptDetails = {
   carekaki: {
     loadLabel: 'Load CareKaki Guardian interactive excerpt',
-    evidenceLabel: 'See full CareKaki evidence and proof',
-    evidenceHref: '#carekaki-proof-full',
+    resultsLabel: 'See CareKaki results',
+    resultsHref: '#carekaki-results',
   },
   'das-dial': {
     loadLabel: 'Load DAS D.I.A.L. interactive excerpt',
-    evidenceLabel: 'See full DAS D.I.A.L. evidence and proof',
-    evidenceHref: '#das-dial-proof-full',
+    resultsLabel: 'See DAS D.I.A.L. results',
+    resultsHref: '#das-dial-results',
   },
   cited: {
     loadLabel: 'Load Cited visibility score interactive excerpt',
-    evidenceLabel: 'See full Cited evidence and proof',
-    evidenceHref: '#cited-proof-full',
+    resultsLabel: 'See Cited results',
+    resultsHref: '#cited-results',
   },
   'fix-yo-yap': {
     loadLabel: 'Load Fix Yo Yap persona card interactive excerpt',
-    evidenceLabel: 'See full Fix Yo Yap evidence and proof',
-    evidenceHref: '#fix-yo-yap-proof-full',
+    resultsLabel: 'See Fix Yo Yap results',
+    resultsHref: '#fix-yo-yap-results',
   },
 } as const
 

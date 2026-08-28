@@ -3,20 +3,18 @@ import { resolve } from 'node:path'
 
 const stylesheet = readFileSync(resolve(process.cwd(), 'src/app/globals.css'), 'utf8')
 
-test('keeps Light and Volt focus outlines visible within the dark contact panel', () => {
+test('keeps the focus outline visible against the dark contact panel', () => {
+  // The panel inverts to --ink, so the default --ink outline would vanish on it.
+  // Every link in the section — address and profiles alike — takes the Volt ring.
   expect(stylesheet).toMatch(
-    /\.profile-contact \.collaboration-actions \.button:focus-visible\s*\{\s*outline-color: var\(--white\);\s*outline-offset: 4px;\s*\}/,
-  )
-  expect(stylesheet).toMatch(
-    /\.profile-contact \.collaboration-links a:focus-visible\s*\{\s*outline-color: var\(--volt\);\s*outline-offset: 4px;\s*\}/,
+    /\.profile-contact a:focus-visible\s*\{\s*outline-color: var\(--volt\);\s*outline-offset: 4px;\s*\}/,
   )
 })
 
-test('bounds the desktop hero with viewport-aware spacing and type', () => {
+test('bounds the desktop hero in viewport height so the projects start above the fold', () => {
+  // vh, not vw: on a short laptop screen a width-derived clamp pushes the first
+  // project card off the bottom, which is the one thing the hero must not do.
   expect(stylesheet).toMatch(
-    /@media \(min-width: 64\.0625rem\)[\s\S]*?\.hero\s*\{\s*padding: clamp\(1\.75rem, 4vh, 4\.5rem\) 0 clamp\(1\.75rem, 4vh, 4rem\);\s*\}/,
-  )
-  expect(stylesheet).toMatch(
-    /@media \(min-width: 64\.0625rem\)[\s\S]*?\.hero h1\s*\{\s*font-size: clamp\(4rem, 5vw, 5\.25rem\);\s*\}/,
+    /@media \(min-width: 64\.0625rem\)\s*\{\s*\.hero\s*\{\s*padding: clamp\([\d.]+rem, [\d.]+vh, [\d.]+rem\) 0 clamp\([\d.]+rem, [\d.]+vh, [\d.]+rem\);\s*\}/,
   )
 })

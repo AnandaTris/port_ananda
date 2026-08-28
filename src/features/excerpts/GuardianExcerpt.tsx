@@ -24,8 +24,8 @@ export function GuardianExcerpt() {
         Simplified local demonstration: it applies a small set of patterns and does not connect to
         CareKaki’s team-built production systems.
       </p>
-      <a className="text-link excerpt-evidence-link" href={excerptDetails.carekaki.evidenceHref}>
-        {excerptDetails.carekaki.evidenceLabel}
+      <a className="text-link excerpt-results-link" href={excerptDetails.carekaki.resultsHref}>
+        {excerptDetails.carekaki.resultsLabel}
       </a>
 
       <div className="excerpt-form">

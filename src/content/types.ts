@@ -1,8 +1,11 @@
-export type Lens = 'story' | 'system' | 'proof'
+import type { projectMarks } from './project-marks'
+
+export type ProjectMarkName = keyof typeof projectMarks
+
 export type Capability = 'ship' | 'responsible-ai' | 'harden' | 'grow' | 'prototype'
 export type ProjectStatus = 'live' | 'working-demo' | 'source-backed' | 'prototype'
 
-export type EvidenceItem = {
+export type OutcomeItem = {
   label: string
   value: string
   source: 'live' | 'test' | 'git' | 'award' | 'documented'
@@ -20,10 +23,22 @@ export type MediaItem = {
   height: number
 }
 
+/**
+ * A project shows its real app icon when the source repo ships one, and an
+ * authored mark otherwise. The two kinds are kept apart on purpose: `icon`
+ * claims to be the product's own logo and `assets.test.ts` makes it prove that,
+ * while `mark` claims nothing except that this site drew a picture of what the
+ * project does. Mixing them would let an invented file pass as a brand.
+ */
+export type ProjectLogo =
+  | { kind: 'icon'; src: string; alt: string }
+  | { kind: 'mark'; name: ProjectMarkName }
+
 export type Project = {
   slug: string
   name: string
   oneLine: string
+  logo: ProjectLogo
   status: ProjectStatus
   featured: boolean
   accent: 'coral' | 'cyan' | 'sunshine' | 'jade' | 'violet'
@@ -35,7 +50,7 @@ export type Project = {
   problem: string
   hardDecision: string
   system: readonly SystemBlock[]
-  outcomes: readonly EvidenceItem[]
+  outcomes: readonly OutcomeItem[]
   limitations: readonly string[]
   stack: readonly string[]
   links: { live?: string; appStore?: string; source?: string }
@@ -76,12 +91,21 @@ export type ProfileLeadership = {
   highlights: readonly string[]
 }
 
+/**
+ * A named bucket of technologies. The buckets are hand-written because no
+ * grouping can be derived from the project data, but they are not free to drift:
+ * `stack.test.ts` asserts the buckets and the union of every `Project.stack`
+ * hold exactly the same items, so a tool can neither go missing nor be invented.
+ */
+export type StackGroup = {
+  name: string
+  items: readonly string[]
+}
+
 export type Profile = {
   name: string
-  hero: string
-  supportingLine: string
-  collaborationLine: string
-  principles: readonly string[]
+  location: string
+  summary: string
   links: readonly ProfileLink[]
   workExperience: readonly ProfileExperience[]
   research: readonly ProfileResearchRole[]

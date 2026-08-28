@@ -1,44 +1,17 @@
 import { render, screen, within } from '@testing-library/react'
+import { projects } from '@/content/projects'
+import { stackGroups } from '@/content/stack'
 import { ProfileSections } from './ProfileSections'
-
-const approvedPrinciples = [
-  'LLMs for understanding, rules for action',
-  'Evidence before claims',
-  'Fail visibly instead of faking success',
-  'Product economics are part of engineering',
-  'Every irreversible action deserves a human gate',
-]
-
-const collaborationContributions = [
-  'Product definition',
-  'AI system design',
-  'Production engineering',
-  'Monetization',
-  'Experimentation',
-  'Cross-functional delivery',
-]
-
-test('renders the exact five approved operating principles', () => {
-  render(<ProfileSections />)
-
-  const principles = screen.getByRole('region', { name: /operating principles/i })
-  const principleList = within(principles).getByRole('list')
-
-  expect(principleList.children).toHaveLength(5)
-  approvedPrinciples.forEach((principle) => {
-    expect(within(principles).getByText(principle)).toBeInTheDocument()
-  })
-})
 
 test('groups Marsh with Incoming and preserves the professional reverse chronology', () => {
   render(<ProfileSections />)
 
-  const professionalExperience = screen.getByRole('list', { name: 'Professional experience' })
-  const roles = Array.from(professionalExperience.children) as HTMLElement[]
+  const workExperience = screen.getByRole('list', { name: 'Work experience' })
+  const roles = Array.from(workExperience.children) as HTMLElement[]
 
   expect(roles).toHaveLength(3)
   expect(
-    roles.map((role) => within(role).getByRole('heading', { level: 4 }).textContent),
+    roles.map((role) => within(role).getByRole('heading', { level: 3 }).textContent),
   ).toEqual([
     'AI Research & Development Intern',
     'Technical Growth Product Manager Intern (internal title: Play Manager)',
@@ -48,7 +21,22 @@ test('groups Marsh with Incoming and preserves the professional reverse chronolo
   expect(within(roles[0]).getByText('Incoming')).toBeInTheDocument()
 })
 
-test('renders two research roles, selected awards, and SENTRE leadership', () => {
+test('lists every stack group and counts each tool against the real projects', () => {
+  render(<ProfileSections />)
+
+  const stack = screen.getByRole('region', { name: 'Tech stack' })
+  for (const group of stackGroups) {
+    const groupRegion = within(stack).getByRole('region', { name: group.name })
+    expect(within(groupRegion).getByRole('list').children).toHaveLength(group.items.length)
+  }
+
+  // Next.js is the most-used tool on the site; the badge has to agree with the
+  // content file rather than with a number someone typed in.
+  const nextCount = projects.filter((project) => project.stack.includes('Next.js')).length
+  expect(within(stack).getByLabelText(`used in ${nextCount} projects`)).toBeInTheDocument()
+})
+
+test('renders two research roles, every award, and SENTRE leadership', () => {
   render(<ProfileSections />)
 
   const researchRoles = screen.getByRole('list', { name: 'Research roles' })
@@ -56,14 +44,17 @@ test('renders two research roles, selected awards, and SENTRE leadership', () =>
   expect(within(researchRoles).getByText('Social AI Studio, SUTD')).toBeInTheDocument()
   expect(within(researchRoles).getByText('Climate Resilient Citizenry, SUTD')).toBeInTheDocument()
 
-  const awards = screen.getByRole('list', { name: 'Selected awards' })
-  expect(awards.children).toHaveLength(5)
+  const awards = screen.getByRole('list', { name: 'Awards and grants' })
+  expect(awards.children).toHaveLength(8)
   ;[
     'Dell InnovateDash Hackathon 2026 — Top 5 Finalist',
-    'SUTD What The Hack Hackathon — 3rd Place',
     'Math Me Home FPGA Game — 2nd Place, Outstanding Project',
+    'Meowtivation Task Manager — 3rd Place, Outstanding Project',
+    'SUTD What The Hack Hackathon — 3rd Place',
+    'Baby Shark Fund Award — Pufferty Fish Robot',
     'UROP Grant — Fames.com',
     'Baby Shark Fund Award — Fames.com',
+    'Garena Competition — Shortlisted Team, FALSE POSITIVE',
   ].forEach((award) => {
     expect(within(awards).getByText(award)).toBeInTheDocument()
   })
@@ -72,52 +63,10 @@ test('renders two research roles, selected awards, and SENTRE leadership', () =>
   ).toBeInTheDocument()
 })
 
-test('presents Brawnix and Ingatik as bounded professional product work', () => {
+test('offers the approved public contact destinations and nothing else', () => {
   render(<ProfileSections />)
 
-  const professionalProducts = screen.getByRole('region', { name: 'Professional product work' })
-  expect(within(professionalProducts).getAllByText('Live product')).toHaveLength(2)
-  expect(within(professionalProducts).getByRole('heading', { name: 'Brawnix' })).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByRole('heading', { name: 'Ingatik: Recall' }),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByText('Technical growth product manager and product engineer'),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByText('Technical growth product manager and product contributor'),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByText(/parallel architecture branch did not ship to main/i),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByText(/do not present him as the principal app author/i),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByText('Live iOS product and public web presence'),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByText('195.5K views and about 60 registrations over seven days'),
-  ).toBeInTheDocument()
-  expect(
-    within(professionalProducts).getByRole('link', { name: 'Explore Brawnix case study' }),
-  ).toHaveAttribute('href', '/work/brawnix')
-  expect(
-    within(professionalProducts).getByRole('link', { name: 'Explore Ingatik: Recall case study' }),
-  ).toHaveAttribute('href', '/work/ingatik-recall')
-})
-
-test('offers the exact collaboration brief and approved public contact destinations', () => {
-  render(<ProfileSections />)
-
-  const contact = screen.getByRole('region', { name: /build something useful together/i })
-  const contributions = within(contact).getByRole('list', {
-    name: 'Collaboration contributions',
-  })
-
-  expect(
-    Array.from(contributions.children).map((contribution) => contribution.textContent),
-  ).toEqual(collaborationContributions)
+  const contact = screen.getByRole('region', { name: 'Contact' })
   expect(
     within(contact).getAllByRole('link').map((link) => link.getAttribute('href')),
   ).toEqual([
@@ -125,6 +74,24 @@ test('offers the exact collaboration brief and approved public contact destinati
     'https://www.linkedin.com/in/ananda-trimar/',
     'https://github.com/AnandaTris',
   ])
+})
+
+test('uses plain section headings with no fieldbook or evidence framing', () => {
+  render(<ProfileSections />)
+
+  expect(
+    screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent),
+  ).toEqual([
+    'Work experience',
+    'Tech stack',
+    'Research',
+    'Awards and grants',
+    'Leadership',
+    'Contact',
+  ])
+  expect(
+    screen.queryByText(/fieldbook|field note|evidence|operating principle/i),
+  ).not.toBeInTheDocument()
 })
 
 test('keeps phone, academic, transcript, resume, and download details out of the public profile', () => {

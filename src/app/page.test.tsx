@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
-import { fireEvent, render, screen, within } from '@testing-library/react'
-import { beforeEach, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import { SiteFooter } from '@/components/shell/SiteFooter'
 import { SiteHeader } from '@/components/shell/SiteHeader'
 import { projects } from '@/content/projects'
@@ -12,11 +12,7 @@ vi.mock('next/navigation', () => ({
   usePathname: () => route.pathname,
 }))
 
-beforeEach(() => {
-  window.history.replaceState(null, '', '/')
-})
-
-test('keeps one main landmark and one of each profile anchor alongside a route-neutral footer', () => {
+test('keeps one main landmark and one of each section anchor alongside a route-neutral footer', () => {
   const { container } = render(
     <>
       <SiteHeader />
@@ -26,38 +22,61 @@ test('keeps one main landmark and one of each profile anchor alongside a route-n
   )
 
   expect(screen.getAllByRole('main')).toHaveLength(1)
-  expect(document.querySelectorAll('#principles')).toHaveLength(1)
-  expect(document.querySelectorAll('#experience')).toHaveLength(1)
-  expect(document.querySelectorAll('#contact')).toHaveLength(1)
+  for (const anchor of ['projects', 'experience', 'stack', 'research', 'awards', 'leadership', 'contact']) {
+    expect(document.querySelectorAll(`#${anchor}`), anchor).toHaveLength(1)
+  }
 
   const footer = container.querySelector('footer.site-footer')
   expect(footer).not.toBeNull()
   expect(footer).not.toHaveAttribute('id', 'contact')
-  expect(footer).toHaveTextContent('Fieldbook closed. Bring an ambitious problem worth testing.')
+  expect(footer).toHaveTextContent('Ananda Triharis Maroso — Singapore')
 })
 
-test('renders featured work and the complete archive in initial static markup', () => {
+test('points every header link at a section that exists on the page', () => {
+  render(
+    <>
+      <SiteHeader />
+      <HomePage />
+    </>,
+  )
+
+  const nav = screen.getByRole('navigation', { name: 'Primary navigation' })
+  const targets = screen.getAllByRole('link').filter((link) => nav.contains(link))
+
+  expect(targets.map((link) => link.textContent)).toEqual([
+    'Projects',
+    'Experience',
+    'Stack',
+    'Research',
+    'Contact',
+  ])
+  for (const link of targets) {
+    expect(document.querySelector(link.getAttribute('href')!)).not.toBeNull()
+  }
+})
+
+test('renders every project in initial static markup with no client bailout', () => {
   const html = renderToStaticMarkup(<HomePage />)
 
-  expect(html).toContain('Five products, one accountable through-line.')
+  expect(html.match(/class="project-card"/g)).toHaveLength(18)
   expect(html).toContain('Fix Yo Yap')
-  expect(html).toContain('Every project, with its evidence boundary.')
-  expect(html.match(/class="archive-card"/g)).toHaveLength(17)
   expect(html).not.toContain('BAILOUT_TO_CLIENT_SIDE_RENDERING')
   projects.forEach((project) => {
     expect(html).toContain(`href="/work/${project.slug}"`)
   })
 })
 
-test('matches the approved homepage evidence order in real rendered output', () => {
+test('orders the page name, projects, experience, stack, research, awards, leadership, contact', () => {
   render(<HomePage />)
 
   const orderedIds = [
-    'featured-fieldbook-title',
-    'principles-heading',
-    'professional-products-heading',
-    'project-archive-title',
+    'hero-title',
+    'projects-heading',
     'experience-heading',
+    'stack-heading',
+    'research-heading',
+    'awards-heading',
+    'leadership-heading',
     'contact-heading',
   ]
   const orderedHeadings = orderedIds.map((id) => {
@@ -73,24 +92,15 @@ test('matches the approved homepage evidence order in real rendered output', () 
   })
 })
 
-test('synchronizes capability order across the featured and archive client islands', () => {
-  render(<HomePage />)
+test('carries no fieldbook, lens, or evidence vocabulary anywhere on the page', () => {
+  const html = renderToStaticMarkup(
+    <>
+      <HomePage />
+      <SiteFooter />
+    </>,
+  )
 
-  fireEvent.click(screen.getByRole('button', { name: 'Price, launch, and grow' }))
-
-  const featured = screen.getByRole('region', {
-    name: 'Five products, one accountable through-line.',
-  })
-  const archive = screen.getByRole('region', {
-    name: 'Every project, with its evidence boundary.',
-  })
-  expect(within(featured).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('Cited')
-  expect(within(archive).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('Cited')
-
-  window.history.replaceState(null, '', '/?lens=proof&capability=prototype#work')
-  fireEvent(window, new PopStateEvent('popstate'))
-
-  expect(screen.getByRole('button', { name: 'Proof' })).toHaveAttribute('aria-pressed', 'true')
-  expect(within(featured).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('CareKaki')
-  expect(within(archive).getAllByRole('heading', { level: 3 })[0]).toHaveTextContent('CareKaki')
+  // The restructure removed the framing, not just the sections that used it.
+  // A stray "field note" heading is the exact regression this guards against.
+  expect(html).not.toMatch(/fieldbook|field note|field operator|evidence|lens/i)
 })

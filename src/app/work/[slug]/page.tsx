@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ProjectLensPanel } from '@/components/lens/ProjectLensPanel'
+import { ProjectDetailPanel } from '@/components/project/ProjectDetailPanel'
+import { ProjectLogo } from '@/components/project/ProjectLogo'
 import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { projects } from '@/content/projects'
@@ -91,14 +92,16 @@ export default async function WorkPage({ params }: WorkPageProps) {
     <main className="case-study" id="main-content" tabIndex={-1}>
       <header className="case-study-hero" data-accent={project.accent}>
         <div className="case-study-hero-copy">
-          <Link className="text-link case-study-back" href="/#work">
-            ← Back to fieldbook
+          <Link className="text-link case-study-back" href="/#projects">
+            ← Back to projects
           </Link>
           <div className="case-study-status">
             <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
             <span>{project.role}</span>
           </div>
-          <p className="eyebrow">Evidence field note</p>
+          <div className="case-study-identity">
+            <ProjectLogo logo={project.logo} size={56} />
+          </div>
           <h1>{project.name}</h1>
           <p className="case-study-deck">{project.oneLine}</p>
           <ul aria-label="Project capabilities" className="case-study-capabilities">
@@ -107,20 +110,19 @@ export default async function WorkPage({ params }: WorkPageProps) {
             ))}
           </ul>
         </div>
-        <ProjectMediaVisual priority project={project} variant="case-study" />
+        <ProjectMediaVisual priority project={project} />
       </header>
 
-      <div aria-label={`${project.name} case study`} className="case-study-lenses">
-        <ProjectLensPanel lens="story" project={project} />
-        <ProjectLensPanel lens="system" project={project} />
-        <ProjectLensPanel lens="proof" project={project} />
+      <div aria-label={`${project.name} case study`} className="case-study-details">
+        <ProjectDetailPanel project={project} section="overview" />
+        <ProjectDetailPanel project={project} section="build" />
+        <ProjectDetailPanel project={project} section="results" />
       </div>
 
       <ExcerptRegistry slug={project.slug} />
 
       <aside aria-labelledby="related-projects-title" className="related-projects">
-        <p className="eyebrow">Shared capabilities</p>
-        <h2 id="related-projects-title">Related field notes</h2>
+        <h2 id="related-projects-title">Related projects</h2>
         <ul>
           {related.map((item) => (
             <li key={item.slug}>

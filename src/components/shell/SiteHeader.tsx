@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
-  { href: '#work', label: 'Work' },
-  { href: '#principles', label: 'Principles' },
+  { href: '#projects', label: 'Projects' },
   { href: '#experience', label: 'Experience' },
+  { href: '#stack', label: 'Stack' },
+  { href: '#research', label: 'Research' },
   { href: '#contact', label: 'Contact' },
 ] as const
 
@@ -25,7 +26,7 @@ export function SiteHeader() {
           <a className="site-mark" href={homeAnchor('#main-content')}>
             <span>ANANDA</span>
             <span aria-hidden="true">/</span>
-            <span>PRODUCT + AI BUILDER</span>
+            <span>SINGAPORE</span>
           </a>
           <button
             aria-controls="primary-navigation"

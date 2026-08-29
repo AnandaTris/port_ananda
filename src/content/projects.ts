@@ -11,7 +11,7 @@ export const projects: readonly Project[] = [
     slug: 'fix-yo-yap',
     name: 'Fix Yo Yap',
     oneLine:
-      'Speaking feedback gets ignored when it arrives as a bare number, so seven metrics drawn from transcription and pitch analysis resolve into a persona under a versioned scoring contract.',
+      'Speaking feedback is easy to ignore when it arrives as a bare number, so I turned seven metrics from transcription and pitch analysis into a persona under a versioned scoring contract.',
     logo: { kind: 'icon', src: '/projects/fix-yo-yap/logo.png', alt: 'Fix Yo Yap app icon' },
     status: 'live',
     featured: true,
@@ -19,13 +19,13 @@ export const projects: readonly Project[] = [
     capabilities: ['ship', 'harden', 'responsible-ai'],
     role: 'Solo product engineer and shipper',
     ownership: [
-      'Built the mobile product, web product, scoring service, database layer, and release pipeline.',
-      'Designed the deterministic scoring contract and persona system.',
-      'Sole-authored the repository history across all refs.',
+      'I built the mobile product, web product, scoring service, database layer, and release pipeline.',
+      'I designed the deterministic scoring contract and persona system.',
+      'I am the sole author of the repository history across all refs.',
     ],
-    contributionBoundary: 'Solo product: every commit across all refs is attributed to Ananda.',
+    contributionBoundary: 'Solo product: every commit across all refs is mine.',
     problem: 'Speaking feedback is easy to ignore when it arrives as an opaque number with no memorable meaning.',
-    hardDecision: 'The persona may be read from an existing score, but is structurally unable to change that score.',
+    hardDecision: 'I let the persona be read from an existing score, but made it structurally unable to change that score.',
     system: [
       {
         title: 'Deterministic scorer',
@@ -42,7 +42,7 @@ export const projects: readonly Project[] = [
       { label: 'Verification', value: 'Five automated test layers documented green', source: 'test' },
     ],
     limitations: [
-      'A previously logged physical-device run was reclassified as untested when the installed Expo Go version made that run impossible.',
+      'I reclassified a previously logged physical-device run as untested once the installed Expo Go version made that run impossible.',
     ],
     stack: ['Expo', 'React Native', 'Next.js', 'FastAPI', 'Python', 'Supabase', 'Vitest', 'Jest'],
     links: {
@@ -63,7 +63,7 @@ export const projects: readonly Project[] = [
     slug: 'carekaki',
     name: 'CareKaki',
     oneLine:
-      'Care navigation goes wrong when a model is trusted with consequences, so the LLM only listens and writes while deterministic rules route every action and hold the irreversible ones for a human.',
+      'Care navigation goes wrong when a model is trusted with consequences, so we let the LLM only listen and write while deterministic rules route every action and hold the irreversible ones for a human.',
     logo: { kind: 'icon', src: '/projects/carekaki/logo.svg', alt: 'CareKaki app icon' },
     status: 'source-backed',
     featured: true,
@@ -72,14 +72,14 @@ export const projects: readonly Project[] = [
     role: 'Product engineer in a four-person hackathon team',
     teamSize: 4,
     ownership: [
-      'Redesigned the product UI and shipped the trilingual system.',
-      'Wrote the offline backend test suite and three-job CI pipeline.',
-      'Migrated the model backend, enabled offline boot, and built the Docker development workflow.',
+      'I redesigned the product UI and shipped the trilingual system.',
+      'I wrote the offline backend test suite and three-job CI pipeline.',
+      'I migrated the model backend, enabled offline boot, and built the Docker development workflow.',
     ],
     contributionBoundary:
-      'Claim Ananda’s UI redesign, trilingual system, test suite, CI, model migration, offline boot, and Docker development work directly; Guardian, adapters, audio, and Telegram systems are team-built contributions.',
+      'The UI redesign, trilingual system, test suite, CI, model migration, offline boot, and Docker development workflow are mine; my teammates built the Guardian, adapters, audio, and Telegram systems.',
     problem: 'People navigating Singapore community care must turn an uncertain conversation into a usable plan without losing safety or accountability.',
-    hardDecision: 'The team limited the LLM to understanding and generation while deterministic rules route actions and require approval for irreversible steps.',
+    hardDecision: 'We limited the LLM to understanding and generation while deterministic rules route actions and require approval for irreversible steps.',
     system: [
       {
         title: 'Conversation to care plan',
@@ -87,7 +87,7 @@ export const projects: readonly Project[] = [
       },
       {
         title: 'Guardian and action routing',
-        detail: 'Team-built safeguards redact sensitive data, reject medical advice, trace sources, and gate risky actions.',
+        detail: 'Safeguards that my teammates built redact sensitive data, reject medical advice, trace sources, and gate risky actions.',
       },
     ],
     outcomes: [
@@ -113,7 +113,7 @@ export const projects: readonly Project[] = [
     slug: 'das-dial',
     name: 'DAS D.I.A.L.',
     oneLine:
-      'Screening should explain its uncertainty rather than hand back a diagnosis, so a local NLP pipeline extracts error patterns and explicit thresholds decide the verdict — or abstain from one.',
+      'Screening should explain its uncertainty rather than hand back a diagnosis, so I built a local NLP pipeline that extracts error patterns and let explicit thresholds decide the verdict — or abstain from one.',
     logo: { kind: 'mark', name: 'reading-slip' },
     status: 'source-backed',
     featured: true,
@@ -122,14 +122,14 @@ export const projects: readonly Project[] = [
     role: 'NLP subsystem, screening-verdict, and test-suite owner in a four-person team',
     teamSize: 4,
     ownership: [
-      'Built the NLP error-pattern analyser and grapheme-to-phoneme rule engine.',
-      'Owned the transparent screening verdict and abstention rules.',
-      'Wrote the automated test suite and test-plan traceability documentation.',
+      'I built the NLP error-pattern analyser and grapheme-to-phoneme rule engine.',
+      'I owned the transparent screening verdict and abstention rules.',
+      'I wrote the automated test suite and test-plan traceability documentation.',
     ],
     contributionBoundary:
-      'Ananda owns the NLP subsystem, screening verdict rule, and test suite; the teammate-built RAG service is not attributed to him.',
+      'The NLP subsystem, screening verdict rule, and test suite are mine; a teammate built the RAG service, and I do not claim it.',
     problem: 'Educators need screening evidence that explains uncertainty instead of turning model output into a diagnosis.',
-    hardDecision: 'A smaller correction checkpoint was rejected after it invented a rewrite; faithfulness was chosen over model size.',
+    hardDecision: 'I rejected a smaller correction checkpoint after it invented a rewrite, choosing faithfulness over model size.',
     system: [
       {
         title: 'Local error-pattern pipeline',
@@ -163,18 +163,18 @@ export const projects: readonly Project[] = [
     slug: 'false-positive',
     name: 'FALSE POSITIVE',
     oneLine:
-      'A voice interrogation has to answer hesitation without treating fear as guilt, so a Unity client talks to a hosted sidecar that reads meaning and vocal affect as two separate signals.',
+      'A voice interrogation has to answer hesitation without treating fear as guilt, so we had a Unity client talk to a hosted sidecar that reads meaning and vocal affect as two separate signals.',
     logo: { kind: 'mark', name: 'waveform' },
     status: 'source-backed',
     featured: true,
     accent: 'violet',
     capabilities: ['prototype', 'harden', 'responsible-ai'],
-    role: 'Team contributor; precise individual ownership is not yet documented',
-    ownership: ['Contributed within the project team; individual ownership remains deliberately unspecified.'],
+    role: 'Team contributor; my individual ownership is deliberately unspecified',
+    ownership: ['I contributed within the project team, and I deliberately claim no individual part of it.'],
     contributionBoundary:
-      'Use team language until Ananda provides his precise individual role; the hosted backend endpoint is not presented as a playable demo.',
+      'I describe this project in team language because my individual role here is deliberately unspecified, and I do not present the hosted backend endpoint as a playable demo.',
     problem: 'A voice-led interrogation needs to react to uncertainty and emotion without equating fear with guilt.',
-    hardDecision: 'The team kept speech models and vendor credentials behind a hosted backend, accepting and documenting that player audio leaves the device.',
+    hardDecision: 'We kept speech models and vendor credentials behind a hosted backend, accepting and documenting that player audio leaves the device.',
     system: [
       {
         title: 'Unity client',
@@ -215,7 +215,7 @@ export const projects: readonly Project[] = [
     slug: 'brawnix',
     name: 'Brawnix',
     oneLine:
-      'A training log is worse than useless if the parser guesses, so an on-device rule grammar returns nothing it cannot recognise and explicit thresholds flag sessions that fight each other.',
+      'A training log is worse than useless if the parser guesses, so I wrote an on-device rule grammar that returns nothing it cannot recognize and set explicit thresholds to flag sessions that fight each other.',
     logo: { kind: 'icon', src: '/projects/brawnix/logo.png', alt: 'Brawnix app icon' },
     status: 'live',
     featured: false,
@@ -223,14 +223,14 @@ export const projects: readonly Project[] = [
     capabilities: ['ship', 'grow', 'prototype'],
     role: 'Technical growth product manager and product engineer',
     ownership: [
-      'Built the deterministic on-device workout parser and rule-based interference engine.',
-      'Built a mobile logging architecture on an unmerged parallel branch.',
-      'Designed regional pricing and modelled product economics.',
+      'I built the deterministic on-device workout parser and rule-based interference engine.',
+      'I built a mobile logging architecture on an unmerged parallel branch.',
+      'I designed regional pricing and modelled product economics.',
     ],
     contributionBoundary:
-      'The parser and interference engine are Ananda’s deterministic code, not AI; the Gemini coach layer is teammate-owned, and the parallel architecture branch did not ship to main.',
+      'The parser and interference engine are my deterministic code, not AI; a teammate owns the Gemini coach layer, and my parallel architecture branch never shipped to main.',
     problem: 'Hybrid athletes need one training log that can recognize workout structure and flag conflicting sessions without guessing.',
-    hardDecision: 'The parser returns no result when a log has no recognizable workout shape rather than inventing one.',
+    hardDecision: 'I made the parser return no result when a log has no recognizable workout shape rather than invent one.',
     system: [
       {
         title: 'On-device parser',
@@ -267,7 +267,7 @@ export const projects: readonly Project[] = [
     slug: 'ingatik-recall',
     name: 'Ingatik: Recall',
     oneLine:
-      'A study timer only earns its place if focus turns into recall and reach turns into use, so subscriptions, localization, and analytics instrument the loop down to kill-or-scale gates.',
+      'A study timer only earns its place if focus turns into recall and reach turns into use, so I instrumented the loop with subscriptions, localization, and analytics, all the way down to kill-or-scale gates.',
     logo: { kind: 'icon', src: '/projects/ingatik/logo.png', alt: 'Ingatik: Recall app icon' },
     status: 'live',
     featured: false,
@@ -275,14 +275,14 @@ export const projects: readonly Project[] = [
     capabilities: ['ship', 'grow'],
     role: 'Technical growth product manager and product contributor',
     ownership: [
-      'Owned product decisions, subscriptions, pricing, analytics, localization, and campaign execution.',
-      'Diagnosed the creator-campaign funnel and kept reported causes separate from measured experiments.',
-      'Contributed product code without claiming principal app authorship.',
+      'I owned product decisions, subscriptions, pricing, analytics, localization, and campaign execution.',
+      'I diagnosed the creator-campaign funnel and kept reported causes separate from measured experiments.',
+      'I contributed product code, though I am not the principal author of the app.',
     ],
     contributionBoundary:
-      'Feature Ananda’s product ownership, subscriptions, pricing, analytics, localization, campaign execution, and funnel diagnosis; do not present him as the principal app author.',
+      'The product ownership, subscriptions, pricing, analytics, localization, campaign execution, and funnel diagnosis are mine; I am not the principal author of the app.',
     problem: 'A study timer must connect focus sessions to recall and retention while proving that reach can convert into product use.',
-    hardDecision: 'Creator spend was paused when 195.5K seven-day campaign views produced about 60 registrations and no paid users.',
+    hardDecision: 'I paused creator spend when 195.5K seven-day campaign views produced about 60 registrations and no paid users.',
     system: [
       {
         title: 'Study and recall loop',
@@ -319,7 +319,7 @@ export const projects: readonly Project[] = [
     slug: 'fames',
     name: 'Fames.com',
     oneLine:
-      'Overlooked games need specific criticism rather than encouragement, so a rubric pipeline grounds every judgement in retrieved peers and labels its offline heuristic path all the way to the report.',
+      'Overlooked games need specific criticism rather than encouragement, so I built a rubric pipeline that grounds every judgement in retrieved peers and labels its offline heuristic path all the way to the report.',
     logo: { kind: 'mark', name: 'joystick' },
     status: 'live',
     featured: false,
@@ -328,13 +328,13 @@ export const projects: readonly Project[] = [
     role: 'AI Mentor owner and shared-architecture contributor in a three-person team',
     teamSize: 3,
     ownership: [
-      'Owns the current AI Mentor prompts, rubric, analysis pipeline, evaluation harness, and provider boundaries.',
-      'Contributed to the shared monorepo architecture and cross-service contract.',
+      'I own the current AI Mentor prompts, rubric, analysis pipeline, evaluation harness, and provider boundaries.',
+      'I contributed to the shared monorepo architecture and cross-service contract.',
     ],
     contributionBoundary:
-      'Only the current AI Mentor slice and shared architecture are attributed; older unverified RAG claims are not reused.',
+      'I claim only the current AI Mentor slice and my share of the architecture; the older RAG claims were never verified, so I do not reuse them.',
     problem: 'Finished games with little attention need specific, grounded feedback and a route to creators who could cover them.',
-    hardDecision: 'Offline analysis travels through the same contract as a provider call but is labelled as an offline heuristic all the way to the report.',
+    hardDecision: 'I route offline analysis through the same contract as a provider call, but label it an offline heuristic all the way to the report.',
     system: [
       {
         title: 'Shared platform contract',
@@ -369,7 +369,7 @@ export const projects: readonly Project[] = [
     slug: 'steady',
     name: 'Steady',
     oneLine:
-      'Long-horizon money decisions need arithmetic you can inspect, so every Singapore rule is a versioned browser module carrying its official citation, and the unfinished ones stay switched off.',
+      'Long-horizon money decisions need arithmetic you can inspect, so I made every Singapore rule a versioned browser module carrying its official citation, and left the unfinished ones switched off.',
     logo: { kind: 'icon', src: '/projects/steady/logo.svg', alt: 'Steady app icon' },
     status: 'source-backed',
     featured: false,
@@ -377,11 +377,11 @@ export const projects: readonly Project[] = [
     capabilities: ['harden', 'responsible-ai', 'ship'],
     role: 'Product engineer',
     ownership: [
-      'Built browser-based calculators and long-horizon projection engines.',
-      'Encoded safety defaults for payments, user inputs, and incomplete legal or policy rules.',
+      'I built the browser-based calculators and long-horizon projection engines.',
+      'I encoded safety defaults for payments, user inputs, and incomplete legal or policy rules.',
     ],
     problem: 'Long-term Singapore financial decisions need inspectable calculations and policy context rather than a black-box recommendation.',
-    hardDecision: 'First- and second-year permanent-resident CPF calculations stay unavailable until the official graduated tables are implemented and verified.',
+    hardDecision: 'I keep first- and second-year permanent-resident CPF calculations unavailable until I have implemented and verified the official graduated tables.',
     system: [
       {
         title: 'Versioned rule modules',
@@ -414,19 +414,22 @@ export const projects: readonly Project[] = [
     slug: 'math-me-home',
     name: 'Math Me Home',
     oneLine:
-      'Two-player game flow has to be provable on hardware with no operating system underneath it, so every transition lives in an explicit finite-state machine written in Lucid HDL for an FPGA.',
+      'Two-player game flow has to be provable on hardware with no operating system underneath it, so I put every transition in an explicit finite-state machine written in Lucid HDL for an FPGA.',
     logo: { kind: 'mark', name: 'chip-plus' },
     status: 'source-backed',
     featured: false,
     accent: 'sunshine',
     capabilities: ['prototype', 'harden'],
-    role: 'Hardware and game-logic engineer',
+    role: 'Hardware and game-logic engineer in a seven-person team',
+    teamSize: 7,
     ownership: [
-      'Designed and implemented the full game-logic finite-state machine.',
-      'Integrated inputs, question generation, answer validation, scoring, displays, and board-level debugging.',
+      'I designed and implemented the full game-logic finite-state machine.',
+      'I integrated inputs, question generation, answer validation, scoring, displays, and board-level debugging.',
     ],
+    contributionBoundary:
+      'The game-logic finite-state machine and the hardware integration are mine; the rest of the build was shared with my team, and the second-place finish was the team’s.',
     problem: 'A two-player quiz needs deterministic game flow, scoring, and feedback on constrained physical hardware.',
-    hardDecision: 'Game flow was expressed as an explicit finite-state machine so every transition and output could be reasoned about on the board.',
+    hardDecision: 'I expressed game flow as an explicit finite-state machine so I could reason about every transition and output on the board.',
     system: [
       {
         title: 'Game-state controller',
@@ -464,7 +467,7 @@ export const projects: readonly Project[] = [
     slug: 'cseshell',
     name: 'CSEShell',
     oneLine:
-      'A shell has to survive every kind of bad input without leaking, so a hand-written command loop in C forks, execs, and waits, freeing its parsed arguments on every pass.',
+      'A shell has to survive every kind of bad input without leaking, so I hand-wrote a command loop in C that forks, execs, and waits, freeing its parsed arguments on every pass.',
     logo: { kind: 'mark', name: 'prompt' },
     status: 'source-backed',
     featured: false,
@@ -473,15 +476,15 @@ export const projects: readonly Project[] = [
     role: 'Shell core owner in a three-person team',
     teamSize: 3,
     ownership: [
-      'Built the read-evaluate-print loop, argument parsing, and the fork, exec, and wait path every external command travels.',
-      'Implemented the startup configuration file, PATH resolution, command history, runtime English and Russian message switching, and the interactive prompt and line editor.',
+      'I built the read-evaluate-print loop, argument parsing, and the fork, exec, and wait path every external command travels.',
+      'I implemented the startup configuration file, PATH resolution, command history, runtime English and Russian message switching, and the interactive prompt and line editor.',
     ],
     contributionBoundary:
-      'The shell core and its startup, history, and input handling are mine; the bundled system programs were shared work across the team.',
+      'The shell core and its startup, history, and input handling are mine; the bundled system programs were shared work across my team.',
     problem:
       'A shell has to keep accepting commands after every kind of bad input — a blank line, an unknown program, a directory change — without leaking memory or dying.',
     hardDecision:
-      'The shell records its launch directory at startup and resolves bundled program paths against it, so its own commands keep working after the user changes directory.',
+      'I made the shell record its launch directory at startup and resolve bundled program paths against it, so it keeps finding its own commands after the user changes directory.',
     system: [
       {
         title: 'Command loop',
@@ -519,7 +522,7 @@ export const projects: readonly Project[] = [
     slug: 'onesearch',
     name: 'OneSearch',
     oneLine:
-      'Searching across video and the web leaves you reconciling result lists by hand, so providers are queried in parallel and a ranking pass is forced to return exactly one answer.',
+      'Searching across video and the web leaves you reconciling result lists by hand, so I queried providers in parallel and forced a ranking pass to return exactly one answer.',
     logo: { kind: 'mark', name: 'fan-in' },
     status: 'working-demo',
     featured: false,
@@ -527,11 +530,11 @@ export const projects: readonly Project[] = [
     capabilities: ['prototype', 'harden'],
     role: 'Product engineer',
     ownership: [
-      'Built concurrent search across YouTube and Brave Search.',
-      'Built the AI ranking and answer-synthesis path, three-screen interface, and rate limiting.',
+      'I built concurrent search across YouTube and Brave Search.',
+      'I built the AI ranking and answer-synthesis path, three-screen interface, and rate limiting.',
     ],
     problem: 'People searching across media and the web still have to reconcile several result lists before they can act.',
-    hardDecision: 'The interface enforces a single-result constraint after concurrent provider fan-out and ranking.',
+    hardDecision: 'I made the interface return a single result after concurrent provider fan-out and ranking.',
     system: [
       {
         title: 'Concurrent retrieval',
@@ -547,7 +550,7 @@ export const projects: readonly Project[] = [
       { label: 'Deployment', value: 'Credentialed deployment answers live queries', source: 'live' },
     ],
     limitations: [
-      'The deployment runs on the author’s own provider keys, so throughput is bounded by their quotas.',
+      'The deployment runs on my own provider keys, so throughput is bounded by my quotas.',
     ],
     stack: ['Next.js', 'TypeScript', 'OpenAI', 'YouTube API', 'Brave Search API', 'Vitest'],
     links: { live: 'https://one-search-chi.vercel.app' },
@@ -571,7 +574,7 @@ export const projects: readonly Project[] = [
     slug: 'aegis',
     name: 'Aegis Risk Assessment Console',
     oneLine:
-      'Managers and consultants need different views of the same risk catalogue, so signed sessions and role middleware split the API and the database credential never reaches the browser.',
+      'Managers and consultants need different views of the same risk catalogue, so I split the API with signed sessions and role middleware, and kept the database credential out of the browser.',
     logo: { kind: 'mark', name: 'shield' },
     status: 'source-backed',
     featured: false,
@@ -579,11 +582,11 @@ export const projects: readonly Project[] = [
     capabilities: ['harden', 'prototype'],
     role: 'Full-stack assessment author',
     ownership: [
-      'Built role-specific project-manager and risk-consultant workflows.',
-      'Implemented the API, authentication and authorization, dashboard aggregation, schema, tests, and architecture documentation.',
+      'I built role-specific project-manager and risk-consultant workflows.',
+      'I implemented the API, authentication and authorization, dashboard aggregation, schema, tests, and architecture documentation.',
     ],
     problem: 'Project managers and risk consultants need different views of the same threat catalogue and mitigation progress.',
-    hardDecision: 'The browser never receives the database service credential; every request crosses an authenticated, role-aware API boundary.',
+    hardDecision: 'I never let the database service credential reach the browser; every request crosses an authenticated, role-aware API boundary.',
     system: [
       {
         title: 'Role-aware API',
@@ -615,7 +618,7 @@ export const projects: readonly Project[] = [
     slug: 'personal-workout-tracker',
     name: 'Personal Workout Tracker',
     oneLine:
-      'A gym log stops being useful the moment it needs a network, so the whole tool is a service-worker PWA that keeps every set in local storage and never asks for an account.',
+      'A gym log stops being useful the moment it needs a network, so I built the whole tool as a service-worker PWA that keeps every set in local storage and never asks for an account.',
     logo: { kind: 'icon', src: '/projects/personal-workout-tracker/logo.png', alt: 'Personal Workout Tracker app icon' },
     status: 'source-backed',
     featured: false,
@@ -623,11 +626,11 @@ export const projects: readonly Project[] = [
     capabilities: ['ship', 'prototype'],
     role: 'Solo personal-tool builder',
     ownership: [
-      'Built the workout, set, repetition, and weight tracking interface.',
-      'Implemented local persistence and offline PWA behavior.',
+      'I built the workout, set, repetition, and weight tracking interface.',
+      'I implemented local persistence and offline PWA behavior.',
     ],
     problem: 'A personal training log needs to keep working in the gym without an account, backend, or network dependency.',
-    hardDecision: 'All workout data stays in local storage, keeping the tool simple and offline at the cost of cross-device sync.',
+    hardDecision: 'I keep all workout data in local storage, trading cross-device sync for a tool that stays simple and works offline.',
     system: [
       {
         title: 'Workout log',
@@ -635,7 +638,7 @@ export const projects: readonly Project[] = [
       },
       {
         title: 'Offline persistence',
-        detail: 'A service worker caches the app while browser local storage retains the user’s data.',
+        detail: 'A service worker caches the app while browser local storage keeps the user’s data on their own device.',
       },
     ],
     outcomes: [

@@ -23,8 +23,8 @@ export const profile: Profile = {
       period: 'Aug 2026 – Dec 2026',
       status: 'incoming',
       highlights: [
-        'Incoming to the Asia Digital team to identify and scope AI use cases across generative AI, NLP, and agentic systems.',
-        'Will develop proof-of-concept prototypes with business, product, engineering, and technology stakeholders.',
+        'I am joining the Asia Digital team to identify and scope AI use cases across generative AI, NLP, and agentic systems.',
+        'I will develop proof-of-concept prototypes with business, product, engineering, and technology stakeholders.',
       ],
     },
     {
@@ -33,8 +33,8 @@ export const profile: Profile = {
       period: 'Jun 2026 – Present',
       status: 'current',
       highlights: [
-        'Owns consumer product plays on a 10-week idea-to-kill-or-scale clock, from research and numeric gates through monetization, distribution, and a recommendation to founders.',
-        'Ships TypeScript product work across Expo, React Native, Next.js, Supabase, payments, localization, and analytics alongside product and growth ownership.',
+        'I own consumer product plays on a 10-week idea-to-kill-or-scale clock, from research and numeric gates through monetization, distribution, and a recommendation to founders.',
+        'I ship TypeScript product work across Expo, React Native, Next.js, Supabase, payments, localization, and analytics alongside my product and growth ownership.',
       ],
     },
     {
@@ -43,8 +43,8 @@ export const profile: Profile = {
       period: 'Sep 2025 – Jan 2026',
       status: 'completed',
       highlights: [
-        'Bridged R&D engineers and product teams for spectrum-analyzer development.',
-        'Produced six structured technical lab sheets for FPC1500 and FSH instruments.',
+        'I bridged R&D engineers and product teams for spectrum-analyzer development.',
+        'I produced six structured technical lab sheets for FPC1500 and FSH instruments.',
       ],
     },
   ],
@@ -54,8 +54,8 @@ export const profile: Profile = {
       title: 'Student Research Assistant',
       period: 'May 2025 – Jan 2026',
       highlights: [
-        'Contributed to a culturally aware AI translation project.',
-        'Labelled and curated multilingual datasets for language understanding and data quality.',
+        'I contributed to a culturally aware AI translation project.',
+        'I labelled and curated multilingual datasets for language understanding and data quality.',
       ],
     },
     {
@@ -63,31 +63,31 @@ export const profile: Profile = {
       title: 'Student Researcher',
       period: 'May 2025 – Jan 2026',
       highlights: [
-        'Worked with the Lee Kuan Yew Centre for Innovative Cities on a study targeting 1,000 households across Singapore.',
-        'Applied field data-collection protocols and community-engagement methods to climate resilience research.',
+        'I worked with the Lee Kuan Yew Centre for Innovative Cities on a study targeting 1,000 households across Singapore.',
+        'I applied field data-collection protocols and community-engagement methods to climate resilience research.',
       ],
     },
   ],
   awards: [
     {
       name: 'Dell InnovateDash Hackathon 2026 — Top 5 Finalist',
-      detail: 'Selected as a Top 5 finalist for CareKaki under the SUTD × Dell Technologies problem statement with Care Corner.',
+      detail: 'We were picked as a Top 5 finalist for CareKaki under the SUTD × Dell Technologies problem statement with Care Corner.',
       date: 'Jun 2026',
     },
     {
       name: 'Math Me Home FPGA Game — 2nd Place, Outstanding Project',
-      detail: 'Placed second among approximately 30 teams.',
+      detail: 'We placed second among approximately 30 teams.',
       date: 'Apr 2026',
     },
     {
       name: 'Meowtivation Task Manager — 3rd Place, Outstanding Project',
       detail:
-        'Placed third for an Android task manager built with Firebase authentication and real-time Firestore sync.',
+        'We placed third for an Android task manager built with Firebase authentication and real-time Firestore sync.',
       date: 'Apr 2026',
     },
     {
       name: 'SUTD What The Hack Hackathon — 3rd Place',
-      detail: 'Placed third among 50 teams, approximately 250 participants.',
+      detail: 'We placed third among 50 teams, approximately 250 participants.',
       date: 'Sep 2025',
     },
     {
@@ -98,17 +98,17 @@ export const profile: Profile = {
     },
     {
       name: 'UROP Grant — Fames.com',
-      detail: 'Received a S$1,500 undergraduate research grant.',
+      detail: 'We received a S$1,500 undergraduate research grant.',
     },
     {
       name: 'Baby Shark Fund Award — Fames.com',
       detail:
-        'Second of two Baby Shark Fund grants: S$2,000; the award date is not yet recorded.',
+        'Second of two Baby Shark Fund grants: S$2,000; I have not recorded the award date yet.',
     },
     {
       name: 'Garena Competition — Shortlisted Team, FALSE POSITIVE',
       detail:
-        'The team reached the shortlist and did not win; the competition edition and date are not yet recorded.',
+        'We reached the shortlist and did not win; I have not recorded the competition edition and date yet.',
     },
   ],
   leadership: [
@@ -117,8 +117,8 @@ export const profile: Profile = {
       title: 'Head of University',
       period: 'Nov 2025 – Present',
       highlights: [
-        'Coordinates 10+ mentors, mentors 50+ students, and supports a community of close to 5,000 members.',
-        'Plans roadshows and workshop material across 6+ schools in Surabaya and Bali for scholarship and study-abroad preparation.',
+        'I coordinate 10+ mentors, mentor 50+ students, and support a community of close to 5,000 members.',
+        'I plan roadshows and workshop material across 6+ schools in Surabaya and Bali for scholarship and study-abroad preparation.',
       ],
     },
   ],

@@ -53,7 +53,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html className={archivo.variable} lang="en">
+    /* The head script adds `motion-ready` to <html> before React hydrates,
+       so the server markup and the client DOM disagree on this one
+       element's className by design. Without this, next dev logs a
+       hydration error on every load. It suppresses only this element's
+       own attributes, never its descendants. */
+    <html className={archivo.variable} lang="en" suppressHydrationWarning>
       <head>
         {/* Blocking on purpose: this has to settle before the first paint, or
             the page paints visible, hides itself on hydration, and animates

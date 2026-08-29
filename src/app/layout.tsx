@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Archivo } from 'next/font/google'
+import { MOTION_READY_SCRIPT } from '@/components/motion/motion-ready'
+import { RevealRoot } from '@/components/motion/RevealRoot'
 import { SiteFooter } from '@/components/shell/SiteFooter'
 import { SiteHeader } from '@/components/shell/SiteHeader'
 import { profile } from '@/content/profile'
@@ -52,10 +54,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html className={archivo.variable} lang="en">
+      <head>
+        {/* Blocking on purpose: this has to settle before the first paint, or
+            the page paints visible, hides itself on hydration, and animates
+            content the reader has already seen. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_READY_SCRIPT }} />
+      </head>
       <body className="site-body">
         <SiteHeader />
         {children}
         <SiteFooter />
+        <RevealRoot />
       </body>
     </html>
   )

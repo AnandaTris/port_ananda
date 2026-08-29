@@ -1,24 +1,42 @@
 @import 'tailwindcss';
 
 :root {
-  /* "Peranakan tiles" palette — token names are legacy, values are the glaze set. */
-  --paper: #e9f0e4;
-  --white: #fdfcf7;
-  --ink: #1f3231;
-  --muted-ink: #516560;
-  --volt: #f7c948;
-  --coral: #e05d7a;
-  --cyan: #3a5fc4;
-  --sunshine: #f2a93b;
-  --jade: #2e9e77;
-  --violet: #8b5fbf;
-  /* Labels used to be IBM Plex Mono. They are now the body grotesque set
-     uppercase and tracked, so they read as small caps rather than as code. */
+  /* One warm neutral ground, near-black slate ink, and five accents held to
+     roughly the same lightness and a low chroma, so no project's colour shouts
+     over the project next to it. The glaze set this replaces was saturated
+     enough that the accent, not the work, was the first thing on every page.
+
+     The token names are legacy and stay that way: every surface reads them
+     through color-mix, and renaming ten variables across two thousand lines
+     buys nothing a comment cannot say. --volt is no longer a signal yellow. */
+  --paper: #f1f0ec;
+  --white: #ffffff;
+  --ink: #1b1f23;
+  --muted-ink: #5e666e;
+  --volt: #ded5bd;
+  --coral: #9a5a4d;
+  --cyan: #3f5f7d;
+  --sunshine: #8a6c3c;
+  --jade: #4a6f5d;
+  --violet: #645b7c;
+  /* A mount for screenshots, and the hairline that separates them. An image
+     whose shape does not match its panel has to show something around it; a
+     grey that belongs to no project reads as a mount, where the accent tint
+     that used to sit there read as coloured bands stuck onto the picture. */
+  --surface-sunk: #eae8e3;
+  --hairline: #dedbd4;
+  /* One family, three roles. Display was Instrument Serif and labels were IBM
+     Plex Mono; both are gone. A portfolio that has to be read as a record of
+     what somebody actually shipped is better served by one grotesque set at
+     three weights than by a display serif borrowing authority it has not
+     earned. Archivo carries all three: 600 for headings, 400 for prose, 600
+     uppercase and tracked for labels. */
   --font-label: var(--font-body);
+  --font-display: var(--font-body);
   --radius-card: 1.4rem;
   --radius-field: 0.85rem;
-  --shadow-soft: 0 1px 2px rgb(31 50 49 / 5%), 0 10px 26px -12px rgb(31 50 49 / 16%);
-  --shadow-lift: 0 2px 4px rgb(31 50 49 / 7%), 0 22px 44px -16px rgb(31 50 49 / 24%);
+  --shadow-soft: 0 1px 2px rgb(27 31 35 / 4%), 0 8px 22px -14px rgb(27 31 35 / 14%);
+  --shadow-lift: 0 1px 3px rgb(27 31 35 / 5%), 0 18px 38px -18px rgb(27 31 35 / 18%);
 }
 
 html {
@@ -78,7 +96,7 @@ a {
   top: 0;
   z-index: 50;
   border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
-  background: rgb(233 240 228 / 90%);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
   backdrop-filter: blur(12px);
 }
 
@@ -231,14 +249,13 @@ a {
 }
 
 .hero h1 {
-  /* Instrument Serif runs narrower and optically lighter than the 800-weight
-     grotesque this replaced, so the measure widens and the type scales up to
-     hold the same presence. */
+  /* A narrow measure is what makes this size read as a statement rather than a
+     paragraph: three or four words a line, broken where the sentence breaks. */
   max-width: 13ch;
   margin: 0;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(2.9rem, 6.5vw, 6.5rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.028em;
   line-height: 0.94;
   text-wrap: balance;
@@ -294,13 +311,17 @@ a {
   transition: box-shadow 160ms ease, transform 160ms ease;
 }
 
+/* The primary action is the darkest thing on the page rather than the most
+   colourful one. A pale accent fill could not both stay quiet and still read
+   as the one button that matters. */
 .button-primary {
-  background: var(--volt);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .button:hover {
   box-shadow: var(--shadow-lift);
-  transform: translateY(-2px) rotate(-0.5deg);
+  transform: translateY(-2px);
 }
 
 @media (min-width: 64.0625rem) {
@@ -318,9 +339,9 @@ a {
 .related-projects h2,
 .not-found h1 {
   margin: 0;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(2.35rem, 5vw, 5rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.018em;
   line-height: 1.02;
   text-wrap: balance;
@@ -412,8 +433,8 @@ a {
 }
 
 .project-media-fallback-heading strong {
-  font-family: var(--font-display), serif;
-  font-weight: 400;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -496,9 +517,9 @@ a {
 }
 
 .detail-panel-heading h2 {
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(1.85rem, 3.4vw, 3.1rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.014em;
   line-height: 1.05;
 }
@@ -566,7 +587,6 @@ a {
 .detail-stack ul,
 .result-groups ul,
 .result-links ul,
-.case-study-capabilities,
 .related-projects ul {
   margin: 0;
   padding: 0;
@@ -621,8 +641,7 @@ a {
   gap: 0.4rem;
 }
 
-.detail-stack li,
-.case-study-capabilities li {
+.detail-stack li {
   padding: 0.45rem 0.75rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--ink) 7%, var(--white));
@@ -636,19 +655,49 @@ a {
   gap: 1.4rem;
 }
 
-/* The facts list is short and the groups beside it are long, so on a wide screen
-   the two-column split left half the panel empty. `display: contents` drops this
-   wrapper's box and lets the groups place themselves in the panel's own grid,
-   which fills the row instead of stacking everything down one side. */
+/* On a wide screen the panel is one grid and every group is placed in it
+   directly — `display: contents` drops the wrapper's box so the groups do not
+   all stack down one side of a two-column split.
+ *
+ * The facts run across the top rather than down the first column. Set as a
+ * column, five rows of label-and-value stood twice as tall as anything beside
+ * them, and the panel took that height with two thirds of it empty. */
 @media (min-width: 75rem) {
   .detail-proof-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
     column-gap: clamp(1.5rem, 3vw, 3rem);
-    row-gap: 2rem;
+    row-gap: 2.25rem;
+  }
+
+  .result-facts {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0 clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .result-facts > div {
+    display: block;
+    padding-block: 0.8rem 0;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 17%, transparent);
+    border-bottom: none;
+  }
+
+  .result-facts dd {
+    margin-top: 0.45rem;
   }
 
   .result-groups {
     display: contents;
+  }
+
+  /* Links wrap onto a second row of groups, and the row above is as tall as
+     the outcomes column — the tallest of the three. Putting them under that
+     column means they follow the group above them instead of hanging a row
+     below a one-sentence list. */
+  .result-links {
+    grid-column: 1;
   }
 }
 
@@ -818,9 +867,9 @@ a {
 
 .project-card h3 {
   margin: 0;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(1.65rem, 2.8vw, 2.45rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.02;
 }
@@ -872,9 +921,19 @@ a {
   padding: clamp(3rem, 7vw, 7rem) 0 clamp(5rem, 9vw, 9rem);
 }
 
+/* One column, copy above the evidence.
+ *
+ * This was two columns, and the picture was whatever shape the copy beside it
+ * happened to be: a tinted band above and below anything wider than the column,
+ * or — once the column stopped stretching — an empty white third of the card
+ * under anything shorter. Neither is a thing you can fix by choosing better
+ * numbers, because thirteen projects supply five different aspect ratios and no
+ * fixed column matches all of them.
+ *
+ * Stacked, the picture sets its own height and spans the full card, so every
+ * screenshot is both larger and free of anything drawn around it. */
 .case-study-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
   overflow: clip;
   border-radius: var(--radius-card);
   background: var(--white);
@@ -895,46 +954,62 @@ a {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
-  margin-bottom: clamp(2.5rem, 7vw, 6rem);
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
 }
 
-.case-study-status {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.65rem 1rem;
-  margin-bottom: 1.5rem;
-  text-transform: none;
-}
-
-.case-study-status > span:last-child {
-  max-width: 34rem;
-  color: var(--muted-ink);
-}
-
-/* The tile rides with the eyebrow, not the h1: the title wraps to two or three
-   lines in this column, and a tile centred against a wrapped title drifts away
-   from the words it is meant to label. */
+/* Mark and status on one line. They were three stacked blocks with a clear
+   96px between the first and the second, which read as a layout that had lost
+   something rather than as breathing room. */
 .case-study-identity {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
 }
 
-.case-study h1 {
+.case-study-role {
+  max-width: 34rem;
+  margin: 0.9rem 0 0;
+  color: var(--muted-ink);
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.case-study-hero h1 {
   /* 13.5cqi keeps the longest title word ("Assessment", 6.1x the font size in
      Rubik 800) at ~82% of the column at every width, so it never has to break.
      A display title never breaks mid-word — it gets a box wide enough to hold
      its longest word instead, which is why overflow-wrap stays normal. */
-  margin: 0.8rem 0 1.3rem;
-  font-family: var(--font-display), serif;
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(2.6rem, 13.5cqi, 4.75rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.022em;
   line-height: 0.98;
   overflow-wrap: normal;
   hyphens: none;
   text-wrap: balance;
+}
+
+/* Title and standfirst share the row once the card is full width. The title
+   is sized in cqi against the copy block, and the clamp caps it well inside
+   its own column, so the longest name here still sets on one line. */
+.case-study-headline {
+  display: grid;
+  gap: clamp(1.1rem, 2.5vw, 2.25rem);
+}
+
+@media (min-width: 64.0625rem) {
+  .case-study-headline {
+    /* Both columns start at the top. Bottom-aligning them looked right for the
+       one three-line title and left a head of empty card above the other
+       twelve, which are one or two lines against a four-line standfirst. */
+    align-items: start;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
 }
 
 .case-study-deck {
@@ -945,44 +1020,89 @@ a {
   line-height: 1.5;
 }
 
-.case-study-capabilities {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 2rem;
-}
-
 .case-study-visual {
   min-width: 0;
   margin: 0;
-  background: color-mix(in srgb, var(--project-accent) 20%, var(--paper));
+  background: var(--surface-sunk);
 }
 
 .case-study-media {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  align-items: center;
+  align-content: start;
 }
 
 .case-study-media img {
-  width: 100%;
-  max-height: 43rem;
-  object-fit: contain;
+  display: block;
 }
 
 .case-study-media figcaption {
-  padding: 0.7rem 0.9rem;
-  background: var(--white);
   color: var(--muted-ink);
+  font-size: 0.74rem;
+  line-height: 1.5;
 }
 
-.case-study-media[data-count='2'] {
-  grid-template-columns: 1fr 1fr;
-  column-gap: 0.9rem;
+/* ── Wide pictures: the full width of the card ──────────────────────────────
+ *
+ * Shown at their own aspect ratio, so the panel takes its height from the
+ * picture and nothing is letterboxed. Where two share the panel, the 1px gap
+ * lets the ground through as a seam between them rather than as a margin
+ * around them. */
+.case-study-media[data-fit='bleed'] .case-study-frame {
+  display: grid;
+  gap: 1px;
+  background: var(--surface-sunk);
 }
 
-.case-study-media[data-count='2'] figcaption {
-  grid-column: 1 / -1;
+.case-study-media[data-fit='bleed'] img {
+  width: 100%;
+  height: auto;
+}
+
+.case-study-media[data-fit='bleed'] figcaption {
+  padding: 0.7rem 0.95rem;
+  background: var(--white);
+  box-shadow: inset 0 1px 0 var(--hairline);
+}
+
+/* ── Narrow pictures: a mount, cut to the picture ───────────────────────────
+ *
+ * A phone screenshot stretched to the width of this card would be two thousand
+ * pixels tall, and a square illustration would take the room a product shot
+ * earns. Both are bounded by height instead — but a full-width panel around a
+ * 322px-wide phone is nine parts ground to one part picture, which is the band
+ * the accent tint used to draw, in grey.
+ *
+ * So the mount shrinks to what it holds: `justify-items: center` leaves the
+ * frame at fit-content, and the caption sits outside it on the card. */
+.case-study-media[data-fit='mount'] {
+  justify-items: center;
+  gap: 1rem;
+  padding: clamp(1.4rem, 4vw, 3.75rem);
+  background: var(--white);
+}
+
+.case-study-media[data-fit='mount'] .case-study-frame {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border-radius: var(--radius-card);
+  background: var(--surface-sunk);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.case-study-media[data-fit='mount'] img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: min(38rem, 72vh);
+}
+
+.case-study-media[data-fit='mount'] figcaption {
+  max-width: 44rem;
+  text-align: center;
 }
 
 .case-study-diagram {
@@ -992,8 +1112,9 @@ a {
   padding: clamp(1.4rem, 4vw, 3.75rem);
 }
 
+/* A label, not a title. At 6rem it competed with the h1 six inches above it. */
 .case-study-diagram .project-media-fallback-heading strong {
-  font-size: clamp(2.7rem, 5.5vw, 6rem);
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
 }
 
 .case-study-details {
@@ -1007,9 +1128,18 @@ a {
   box-shadow: var(--shadow-soft);
 }
 
+/* Everything inside the excerpt is capped at a 48rem measure — the prose, the
+   controls, the cast strip — so on a wide screen a full-width card was a third
+   empty down its right side. The card takes the width of what it holds and
+   centres instead, which also sets the demonstration apart from the full-width
+   panels above and below it. */
 .interactive-excerpt {
+  --excerpt-pad: clamp(1.35rem, 3vw, 2.75rem);
+
+  max-width: calc(48rem + 2 * var(--excerpt-pad));
   margin-top: clamp(3rem, 7vw, 7rem);
-  padding: clamp(1.35rem, 3vw, 2.75rem);
+  margin-inline: auto;
+  padding: var(--excerpt-pad);
   border-radius: var(--radius-card);
   background: var(--white);
   box-shadow: var(--shadow-soft);
@@ -1023,9 +1153,9 @@ a {
 
 .interactive-excerpt-heading h2 {
   margin: 0;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.016em;
   line-height: 1.02;
 }
@@ -1220,14 +1350,122 @@ a {
 }
 
 .excerpt-score strong,
-.excerpt-persona > strong {
+.excerpt-persona strong {
   display: block;
   margin-top: 0.35rem;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(2.35rem, 6vw, 4.75rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.02;
+}
+
+/* ── The cast ────────────────────────────────────────────────────────────────
+ *
+ * The mascots are the product's own art and keep the product's near-black
+ * body: the accents were computed to clear a colour-blind separation floor
+ * against that body, and repainting the bubble to this site's paper would
+ * quietly throw the check away.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+.yapper-mark {
+  display: block;
+  flex: none;
+  height: auto;
+}
+
+.yapper-verdict {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2.6vw, 1.6rem);
+}
+
+.yapper-verdict > div {
+  min-width: 0;
+}
+
+/* The name shares its line with a 104px mascot now, so it runs at roughly two
+   thirds of the score excerpt's display size instead of matching it. */
+.excerpt-persona strong {
+  margin-top: 0.3rem;
+  font-size: clamp(1.85rem, 4.4vw, 3.15rem);
+}
+
+.excerpt-persona .yapper-tagline {
+  margin-top: 0.5rem;
+  max-width: 34ch;
+  color: var(--muted-ink);
+  line-height: 1.45;
+}
+
+.excerpt-persona .yapper-tell {
+  margin-top: 0.7rem;
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Below the match floor the rule is naming the nearest yapper, not calling it.
+   The label already says so; the mascot pulls back to match. */
+.excerpt-persona[data-confident='false'] .yapper-verdict .yapper-mark {
+  opacity: 0.55;
+}
+
+.yapper-cast {
+  padding-top: 1.3rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.yapper-cast > ul {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.yapper-cast li {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.35rem;
+  border-radius: var(--radius-field);
+  text-align: center;
+}
+
+.yapper-cast li span {
+  color: var(--muted-ink);
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+/* Everyone stays on the strip and stays readable. Only the round's answer is
+   lit, so the four that were not named still read as part of the cast rather
+   than as disabled options. */
+.yapper-cast li[data-active='false'] .yapper-mark {
+  opacity: 0.3;
+}
+
+.yapper-cast li[data-active='true'] {
+  background: color-mix(in srgb, var(--cyan) 10%, var(--white));
+}
+
+.yapper-cast li[data-active='true'] span {
+  color: var(--ink);
+}
+
+.yapper-cast-note {
+  margin: 1rem 0 0;
+  color: var(--muted-ink);
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 /* The measurements the rule actually read, in the round's own numbers. */
@@ -1319,16 +1557,11 @@ a {
   outline-offset: 3px;
 }
 
-.related-projects li > p {
-  margin: 0 0 2rem;
-  color: var(--muted-ink);
-}
-
 .related-projects h3 {
   margin: 0;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.012em;
   line-height: 1.1;
 }
@@ -1425,7 +1658,11 @@ a {
 }
 
 .stack-groups {
+  /* Each card is as tall as its own list. Stretched to match its neighbour, a
+     one-row group carried an empty second row of white, and seven groups in
+     two columns meant four of them did. */
   display: grid;
+  align-items: start;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: clamp(2.5rem, 6vw, 4rem);
@@ -1501,8 +1738,8 @@ a {
 .experience-entry h3,
 .profile-compact-list h3 {
   margin: 0;
-  font-family: var(--font-display), serif;
-  font-weight: 400;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
   letter-spacing: -0.014em;
   line-height: 1.05;
 }
@@ -1622,9 +1859,9 @@ a {
 /* The address itself, at display size. The section used to open on a paragraph
    about what makes a good collaboration; the address was three lines below it. */
 .contact-email {
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(1.6rem, 4.5vw, 3.25rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.018em;
   line-height: 1.05;
   overflow-wrap: anywhere;
@@ -1666,9 +1903,9 @@ a {
 .section-heading h2 {
   max-width: 18ch;
   margin: 0;
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   font-size: clamp(2rem, 4vw, 4rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.016em;
   line-height: 1.02;
 }
@@ -1786,15 +2023,13 @@ a {
     flex-direction: column;
   }
 
-  .case-study-hero {
-    grid-template-columns: 1fr;
-  }
-
   .case-study-back {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
-  .case-study-visual {
+  /* Only the drawn fallback needs a floor. Applying it to every visual put the
+     bands back on any screenshot shorter than 22rem at this width. */
+  .case-study-diagram {
     min-height: 22rem;
   }
 
@@ -1845,6 +2080,25 @@ a {
   .excerpt-control-grid,
   .excerpt-persona dl {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* The cast stays five across down to 320 — splitting it over two rows would
+     stop reading as "these are the five". It buys the room by pulling in the
+     cell padding and dropping both mascot sizes. */
+  .yapper-verdict .yapper-mark {
+    width: 66px;
+  }
+
+  .yapper-cast > ul {
+    gap: 0.3rem;
+  }
+
+  .yapper-cast li {
+    padding: 0.6rem 0.15rem;
+  }
+
+  .yapper-cast .yapper-mark {
+    width: 38px;
   }
 }
 

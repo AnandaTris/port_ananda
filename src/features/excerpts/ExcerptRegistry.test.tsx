@@ -43,13 +43,6 @@ const approvedExcerpts = [
     resultsHref: '#das-dial-results',
   },
   {
-    slug: 'cited',
-    heading: 'Cited visibility score',
-    loadLabel: 'Load Cited visibility score interactive excerpt',
-    resultsLabel: 'See Cited results',
-    resultsHref: '#cited-results',
-  },
-  {
     slug: 'fix-yo-yap',
     heading: 'Fix Yo Yap persona card',
     loadLabel: 'Load Fix Yo Yap persona card interactive excerpt',
@@ -120,23 +113,6 @@ test('shows the exact DAS disclaimer and resets the selected example', async () 
 
   fireEvent.click(screen.getByRole('button', { name: 'Reset' }))
   expect(screen.getByRole('radio', { name: /enuf/i })).toBeChecked()
-})
-
-test('discloses Cited modelled data and resets its deterministic controls', async () => {
-  render(<ExcerptRegistry slug="cited" />)
-
-  fireEvent.click(
-    screen.getByRole('button', { name: 'Load Cited visibility score interactive excerpt' }),
-  )
-  await screen.findByRole('heading', { name: 'Cited visibility score' })
-  expect(screen.getByText(/modelled data/i)).toBeInTheDocument()
-  fireEvent.change(screen.getByLabelText('Rank'), { target: { value: '2' } })
-  fireEvent.change(screen.getByLabelText('Sentiment'), { target: { value: 'neutral' } })
-  expect(screen.getByRole('status')).toHaveTextContent('58.62')
-
-  fireEvent.click(screen.getByRole('button', { name: 'Reset' }))
-  expect(screen.getByLabelText('Rank')).toHaveValue('1')
-  expect(screen.getByRole('status')).toHaveTextContent('100.00')
 })
 
 test('discloses fixed Fix Yo Yap rules and resets the persona preset', async () => {

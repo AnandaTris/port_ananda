@@ -1,6 +1,7 @@
 import { ExternalLink } from '@/components/ui/ExternalLink'
 import { StatusBadge } from '@/components/ui/StatusBadge'
-import type { Project, ProjectStatus } from '@/content/types'
+import { statusDetails } from '@/content/status'
+import type { Project } from '@/content/types'
 
 /**
  * The three parts of a case study. These used to be selectable "lenses" the
@@ -12,16 +13,6 @@ export type DetailSection = 'overview' | 'build' | 'results'
 type ProjectDetailPanelProps = {
   project: Project
   section: DetailSection
-}
-
-const statusDetails: Record<
-  ProjectStatus,
-  { label: string; tone: 'jade' | 'cyan' | 'coral' | 'sunshine' }
-> = {
-  live: { label: 'Live product', tone: 'jade' },
-  'working-demo': { label: 'Working demo', tone: 'cyan' },
-  'source-backed': { label: 'Source-backed', tone: 'sunshine' },
-  prototype: { label: 'Prototype', tone: 'coral' },
 }
 
 const linkLabels: Record<keyof Project['links'], string> = {

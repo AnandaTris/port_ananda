@@ -9,7 +9,7 @@ import type { StackGroup } from './types'
 export const stackGroups: readonly StackGroup[] = [
   {
     name: 'Languages',
-    items: ['TypeScript', 'JavaScript', 'Python', 'C', 'C#', 'Kotlin', 'Lucid HDL'],
+    items: ['TypeScript', 'JavaScript', 'Python', 'C', 'C#', 'Lucid HDL'],
   },
   {
     name: 'Web and mobile',
@@ -21,21 +21,18 @@ export const stackGroups: readonly StackGroup[] = [
       'Vite',
       'Hono',
       'TanStack Router',
-      'Reanimated',
       'PWA',
       'Workbox',
-      'Web APIs',
     ],
   },
   {
     name: 'Backend and data',
-    items: ['FastAPI', 'Flask', 'Node.js', 'Supabase', 'Postgres', 'SQLite', 'localStorage'],
+    items: ['FastAPI', 'Supabase', 'Postgres', 'localStorage'],
   },
   {
     name: 'AI and ML',
     items: [
       'OpenAI',
-      'Anthropic',
       'Gemini',
       'Gemini Vision',
       'Transformers.js',
@@ -46,7 +43,7 @@ export const stackGroups: readonly StackGroup[] = [
   },
   {
     name: 'Testing and CI',
-    items: ['Vitest', 'Jest', 'pytest', 'Playwright', 'GNU Make', 'Bash', 'GitHub Actions', 'Docker'],
+    items: ['Vitest', 'Jest', 'pytest', 'GNU Make', 'Bash', 'GitHub Actions', 'Docker'],
   },
   {
     name: 'Product and growth',
@@ -61,8 +58,6 @@ export const stackGroups: readonly StackGroup[] = [
       'FPGA',
       'Alchitry Au',
       'Vivado',
-      'Leaflet',
-      'OpenStreetMap',
       'YouTube API',
       'Brave Search API',
     ],

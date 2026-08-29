@@ -30,32 +30,11 @@ export const projectMarks = {
     d: 'M4.5 10v4M8.5 6v12M12 8.5v7M15.5 4.5v15M19.5 9.5v5',
   },
 
-  /* A rising score inside brackets — the citation marks are the point, since
-     the product's claim is that the number can be traced back. */
-  'bracketed-score': {
-    title: 'A rising bar chart between two brackets',
-    d: 'M9 4.5H5v15h4M15 4.5h4v15h-4M9.5 15v-2.5M12 15v-5M14.5 15v-7.5',
-  },
-
   /* An arcade joystick. A d-pad was the first attempt and read as a medical
      cross at tile size; a ball on a stick is only ever one thing. */
   joystick: {
     title: 'An arcade joystick',
     d: 'M9.4 7a2.6 2.6 0 1 0 5.2 0 2.6 2.6 0 1 0-5.2 0M12 9.6v4.4M6 19.5l2.2-5.5h7.6l2.2 5.5z',
-  },
-
-  /* A source and the signal leaving it. Commentary is generated from a match
-     that is already happening, so the dot comes first and the arcs follow. */
-  broadcast: {
-    title: 'A point emitting two pairs of broadcast arcs',
-    d: 'M10.4 12a1.6 1.6 0 1 0 3.2 0 1.6 1.6 0 1 0-3.2 0M7.76 7.76A6 6 0 0 0 7.76 16.24M16.24 16.24A6 6 0 0 0 16.24 7.76M5.28 5.28A9.5 9.5 0 0 0 5.28 18.72M18.72 18.72A9.5 9.5 0 0 0 18.72 5.28',
-  },
-
-  /* A flat traffic line with one real spike in it. The tool exists to tell that
-     shape apart from ordinary noise, so the noise is drawn too. */
-  spike: {
-    title: 'A flat traffic line broken by one tall spike',
-    d: 'M3.5 15.5l4-1 3 1L14 6l3.5 9.5 3-1',
   },
 
   /* A chip with its legs and an operator on the die: arithmetic that is wired,
@@ -77,13 +56,6 @@ export const projectMarks = {
   shield: {
     title: 'A shield',
     d: 'M12 3.5l7 2.6v5.4c0 4.3-2.9 7.6-7 9.5-4.1-1.9-7-5.2-7-9.5V6.1z',
-  },
-
-  /* Water, and the pin that says where it is. Both halves matter: the app is a
-     map of drinking fountains, not a map and not a fountain. */
-  droplet: {
-    title: 'A water droplet',
-    d: 'M12 3.2c3.7 4.3 5.7 7.2 5.7 9.6a5.7 5.7 0 0 1-11.4 0c0-2.4 2-5.3 5.7-9.6z',
   },
 
   /* A prompt waiting for input. It is the first thing the shell prints and the

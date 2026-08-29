@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { yappers, yappersByName } from '@/content/yappers'
 import { excerptDetails } from './excerpt-config'
 import { matchPersona, type SampleMetrics } from './yap'
+import { YapperMark } from './YapperMark'
 
 /**
  * Presets are named for what was measured, never for the yapper they produce.
@@ -71,6 +73,7 @@ export function YapExcerpt() {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const selectedPreset = personaPresets[selectedIndex]
   const match = matchPersona(selectedPreset.metrics)
+  const matched = yappersByName[match.persona]
 
   return (
     <section aria-labelledby="yap-excerpt-title" className="interactive-excerpt">
@@ -78,8 +81,9 @@ export function YapExcerpt() {
         <p className="eyebrow">Interactive excerpt</p>
         <h2 id="yap-excerpt-title">Fix Yo Yap persona card</h2>
         <p>
-          Switch between fixed metric presets to see which of the five yappers the labelling rule
-          names, and the measurements it names them on.
+          Five ways of talking, each one good at something and paying for it. Switch between fixed
+          metric presets to see which yapper the labelling rule names, and the measurements it names
+          them on.
         </p>
       </header>
 
@@ -116,11 +120,25 @@ export function YapExcerpt() {
           </div>
         </fieldset>
 
-        <div aria-live="polite" className="excerpt-result excerpt-persona" role="status">
-          <p className="excerpt-result-label">
-            {match.confident ? 'This round is' : 'Nothing crossed the line, so it landed closest to'}
-          </p>
-          <strong>{match.persona}</strong>
+        <div
+          aria-live="polite"
+          className="excerpt-result excerpt-persona"
+          data-confident={match.confident}
+          role="status"
+        >
+          <div className="yapper-verdict">
+            <YapperMark width={104} yapper={matched} />
+            <div>
+              <p className="excerpt-result-label">
+                {match.confident
+                  ? 'This round is'
+                  : 'Nothing crossed the line, so it landed closest to'}
+              </p>
+              <strong>{match.persona}</strong>
+              <p className="yapper-tagline">{matched.tagline}</p>
+              <p className="yapper-tell">{matched.tell}</p>
+            </div>
+          </div>
           <ul className="excerpt-receipts">
             {match.because.map((receipt) => (
               <li key={receipt}>{receipt}</li>
@@ -153,6 +171,30 @@ export function YapExcerpt() {
             </div>
           </dl>
         </div>
+
+        {/* The cast, always all five. It is deliberately not a control: a yapper
+            is a reading of a score that already exists, and a row of five
+            clickable faces would quietly turn the label into the thing being
+            chosen. */}
+        <div className="yapper-cast">
+          <p className="excerpt-result-label">The cast</p>
+          <ul>
+            {yappers.map((yapper) => (
+              <li
+                aria-current={yapper.name === match.persona ? true : undefined}
+                data-active={yapper.name === match.persona}
+                key={yapper.id}
+              >
+                <YapperMark width={46} yapper={yapper} />
+                <span>{yapper.name}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="yapper-cast-note">
+            The metrics pick the yapper. Nothing here is selectable, and no yapper can move a score.
+          </p>
+        </div>
+
         <button className="excerpt-reset" onClick={() => setSelectedIndex(0)} type="button">
           Reset
         </button>

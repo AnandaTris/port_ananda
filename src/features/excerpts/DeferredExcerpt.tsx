@@ -9,7 +9,6 @@ const excerptLoaders: Record<ApprovedExcerptSlug, () => Promise<ExcerptModule>> 
   carekaki: () =>
     import('./GuardianExcerpt').then(({ GuardianExcerpt }) => ({ default: GuardianExcerpt })),
   'das-dial': () => import('./DialExcerpt').then(({ DialExcerpt }) => ({ default: DialExcerpt })),
-  cited: () => import('./CitedExcerpt').then(({ CitedExcerpt }) => ({ default: CitedExcerpt })),
   'fix-yo-yap': () => import('./YapExcerpt').then(({ YapExcerpt }) => ({ default: YapExcerpt })),
 }
 

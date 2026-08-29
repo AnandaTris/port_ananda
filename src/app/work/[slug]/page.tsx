@@ -6,23 +6,14 @@ import { ProjectLogo } from '@/components/project/ProjectLogo'
 import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { projects } from '@/content/projects'
-import type { Project, ProjectStatus } from '@/content/types'
+import { statusDetails } from '@/content/status'
+import type { Project } from '@/content/types'
 import { ExcerptRegistry } from '@/features/excerpts/ExcerptRegistry'
 import { getProject } from '@/lib/projects'
 import { SITE_URL } from '@/lib/site'
 
 type WorkPageProps = {
   params: Promise<{ slug: string }>
-}
-
-const statusDetails: Record<
-  ProjectStatus,
-  { label: string; tone: 'jade' | 'cyan' | 'coral' | 'sunshine' }
-> = {
-  live: { label: 'Live product', tone: 'jade' },
-  'working-demo': { label: 'Working demo', tone: 'cyan' },
-  'source-backed': { label: 'Source-backed', tone: 'sunshine' },
-  prototype: { label: 'Prototype', tone: 'coral' },
 }
 
 export function generateStaticParams() {
@@ -95,20 +86,17 @@ export default async function WorkPage({ params }: WorkPageProps) {
           <Link className="text-link case-study-back" href="/#projects">
             ← Back to projects
           </Link>
-          <div className="case-study-status">
-            <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
-            <span>{project.role}</span>
-          </div>
           <div className="case-study-identity">
             <ProjectLogo logo={project.logo} size={56} />
+            <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
           </div>
-          <h1>{project.name}</h1>
-          <p className="case-study-deck">{project.oneLine}</p>
-          <ul aria-label="Project capabilities" className="case-study-capabilities">
-            {project.capabilities.map((capability) => (
-              <li key={capability}>{capability}</li>
-            ))}
-          </ul>
+          <div className="case-study-headline">
+            <h1>{project.name}</h1>
+            <div>
+              <p className="case-study-deck">{project.oneLine}</p>
+              <p className="case-study-role">{project.role}</p>
+            </div>
+          </div>
         </div>
         <ProjectMediaVisual priority project={project} />
       </header>
@@ -126,7 +114,6 @@ export default async function WorkPage({ params }: WorkPageProps) {
         <ul>
           {related.map((item) => (
             <li key={item.slug}>
-              <p>{item.capabilities.filter((capability) => project.capabilities.includes(capability)).join(' · ')}</p>
               <h3>
                 <Link href={`/work/${item.slug}`}>{item.name}</Link>
               </h3>

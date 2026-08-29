@@ -3,7 +3,7 @@ import { projects } from '@/content/projects'
 import { ProjectMediaVisual } from './ProjectMediaVisual'
 
 const mediaProject = projects.find((project) => project.slug === 'fix-yo-yap')!
-const noMediaProject = projects.find((project) => project.slug === 'das-dial')!
+const noMediaProject = projects.find((project) => project.slug === 'cseshell')!
 
 test('replaces a failed screenshot with a titled status and system fallback', () => {
   render(<ProjectMediaVisual project={mediaProject} />)
@@ -15,10 +15,13 @@ test('replaces a failed screenshot with a titled status and system fallback', ()
   fireEvent.error(image)
 
   expect(screen.queryByRole('img', { name: mediaProject.media[0].alt })).not.toBeInTheDocument()
-  const fallback = screen.getByRole('img', { name: 'Fix Yo Yap media fallback' })
-  expect(within(fallback).getByText('Fix Yo Yap')).toBeInTheDocument()
-  expect(within(fallback).getByText('Live product')).toBeInTheDocument()
+  const fallback = screen.getByRole('img', { name: 'Fix Yo Yap system diagram' })
+  expect(within(fallback).getByText('No screenshot')).toBeInTheDocument()
   expect(within(fallback).getByText('Deterministic scorer')).toBeInTheDocument()
+  // The hero already carries the name and the status. The panel that stands in
+  // for a missing picture must not say them a second time.
+  expect(within(fallback).queryByText('Fix Yo Yap')).not.toBeInTheDocument()
+  expect(within(fallback).queryByText('Shipped')).not.toBeInTheDocument()
 })
 
 test('renders every media item a project declares', () => {
@@ -29,10 +32,14 @@ test('renders every media item a project declares', () => {
 })
 
 test('uses the same immediate fallback when a project has no media', () => {
+  // Guards the fixture as much as the component: this test only says anything
+  // once the project it picks genuinely ships without screenshots.
+  expect(noMediaProject.media).toHaveLength(0)
+
   render(<ProjectMediaVisual project={noMediaProject} />)
 
-  const fallback = screen.getByRole('img', { name: 'DAS D.I.A.L. media fallback' })
+  const fallback = screen.getByRole('img', { name: 'CSEShell system diagram' })
   expect(fallback).toHaveClass('case-study-visual', 'case-study-diagram')
-  expect(within(fallback).getByText('Source-backed')).toBeInTheDocument()
-  expect(within(fallback).getByText('Rules over extracted evidence')).toBeInTheDocument()
+  expect(within(fallback).getByText('Command loop')).toBeInTheDocument()
+  expect(within(fallback).queryByText('CSEShell')).not.toBeInTheDocument()
 })

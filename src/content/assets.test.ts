@@ -4,7 +4,7 @@ import { assetProvenance } from './assets'
 import { projects } from './projects'
 
 test('tracks every imported public asset', () => {
-  expect(assetProvenance.length).toBe(20)
+  expect(assetProvenance.length).toBe(23)
   for (const asset of assetProvenance) {
     expect(existsSync(join(process.cwd(), 'public', asset.publicPath))).toBe(true)
     expect(

@@ -2,11 +2,16 @@ import type { Project } from './types'
 
 const lastVerified = '2026-08-21'
 
+/** Evidence captured after the 08-21 sweep carries its own date rather than
+    quietly ageing the whole file forward. */
+const verifiedAug29 = '2026-08-29'
+
 export const projects: readonly Project[] = [
   {
     slug: 'fix-yo-yap',
     name: 'Fix Yo Yap',
-    oneLine: 'An impromptu speaking game that turns an auditable score into a memorable persona.',
+    oneLine:
+      'Speaking feedback gets ignored when it arrives as a bare number, so seven metrics drawn from transcription and pitch analysis resolve into a persona under a versioned scoring contract.',
     logo: { kind: 'icon', src: '/projects/fix-yo-yap/logo.png', alt: 'Fix Yo Yap app icon' },
     status: 'live',
     featured: true,
@@ -57,9 +62,10 @@ export const projects: readonly Project[] = [
   {
     slug: 'carekaki',
     name: 'CareKaki',
-    oneLine: 'A trilingual care navigator that keeps high-consequence actions behind deterministic safeguards and human gates.',
+    oneLine:
+      'Care navigation goes wrong when a model is trusted with consequences, so the LLM only listens and writes while deterministic rules route every action and hold the irreversible ones for a human.',
     logo: { kind: 'icon', src: '/projects/carekaki/logo.svg', alt: 'CareKaki app icon' },
-    status: 'working-demo',
+    status: 'source-backed',
     featured: true,
     accent: 'jade',
     capabilities: ['responsible-ai', 'harden', 'prototype'],
@@ -106,7 +112,8 @@ export const projects: readonly Project[] = [
   {
     slug: 'das-dial',
     name: 'DAS D.I.A.L.',
-    oneLine: 'A dyslexia screening and error-pattern system with transparent verdict rules, abstention, and local NLP.',
+    oneLine:
+      'Screening should explain its uncertainty rather than hand back a diagnosis, so a local NLP pipeline extracts error patterns and explicit thresholds decide the verdict — or abstain from one.',
     logo: { kind: 'mark', name: 'reading-slip' },
     status: 'source-backed',
     featured: true,
@@ -142,13 +149,21 @@ export const projects: readonly Project[] = [
     ],
     stack: ['Next.js', 'Supabase', 'Gemini Vision', 'Transformers.js', 'ONNX', 'Vitest'],
     links: { source: 'https://github.com/AnandaTris/dyslexia-screener' },
-    media: [],
-    lastVerified,
+    media: [
+      {
+        src: '/projects/das-dial/error-pattern-report.jpg',
+        alt: 'DAS D.I.A.L. error pattern report showing the analysed writing sample beside a mixed-pattern verdict, its confidence, and the phonological, orthographic, morphological, and visual split',
+        width: 1898,
+        height: 912,
+      },
+    ],
+    lastVerified: verifiedAug29,
   },
   {
     slug: 'false-positive',
     name: 'FALSE POSITIVE',
-    oneLine: 'A psychological mystery prototype where a voice-driven detective reads meaning and vocal affect without claiming lie detection.',
+    oneLine:
+      'A voice interrogation has to answer hesitation without treating fear as guilt, so a Unity client talks to a hosted sidecar that reads meaning and vocal affect as two separate signals.',
     logo: { kind: 'mark', name: 'waveform' },
     status: 'source-backed',
     featured: true,
@@ -197,48 +212,10 @@ export const projects: readonly Project[] = [
     lastVerified,
   },
   {
-    slug: 'cited',
-    name: 'Cited',
-    oneLine: 'An AI-search visibility product that publishes its score formula and labels modelled data as modelled.',
-    logo: { kind: 'mark', name: 'bracketed-score' },
-    status: 'working-demo',
-    featured: true,
-    accent: 'sunshine',
-    capabilities: ['responsible-ai', 'grow', 'harden'],
-    role: 'Product and engineering owner',
-    ownership: [
-      'Defined the honest measurement thesis and published score formula.',
-      'Built the credential-free modelled demo, coverage semantics, and live-scan boundary.',
-      'Implemented the product, API, billing contracts, and automated checks in the public source.',
-    ],
-    problem: 'Brands cannot act on AI-search visibility when a product hides which assistants were measured or fills gaps with estimates.',
-    hardDecision: 'Unsupported assistants contribute no fabricated answers; partial coverage is stated beside every score.',
-    system: [
-      {
-        title: 'Published scoring model',
-        detail: 'Rank and sentiment feed a visible formula, computed only over assistant surfaces actually collected.',
-      },
-      {
-        title: 'Two honest modes',
-        detail: 'Credential-free exploration is deterministic and labelled modelled, while live mode records only observed scans.',
-      },
-    ],
-    outcomes: [
-      { label: 'Demo', value: 'Working credential-free local dashboard and grader', source: 'documented' },
-      { label: 'Automated checks', value: '333 tests documented across 12 files', source: 'test' },
-    ],
-    limitations: [
-      'No live Claude scan has been observed in the repository, and the other tracked assistant surfaces are not measured.',
-    ],
-    stack: ['Next.js', 'TypeScript', 'Postgres', 'Anthropic', 'Stripe', 'Vitest'],
-    links: { source: 'https://github.com/AnandaTris/cited' },
-    media: [],
-    lastVerified,
-  },
-  {
     slug: 'brawnix',
     name: 'Brawnix',
-    oneLine: 'A live hybrid-athlete coach with deterministic workout parsing and explicit training-interference rules.',
+    oneLine:
+      'A training log is worse than useless if the parser guesses, so an on-device rule grammar returns nothing it cannot recognise and explicit thresholds flag sessions that fight each other.',
     logo: { kind: 'icon', src: '/projects/brawnix/logo.png', alt: 'Brawnix app icon' },
     status: 'live',
     featured: false,
@@ -289,7 +266,8 @@ export const projects: readonly Project[] = [
   {
     slug: 'ingatik-recall',
     name: 'Ingatik: Recall',
-    oneLine: 'A live Pomodoro study product shaped through subscriptions, localization, analytics, and creator-led funnel diagnosis.',
+    oneLine:
+      'A study timer only earns its place if focus turns into recall and reach turns into use, so subscriptions, localization, and analytics instrument the loop down to kill-or-scale gates.',
     logo: { kind: 'icon', src: '/projects/ingatik/logo.png', alt: 'Ingatik: Recall app icon' },
     status: 'live',
     featured: false,
@@ -340,9 +318,10 @@ export const projects: readonly Project[] = [
   {
     slug: 'fames',
     name: 'Fames.com',
-    oneLine: 'An indie-game discovery platform whose current AI Mentor slice critiques store presence with explicit grounding and cost boundaries.',
+    oneLine:
+      'Overlooked games need specific criticism rather than encouragement, so a rubric pipeline grounds every judgement in retrieved peers and labels its offline heuristic path all the way to the report.',
     logo: { kind: 'mark', name: 'joystick' },
-    status: 'source-backed',
+    status: 'live',
     featured: false,
     accent: 'violet',
     capabilities: ['responsible-ai', 'harden', 'prototype'],
@@ -367,6 +346,7 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
+      { label: 'Release', value: 'Platform live at fames.site', source: 'live' },
       { label: 'Source', value: 'Public source with the AI Mentor slice and shared architecture', source: 'git' },
       { label: 'Offline path', value: 'Produces a complete contract-valid report without a model key', source: 'test' },
     ],
@@ -374,52 +354,22 @@ export const projects: readonly Project[] = [
       'No live model call or golden-set sweep has been run, and the mentor report UI is not built.',
     ],
     stack: ['Next.js', 'FastAPI', 'Python', 'TypeScript', 'Supabase', 'Postgres', 'Vitest', 'pytest'],
-    links: { source: 'https://github.com/zektron001/Fames.com' },
-    media: [],
-    lastVerified,
-  },
-  {
-    slug: 'hypecast',
-    name: 'HypeCast',
-    oneLine: 'A local gameplay-casting prototype that grounds commentary in visible match events before generating voice.',
-    logo: { kind: 'mark', name: 'broadcast' },
-    status: 'prototype',
-    featured: false,
-    accent: 'sunshine',
-    capabilities: ['prototype', 'responsible-ai'],
-    role: 'Prototype product engineer',
-    ownership: [
-      'Built the credential-free scripted demo and live clip-analysis path.',
-      'Implemented evidence gating, synchronized commentary, and share-card export.',
-    ],
-    problem: 'Turning raw gameplay into a cast short is only useful if the commentary stays synchronized and does not invent events.',
-    hardDecision: 'Kills require killfeed evidence; uncertain observations are softened instead of narrated as fact.',
-    system: [
+    links: { live: 'https://fames.site', source: 'https://github.com/zektron001/Fames.com' },
+    media: [
       {
-        title: 'Grounded moment extraction',
-        detail: 'Sampled frames and native-resolution killfeed crops produce a sanitized timeline of match moments.',
-      },
-      {
-        title: 'Timed casting pipeline',
-        detail: 'Persona scripts, measured speech, line fitting, and a playback clock keep captions and voice aligned.',
+        src: '/projects/fames/quest-board.png',
+        alt: 'Fames.com quest board on fames.site with a featured catalogue entry and the genre router',
+        width: 1920,
+        height: 860,
       },
     ],
-    outcomes: [
-      { label: 'Demo', value: 'Credential-free local 60-second scripted match', source: 'documented' },
-      { label: 'Core checks', value: 'Vitest coverage over timing, demo invariants, and event sanitization', source: 'test' },
-    ],
-    limitations: [
-      'The verified artifact is local only; live mode needs a model key, and full video export remains a stretch goal.',
-    ],
-    stack: ['Next.js', 'TypeScript', 'OpenAI', 'Vitest', 'Web APIs'],
-    links: {},
-    media: [],
-    lastVerified,
+    lastVerified: verifiedAug29,
   },
   {
     slug: 'steady',
     name: 'Steady',
-    oneLine: 'A source-backed Singapore money calculator and 30-year decision simulator with versioned, cited rules.',
+    oneLine:
+      'Long-horizon money decisions need arithmetic you can inspect, so every Singapore rule is a versioned browser module carrying its official citation, and the unfinished ones stay switched off.',
     logo: { kind: 'icon', src: '/projects/steady/logo.svg', alt: 'Steady app icon' },
     status: 'source-backed',
     featured: false,
@@ -461,90 +411,10 @@ export const projects: readonly Project[] = [
     lastVerified,
   },
   {
-    slug: 'rekap',
-    name: 'Rekap',
-    oneLine: 'An offline Android prototype that turns daily screen time into an animated, shareable reveal.',
-    logo: { kind: 'icon', src: '/projects/rekap/logo.png', alt: 'Rekap app icon' },
-    status: 'prototype',
-    featured: false,
-    accent: 'coral',
-    capabilities: ['prototype', 'ship'],
-    role: 'Prototype product engineer',
-    ownership: [
-      'Built the Android usage-statistics module, reveal, local persistence, and share card.',
-      'Built a browser design harness for reviewing the experience without pretending the native mechanic runs on web.',
-    ],
-    problem: 'Screen-time reports are easy to ignore; the product must turn a daily device fact into a short, legible story worth sharing.',
-    hardDecision: 'The web build is explicitly a design harness because the real usage-history mechanic has no browser equivalent.',
-    system: [
-      {
-        title: 'Native usage bridge',
-        detail: 'A custom Android module reads usage history and joins applications with visible labels and icons.',
-      },
-      {
-        title: 'Reveal and export',
-        detail: 'An animated verdict feeds a fixed-size share card and local daily record.',
-      },
-    ],
-    outcomes: [
-      { label: 'Prototype', value: 'Android prototype plus browser design harness', source: 'documented' },
-    ],
-    limitations: [
-      'A physical Android device and a custom development build are required to verify the real mechanic; an emulator has no meaningful history.',
-    ],
-    stack: ['Expo', 'React Native', 'TypeScript', 'Kotlin', 'SQLite', 'Reanimated'],
-    links: {},
-    media: [
-      {
-        src: '/projects/rekap/feature-graphic.png',
-        alt: 'Rekap screen-time reveal feature graphic',
-        width: 1024,
-        height: 500,
-      },
-    ],
-    lastVerified,
-  },
-  {
-    slug: 'spike-responder',
-    name: 'Spike Responder',
-    oneLine: 'A local resilience tool that notices real traffic spikes and checks whether users can still finish a critical journey.',
-    logo: { kind: 'mark', name: 'spike' },
-    status: 'prototype',
-    featured: false,
-    accent: 'cyan',
-    capabilities: ['prototype', 'harden'],
-    role: 'Prototype product engineer',
-    ownership: [
-      'Built spike detection, browser-fleet execution, journey validation, verdict aggregation, and reporting.',
-      'Defined hard safety caps and environment-based secret handling.',
-    ],
-    problem: 'Teams skip discrete load-test events, so they learn too late whether a real traffic spike breaks the user journey that matters.',
-    hardDecision: 'The tool never generates load and hard-caps the observing fleet at 200 browsers.',
-    system: [
-      {
-        title: 'Spike detector',
-        detail: 'A rolling baseline, multiplier, floor, and cooldown identify a traffic event from an existing signal.',
-      },
-      {
-        title: 'Critical-path fleet',
-        detail: 'Local or remote browsers execute declarative journey steps and aggregate completion and latency verdicts.',
-      },
-    ],
-    outcomes: [
-      { label: 'Core verification', value: '44 tests plus real-site runs on happy and failure paths', source: 'test' },
-    ],
-    limitations: [
-      'The technical prototype works locally, but product demand has not been validated and remote browser providers have not been tested.',
-    ],
-    stack: ['TypeScript', 'Playwright', 'Node.js', 'Vitest'],
-    links: {},
-    media: [],
-    lastVerified,
-  },
-  {
     slug: 'math-me-home',
     name: 'Math Me Home',
-    oneLine: 'A two-player math quiz implemented as a finite-state machine on an FPGA board.',
+    oneLine:
+      'Two-player game flow has to be provable on hardware with no operating system underneath it, so every transition lives in an explicit finite-state machine written in Lucid HDL for an FPGA.',
     logo: { kind: 'mark', name: 'chip-plus' },
     status: 'source-backed',
     featured: false,
@@ -571,7 +441,7 @@ export const projects: readonly Project[] = [
       { label: 'Recognition', value: '2nd Place, Outstanding Project among approximately 30 teams', source: 'award' },
       { label: 'Source', value: 'Source and architecture diagrams retained', source: 'documented' },
     ],
-    limitations: ['The source-backed game requires the Alchitry Au FPGA hardware for execution.'],
+    limitations: ['The game requires Alchitry Au FPGA hardware to run.'],
     stack: ['Lucid HDL', 'Alchitry Au', 'Vivado', 'FPGA'],
     links: {},
     media: [
@@ -593,7 +463,8 @@ export const projects: readonly Project[] = [
   {
     slug: 'cseshell',
     name: 'CSEShell',
-    oneLine: 'A Unix shell written in C, with its own command loop, startup file, and line editor.',
+    oneLine:
+      'A shell has to survive every kind of bad input without leaking, so a hand-written command loop in C forks, execs, and waits, freeing its parsed arguments on every pass.',
     logo: { kind: 'mark', name: 'prompt' },
     status: 'source-backed',
     featured: false,
@@ -647,9 +518,10 @@ export const projects: readonly Project[] = [
   {
     slug: 'onesearch',
     name: 'OneSearch',
-    oneLine: 'A source-backed search engine that fans out across providers and returns one ranked answer.',
+    oneLine:
+      'Searching across video and the web leaves you reconciling result lists by hand, so providers are queried in parallel and a ranking pass is forced to return exactly one answer.',
     logo: { kind: 'mark', name: 'fan-in' },
-    status: 'source-backed',
+    status: 'working-demo',
     featured: false,
     accent: 'violet',
     capabilities: ['prototype', 'harden'],
@@ -670,17 +542,36 @@ export const projects: readonly Project[] = [
         detail: 'A ranking and synthesis pass reduces the candidates to one answer and a three-state user flow.',
       },
     ],
-    outcomes: [{ label: 'Automated checks', value: '57 tests across 9 test files', source: 'test' }],
-    limitations: ['The credentialed deployment has not been verified, so no live link is published.'],
+    outcomes: [
+      { label: 'Automated checks', value: '57 tests across 9 test files', source: 'test' },
+      { label: 'Deployment', value: 'Credentialed deployment answers live queries', source: 'live' },
+    ],
+    limitations: [
+      'The deployment runs on the author’s own provider keys, so throughput is bounded by their quotas.',
+    ],
     stack: ['Next.js', 'TypeScript', 'OpenAI', 'YouTube API', 'Brave Search API', 'Vitest'],
-    links: {},
-    media: [],
-    lastVerified,
+    links: { live: 'https://one-search-chi.vercel.app' },
+    media: [
+      {
+        src: '/projects/onesearch/search-screen.png',
+        alt: 'OneSearch search screen with a query entered and the Video result type selected',
+        width: 1100,
+        height: 520,
+      },
+      {
+        src: '/projects/onesearch/single-result.png',
+        alt: 'OneSearch single-result answer card for a video, with open and reject actions',
+        width: 776,
+        height: 360,
+      },
+    ],
+    lastVerified: verifiedAug29,
   },
   {
     slug: 'aegis',
     name: 'Aegis Risk Assessment Console',
-    oneLine: 'A source-backed full-stack console for project risk tables and organization-wide risk oversight.',
+    oneLine:
+      'Managers and consultants need different views of the same risk catalogue, so signed sessions and role middleware split the API and the database credential never reaches the browser.',
     logo: { kind: 'mark', name: 'shield' },
     status: 'source-backed',
     featured: false,
@@ -721,43 +612,10 @@ export const projects: readonly Project[] = [
     lastVerified,
   },
   {
-    slug: 'hydrun',
-    name: 'Hydrun',
-    oneLine: 'A team-built geolocation app for finding and contributing public water-fountain locations.',
-    logo: { kind: 'mark', name: 'droplet' },
-    status: 'source-backed',
-    featured: false,
-    accent: 'cyan',
-    capabilities: ['prototype', 'ship'],
-    role: 'Team hackathon contributor; precise individual ownership is not documented',
-    ownership: ['Contributed within the hackathon team; individual feature ownership remains unspecified.'],
-    contributionBoundary: 'Describe Hydrun as a team hackathon project; do not imply sole ownership or a verified live deployment.',
-    problem: 'People need a quick way to locate nearby water fountains and add missing locations while moving through a campus or city.',
-    hardDecision: 'The team combined browser geolocation with a shared map and contribution flow to deliver the end-to-end project within 24 hours.',
-    system: [
-      {
-        title: 'Location-aware map',
-        detail: 'A React and Leaflet interface centers on the user and displays contributed fountain markers.',
-      },
-      {
-        title: 'Shared location service',
-        detail: 'A Flask backend supports fountain records and user-submitted location details.',
-      },
-    ],
-    outcomes: [
-      { label: 'Recognition', value: '3rd Place at SUTD What The Hack among 50 teams', source: 'award' },
-      { label: 'Source', value: 'Public team repository', source: 'git' },
-    ],
-    limitations: ['The former deployment has not been re-verified, so the archive publishes source only.'],
-    stack: ['React', 'Flask', 'Python', 'Leaflet', 'OpenStreetMap'],
-    links: { source: 'https://github.com/GiorgioRPo/HydrunFrontend' },
-    media: [],
-    lastVerified,
-  },
-  {
     slug: 'personal-workout-tracker',
     name: 'Personal Workout Tracker',
-    oneLine: 'A source-backed offline PWA for remembering sessions and tracking progressive overload.',
+    oneLine:
+      'A gym log stops being useful the moment it needs a network, so the whole tool is a service-worker PWA that keeps every set in local storage and never asks for an account.',
     logo: { kind: 'icon', src: '/projects/personal-workout-tracker/logo.png', alt: 'Personal Workout Tracker app icon' },
     status: 'source-backed',
     featured: false,
@@ -781,19 +639,25 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source', value: 'Public source-backed PWA with a simple local run path', source: 'git' },
+      { label: 'Source', value: 'Public repository with a documented local run path', source: 'git' },
     ],
     limitations: ['Data is local to one browser profile and is not synchronized across devices.'],
     stack: ['React', 'Vite', 'JavaScript', 'PWA', 'Workbox', 'localStorage'],
     links: { source: 'https://github.com/AnandaTris/Personal-Workout-Tracker' },
     media: [
       {
-        src: '/projects/personal-workout-tracker/hero.png',
-        alt: 'Personal Workout Tracker hero illustration',
-        width: 343,
-        height: 361,
+        src: '/projects/personal-workout-tracker/session-picker.jpg',
+        alt: 'Personal Workout Tracker session picker with four saved training days and a new-day card',
+        width: 590,
+        height: 1280,
+      },
+      {
+        src: '/projects/personal-workout-tracker/progression-history.jpg',
+        alt: 'Personal Workout Tracker progression history for one exercise, listing the best set and every set per session',
+        width: 590,
+        height: 1280,
       },
     ],
-    lastVerified,
+    lastVerified: verifiedAug29,
   },
 ]

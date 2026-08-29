@@ -22,19 +22,14 @@ const approvedSlugs = [
   'carekaki',
   'das-dial',
   'false-positive',
-  'cited',
   'brawnix',
   'ingatik-recall',
   'fames',
-  'hypecast',
   'steady',
-  'rekap',
-  'spike-responder',
   'math-me-home',
   'cseshell',
   'onesearch',
   'aegis',
-  'hydrun',
   'personal-workout-tracker',
 ]
 
@@ -46,7 +41,7 @@ test('publishes home and every approved project route', () => {
     `${expectedOrigin}/`,
     ...approvedSlugs.map((slug) => `${expectedOrigin}/work/${slug}`),
   ])
-  expect(urls).toHaveLength(19)
+  expect(urls).toHaveLength(14)
   expect(urls).not.toEqual(expect.arrayContaining([
     expect.stringMatching(/chord|docdeck|pufferty|meowtivation/i),
   ]))

@@ -2,14 +2,7 @@ import Link from 'next/link'
 import { CountUp } from '@/components/motion/CountUp'
 import { ProjectLogo } from '@/components/project/ProjectLogo'
 import { projects } from '@/content/projects'
-import type { ProjectStatus } from '@/content/types'
-
-const statusLabels: Record<ProjectStatus, string> = {
-  live: 'Live',
-  'working-demo': 'Working demo',
-  'source-backed': 'Source-backed',
-  prototype: 'Prototype',
-}
+import { statusLabels } from '@/content/status'
 
 /**
  * One list, every project, in the order the content file declares. This

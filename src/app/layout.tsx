@@ -1,25 +1,24 @@
 import type { Metadata } from 'next'
-import { Archivo, Instrument_Serif } from 'next/font/google'
+import { Archivo } from 'next/font/google'
 import { SiteFooter } from '@/components/shell/SiteFooter'
 import { SiteHeader } from '@/components/shell/SiteHeader'
 import { profile } from '@/content/profile'
 import { SITE_URL } from '@/lib/site'
 import './globals.css'
 
-// Display face is Instrument Serif, which ships a single 400 weight — every
-// display rule in globals.css sets font-weight 400 explicitly so headings never
-// synthesise a fake bold.
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  variable: '--font-display',
-  weight: '400',
-})
-
-// Body was Inter, which is the default face in nearly every AI design tool and
-// component library — the single most-cited giveaway that a site was generated
-// rather than designed. Archivo is a grotesque drawn for print headlines: it is
-// narrower, its apertures open wider, and it holds its shape in the tracked
-// uppercase labels this site leans on, which is exactly where Inter goes limp.
+// The site's only face. Body was Inter, which is the default in nearly every AI
+// design tool and component library — the most-cited giveaway that a site was
+// generated rather than designed. Archivo is a grotesque drawn for print
+// headlines: narrower, wider apertures, and it holds its shape both in a 4.75rem
+// heading and in the tracked uppercase labels, which is exactly where Inter goes
+// limp. Loading the variable font gives headings a real 600 instead of a
+// synthesised bold, so the display role needs no second family.
+//
+// The variable goes on <html> rather than <body>: globals.css derives
+// --font-label and --font-display from --font-body inside :root, and a custom
+// property is substituted in the context of the element that declares it. Set on
+// <body>, those two :root declarations resolve against an undefined
+// --font-body and every label silently falls back to the system sans.
 const archivo = Archivo({
   subsets: ['latin'],
   variable: '--font-body',
@@ -52,10 +51,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${instrumentSerif.variable} ${archivo.variable} site-body`}
-      >
+    <html className={archivo.variable} lang="en">
+      <body className="site-body">
         <SiteHeader />
         {children}
         <SiteFooter />

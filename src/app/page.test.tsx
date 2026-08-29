@@ -58,7 +58,7 @@ test('points every header link at a section that exists on the page', () => {
 test('renders every project in initial static markup with no client bailout', () => {
   const html = renderToStaticMarkup(<HomePage />)
 
-  expect(html.match(/class="project-card"/g)).toHaveLength(18)
+  expect(html.match(/class="project-card"/g)).toHaveLength(13)
   expect(html).toContain('Fix Yo Yap')
   expect(html).not.toContain('BAILOUT_TO_CLIENT_SIDE_RENDERING')
   projects.forEach((project) => {

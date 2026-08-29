@@ -49,10 +49,16 @@ export const assetProvenance: readonly AssetProvenance[] = [
     description: 'Detective silhouette scene still',
   },
   {
-    publicPath: 'projects/rekap/feature-graphic.png',
-    sourcePath: '/Users/anandatriharismaroso/dev/rekap/store/play-feature-graphic.png',
-    project: 'rekap',
-    description: 'Published Google Play feature graphic',
+    publicPath: 'projects/fames/quest-board.png',
+    sourcePath: 'https://fames.site',
+    project: 'fames',
+    description: 'Live deployment quest board, captured at 1920 wide and cropped to the page (2026-08-29)',
+  },
+  {
+    publicPath: 'projects/das-dial/error-pattern-report.jpg',
+    sourcePath: '/Users/anandatriharismaroso/dev/dyslexia-screener',
+    project: 'das-dial',
+    description: 'Error pattern report, frame from a local demo recording, cropped (2026-08-29)',
   },
   {
     publicPath: 'projects/math-me-home/fsm.png',
@@ -71,12 +77,6 @@ export const assetProvenance: readonly AssetProvenance[] = [
     sourcePath: '/Users/anandatriharismaroso/dev/Illinois-ARCS-Take-Home-Assessment/docs/screenshots/login.png',
     project: 'aegis',
     description: 'Risk console login screenshot',
-  },
-  {
-    publicPath: 'projects/personal-workout-tracker/hero.png',
-    sourcePath: '/Users/anandatriharismaroso/dev/Personal Workout Tracker/src/assets/hero.png',
-    project: 'personal-workout-tracker',
-    description: 'Workout tracker hero illustration',
   },
   {
     publicPath: 'projects/steady/ollie-cheer.png',
@@ -111,10 +111,33 @@ export const assetProvenance: readonly AssetProvenance[] = [
     description: 'Shipped app icon, downscaled to 256px',
   },
   {
-    publicPath: 'projects/rekap/logo.png',
-    sourcePath: '/Users/anandatriharismaroso/dev/rekap/assets/icon.png',
-    project: 'rekap',
-    description: 'Shipped app icon, downscaled to 256px',
+    publicPath: 'projects/onesearch/search-screen.png',
+    sourcePath: 'https://one-search-chi.vercel.app',
+    project: 'onesearch',
+    description: 'Live deployment search screen, cropped out of a browser capture (2026-08-29)',
+  },
+  {
+    publicPath: 'projects/onesearch/single-result.png',
+    sourcePath: 'https://one-search-chi.vercel.app',
+    project: 'onesearch',
+    description: 'Live deployment result card, cropped out of a browser capture (2026-08-29)',
+  },
+  /*
+   * Device screenshots of the installed PWA rather than a browser capture:
+   * this one only exists as a phone-sized app, and a desktop viewport would
+   * show a layout nobody actually uses it in.
+   */
+  {
+    publicPath: 'projects/personal-workout-tracker/session-picker.jpg',
+    sourcePath: 'https://github.com/AnandaTris/Personal-Workout-Tracker',
+    project: 'personal-workout-tracker',
+    description: 'Session picker on device, installed PWA (2026-08-29)',
+  },
+  {
+    publicPath: 'projects/personal-workout-tracker/progression-history.jpg',
+    sourcePath: 'https://github.com/AnandaTris/Personal-Workout-Tracker',
+    project: 'personal-workout-tracker',
+    description: 'Progression history on device, installed PWA (2026-08-29)',
   },
   {
     publicPath: 'projects/personal-workout-tracker/logo.png',

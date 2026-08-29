@@ -14,11 +14,6 @@ export const excerptDetails = {
     resultsLabel: 'See DAS D.I.A.L. results',
     resultsHref: '#das-dial-results',
   },
-  cited: {
-    loadLabel: 'Load Cited visibility score interactive excerpt',
-    resultsLabel: 'See Cited results',
-    resultsHref: '#cited-results',
-  },
   'fix-yo-yap': {
     loadLabel: 'Load Fix Yo Yap persona card interactive excerpt',
     resultsLabel: 'See Fix Yo Yap results',

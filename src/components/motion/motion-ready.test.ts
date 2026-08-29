@@ -7,14 +7,18 @@ function runScript() {
 }
 
 function stubMatchMedia(reduced: boolean) {
-  vi.stubGlobal(
-    'matchMedia',
-    vi.fn(() => ({ matches: reduced })),
-  )
+  const query = vi.fn(() => ({ matches: reduced }))
+  vi.stubGlobal('matchMedia', query)
+  return query
 }
 
 beforeEach(() => {
   document.documentElement.className = ''
+  // afterEach's unstubAllGlobals() also drops the shared IntersectionObserver
+  // stub from src/test/setup.ts, and jsdom has none of its own. Without this
+  // line every test after the first returns on the script's first guard and
+  // passes without exercising the branch it names.
+  vi.stubGlobal('IntersectionObserver', class {})
   stubMatchMedia(false)
 })
 
@@ -29,10 +33,11 @@ test('marks the document ready when motion is allowed', () => {
 })
 
 test('marks nothing when the visitor asked for reduced motion', () => {
-  stubMatchMedia(true)
+  const query = stubMatchMedia(true)
 
   runScript()
 
+  expect(query).toHaveBeenCalledWith('(prefers-reduced-motion: reduce)')
   expect(document.documentElement.classList.contains('motion-ready')).toBe(false)
 })
 

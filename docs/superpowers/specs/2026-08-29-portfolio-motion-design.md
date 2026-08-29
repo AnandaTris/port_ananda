@@ -57,21 +57,31 @@ preference, and it is why the design below looks the way it does.
 
 ## 4. Architecture
 
-### 4.1 `RevealRoot`
+### 4.1 Two pieces, and why
 
-`src/components/motion/RevealRoot.tsx` — one client component, mounted once in
-`layout.tsx`. It wraps nothing and renders nothing.
+**`motion-ready` is decided before first paint.** `src/components/motion/
+motion-ready.ts` exports the source of a small inline script that
+`layout.tsx` renders into `<head>`. It adds `motion-ready` to the document
+element only when `prefers-reduced-motion` is not `reduce` **and**
+`IntersectionObserver` exists.
 
-On mount:
+This cannot be a React effect. Effects run after hydration, so the browser
+would paint the server HTML fully visible, then hydration would hide every
+reveal target, then animate it back in — content appearing, vanishing, and
+re-animating on any connection slow enough to separate paint from hydration.
+A blocking script in `<head>` settles the question before anything is drawn.
 
-1. Read `prefers-reduced-motion` once, on mount. If reduced, **return
-   immediately**: no class, no observer, no hidden elements, ever. Reduced
-   motion is an early exit, not a shorter animation. The preference is not
-   watched for changes mid-session; a visitor who toggles it gets the new
-   behaviour on their next navigation.
-2. Add `motion-ready` to the document element.
-3. Create one `IntersectionObserver` over every `[data-reveal]` element.
-4. On intersect: take the entries that are intersecting, sort them into
+The preference is read once, at load. A visitor who toggles reduced motion
+mid-session gets the new behaviour on their next navigation.
+
+**`RevealRoot`** — `src/components/motion/RevealRoot.tsx`, one client component
+mounted once in `layout.tsx`. It wraps nothing and renders nothing. On mount:
+
+1. If `motion-ready` is absent from the document element, **return
+   immediately**. That single check covers reduced motion, missing
+   `IntersectionObserver`, and a page where the script never ran.
+2. Create one `IntersectionObserver` over every `[data-reveal]` element.
+3. On intersect: take the entries that are intersecting, sort them into
    document order (by `boundingClientRect.top`, then `left`), and for each one
    set `--reveal-index` to its position in that sorted batch, capped at 4. Then
    add `is-revealed` and unobserve it.
@@ -93,10 +103,10 @@ Reveal targets must never start hidden in the base stylesheet:
 .motion-ready [data-reveal]:not(.is-revealed) { opacity: 0 }
 ```
 
-If JavaScript fails to load, the observer is unsupported, or `RevealRoot`
-throws, `motion-ready` is never added and the site renders complete and static.
-An `opacity: 0` base state would make a JS failure indistinguishable from a
-blank portfolio.
+If JavaScript is disabled, the head script never runs, or
+`IntersectionObserver` is missing, `motion-ready` is never added and the site
+renders complete and static. An `opacity: 0` base state would make a JS failure
+indistinguishable from a blank portfolio.
 
 ### 4.3 Keyframe
 
@@ -156,23 +166,29 @@ Inherited from `2026-08-21-portfolio-design.md` §11 and not overridden here:
 - No scroll hijacking, no parallax, no custom cursor, no ambient loops
 - Reveals fire once and never replay
 - Only `transform` and `opacity` animate, so no layout shift and no CLS cost
-- `prefers-reduced-motion` removes all of it, via the §4.1 early exit and the
+- `prefers-reduced-motion` removes all of it, via the §4.1 head script and the
   existing global CSS block
 - Keyboard focus states are untouched; no motion gates access to any control
 
 ## 7. Testing
 
+**`src/components/motion/motion-ready.test.ts`** — executes the exported
+script source with a mocked `matchMedia`:
+
+1. adds `motion-ready` when motion is allowed and `IntersectionObserver` exists
+2. adds nothing under `prefers-reduced-motion: reduce`
+3. adds nothing when `IntersectionObserver` is undefined
+
 **`src/components/motion/RevealRoot.test.tsx`** — with a mocked
 `IntersectionObserver`:
 
-1. adds `motion-ready` to the document element
+1. observes every `[data-reveal]` element when `motion-ready` is present
 2. adds `is-revealed` when an element intersects
 3. unobserves an element after revealing it, so reveals do not repeat
 4. staggers a batch: three elements intersecting together get `--reveal-index`
    0, 1, 2 in document order, and an element intersecting alone gets 0
 5. caps the stagger: the sixth element of one batch gets 4, not 5
-6. under `prefers-reduced-motion: reduce`, adds no class, creates no observer,
-   and hides nothing
+6. creates no observer and reveals nothing when `motion-ready` is absent
 
 **`src/app/globals.test.ts`** — one new guard, in the style of the repo's
 existing dead-code guards:
@@ -190,12 +206,14 @@ existing test means the §3 constraint was violated and the approach is wrong.
 
 **New**
 
+- `src/components/motion/motion-ready.ts`
+- `src/components/motion/motion-ready.test.ts`
 - `src/components/motion/RevealRoot.tsx`
 - `src/components/motion/RevealRoot.test.tsx`
 
 **Modified**
 
-- `src/app/layout.tsx` — mount `RevealRoot` once
+- `src/app/layout.tsx` — inline the head script, mount `RevealRoot` once
 - `src/app/globals.css` — keyframe, reveal gate, hover upgrades
 - `src/app/globals.test.ts` — the §7 guard
 - `src/components/motion/CountUp.tsx` — curve retune

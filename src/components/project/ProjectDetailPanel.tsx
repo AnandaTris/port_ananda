@@ -43,11 +43,11 @@ function OverviewContent({ project }: { project: Project }) {
   return (
     <div className="detail-story-grid">
       <dl className="detail-facts">
-        <div>
+        <div data-reveal>
           <dt>Problem</dt>
           <dd>{project.problem}</dd>
         </div>
-        <div>
+        <div data-reveal>
           <dt>Hard decision</dt>
           <dd>{project.hardDecision}</dd>
         </div>
@@ -61,7 +61,7 @@ function BuildContent({ project }: { project: Project }) {
     <div className="detail-system-grid">
       <ol aria-label="Build decisions" className="system-decisions">
         {project.system.map((block, index) => (
-          <li key={block.title}>
+          <li data-reveal key={block.title}>
             <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <div>
               <strong>{block.title}</strong>
@@ -70,7 +70,7 @@ function BuildContent({ project }: { project: Project }) {
           </li>
         ))}
       </ol>
-      <div className="detail-stack">
+      <div className="detail-stack" data-reveal>
         <p className="detail-label">Stack</p>
         <ul aria-label="Technology stack">
           {project.stack.map((item) => (
@@ -91,29 +91,29 @@ function ResultsContent({ project }: { project: Project }) {
   return (
     <div className="detail-proof-grid">
       <dl className="result-facts">
-        <div>
+        <div data-reveal>
           <dt>Status</dt>
           <dd>
             <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
           </dd>
         </div>
-        <div>
+        <div data-reveal>
           <dt>Role</dt>
           <dd>{project.role}</dd>
         </div>
         {project.teamSize ? (
-          <div>
+          <div data-reveal>
             <dt>Team</dt>
             <dd>{project.teamSize} people</dd>
           </div>
         ) : null}
         {project.contributionBoundary ? (
-          <div>
+          <div data-reveal>
             <dt>Team boundary</dt>
             <dd>{project.contributionBoundary}</dd>
           </div>
         ) : null}
-        <div>
+        <div data-reveal>
           <dt>Last checked</dt>
           <dd>
             <time dateTime={project.lastVerified}>{project.lastVerified}</time>
@@ -122,7 +122,7 @@ function ResultsContent({ project }: { project: Project }) {
       </dl>
 
       <div className="result-groups">
-        <div className="result-outcomes">
+        <div className="result-outcomes" data-reveal>
           <p className="detail-label">Outcomes</p>
           <ul aria-label="Recorded project outcomes">
             {project.outcomes.map((outcome) => (
@@ -134,7 +134,7 @@ function ResultsContent({ project }: { project: Project }) {
             ))}
           </ul>
         </div>
-        <div>
+        <div data-reveal>
           <p className="detail-label">What I owned</p>
           <ul>
             {project.ownership.map((item) => (
@@ -142,7 +142,7 @@ function ResultsContent({ project }: { project: Project }) {
             ))}
           </ul>
         </div>
-        <div>
+        <div data-reveal>
           <p className="detail-label">Limitations</p>
           <ul>
             {project.limitations.map((item) => (
@@ -151,7 +151,7 @@ function ResultsContent({ project }: { project: Project }) {
           </ul>
         </div>
         {links.length > 0 ? (
-          <div className="result-links">
+          <div className="result-links" data-reveal>
             <p className="detail-label">Links</p>
             <ul>
               {links.map(([kind, href]) => (
@@ -184,7 +184,7 @@ export function ProjectDetailPanel({ project, section }: ProjectDetailPanelProps
       className="project-detail-panel"
       data-section={section}
     >
-      <header className="detail-panel-heading">
+      <header className="detail-panel-heading" data-reveal>
         <p className="detail-kicker">{sectionKickers[section]}</p>
         <h2 id={headingId}>{sectionHeadings[section]}</h2>
       </header>

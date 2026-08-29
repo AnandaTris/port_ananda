@@ -74,6 +74,7 @@ export function DeferredExcerpt({ slug }: { slug: ApprovedExcerptSlug }) {
       aria-busy={isLoading || undefined}
       aria-labelledby={`${slug}-excerpt-load-title`}
       className="interactive-excerpt interactive-excerpt-deferred"
+      data-reveal
       ref={containerRef}
     >
       <header className="interactive-excerpt-heading">

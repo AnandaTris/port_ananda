@@ -86,11 +86,11 @@ export default async function WorkPage({ params }: WorkPageProps) {
           <Link className="text-link case-study-back" href="/#projects">
             ← Back to projects
           </Link>
-          <div className="case-study-identity">
+          <div className="case-study-identity" data-reveal>
             <ProjectLogo logo={project.logo} size={56} />
             <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
           </div>
-          <div className="case-study-headline">
+          <div className="case-study-headline" data-reveal>
             <h1>{project.name}</h1>
             <div>
               <p className="case-study-deck">{project.oneLine}</p>

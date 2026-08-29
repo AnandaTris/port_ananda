@@ -43,6 +43,7 @@ export function ProjectMediaVisual({ project, priority = false }: ProjectMediaVi
         className="case-study-visual case-study-media"
         data-count={visibleMedia.length}
         data-fit={fit}
+        data-reveal
       >
         {/* The pictures get their own box so a mount can shrink to them. A
             mount that also had to hold the caption would be as wide as a line
@@ -77,6 +78,7 @@ export function ProjectMediaVisual({ project, priority = false }: ProjectMediaVi
     <div
       aria-label={`${project.name} system diagram`}
       className="case-study-visual case-study-diagram project-media-fallback"
+      data-reveal
       role="img"
     >
       <p className="project-media-fallback-heading">

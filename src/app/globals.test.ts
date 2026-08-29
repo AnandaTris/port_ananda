@@ -18,3 +18,21 @@ test('bounds the desktop hero in viewport height so the projects start above the
     /@media \(min-width: 64\.0625rem\)\s*\{\s*\.hero\s*\{\s*padding: clamp\([\d.]+rem, [\d.]+vh, [\d.]+rem\) 0 clamp\([\d.]+rem, [\d.]+vh, [\d.]+rem\);\s*\}/,
   )
 })
+
+test('hides reveal targets only after JavaScript has proven it can reveal them', () => {
+  // Every rule that hides a [data-reveal] element must be scoped to
+  // .motion-ready. Unscoped, a JS failure is indistinguishable from a blank
+  // portfolio: the content is served, painted, and then never revealed.
+  const hidingRules = stylesheet
+    .split('}')
+    .filter((rule) => rule.includes('[data-reveal]') && /opacity:\s*0\b/.test(rule))
+
+  expect(hidingRules.length).toBeGreaterThan(0)
+  for (const rule of hidingRules) {
+    expect(rule).toContain('.motion-ready')
+  }
+})
+
+test('reveals with the approved spring curve rather than a default ease', () => {
+  expect(stylesheet).toContain('cubic-bezier(0.34, 1.56, 0.64, 1)')
+})

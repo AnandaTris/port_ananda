@@ -2140,6 +2140,31 @@ a {
   color: color-mix(in srgb, var(--detail-accent) 68%, var(--ink));
 }
 
+/* Motion layer.
+   Base state is visible. Only after the head script confirms the visitor wants
+   motion and the browser can deliver it does anything hide, so a page with no
+   JavaScript renders complete and static. */
+.motion-ready [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+}
+
+.motion-ready [data-reveal].is-revealed {
+  animation: reveal-rise 720ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(var(--reveal-index, 0) * 110ms);
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -30,7 +30,7 @@ One character, applied everywhere, chosen from three live options:
 | Curve | `cubic-bezier(0.34, 1.56, 0.64, 1)` — spring, overshoots |
 | Duration | 720ms entrance, 380ms hover |
 | Distance | 22px rise, from `scale(0.94)` |
-| Stagger | 110ms per sibling |
+| Stagger | 110ms per element, within one intersection batch, capped at 4 |
 
 Cards arrive with weight and a small bounce. Hover tilts the card and kicks its
 logo. This is deliberately the most playful of the options considered; the
@@ -71,10 +71,16 @@ On mount:
    behaviour on their next navigation.
 2. Add `motion-ready` to the document element.
 3. Create one `IntersectionObserver` over every `[data-reveal]` element.
-4. On intersect: set `--reveal-index` to the element's index among the
-   `[data-reveal]` elements sharing its immediate parent, add `is-revealed`,
-   and unobserve it. Indexing per parent is what makes the project grid
-   stagger without any per-card bookkeeping in the markup.
+4. On intersect: take the entries that are intersecting, sort them into
+   document order (by `boundingClientRect.top`, then `left`), and for each one
+   set `--reveal-index` to its position in that sorted batch, capped at 4. Then
+   add `is-revealed` and unobserve it.
+
+The index is **per intersection batch, not per parent**. Elements that come
+into view together stagger against each other; an element that arrives alone
+has index 0 and no delay. Indexing per parent would give the thirteenth project
+card a delay of `12 x 110ms`, so it would enter the viewport and sit invisible
+for over a second. The cap of 4 bounds the tail of any batch at 440ms.
 
 Reveals fire once. Nothing replays on scroll back.
 
@@ -162,7 +168,10 @@ Inherited from `2026-08-21-portfolio-design.md` §11 and not overridden here:
 1. adds `motion-ready` to the document element
 2. adds `is-revealed` when an element intersects
 3. unobserves an element after revealing it, so reveals do not repeat
-4. under `prefers-reduced-motion: reduce`, adds no class, creates no observer,
+4. staggers a batch: three elements intersecting together get `--reveal-index`
+   0, 1, 2 in document order, and an element intersecting alone gets 0
+5. caps the stagger: the sixth element of one batch gets 4, not 5
+6. under `prefers-reduced-motion: reduce`, adds no class, creates no observer,
    and hides nothing
 
 **`src/app/globals.test.ts`** — one new guard, in the style of the repo's

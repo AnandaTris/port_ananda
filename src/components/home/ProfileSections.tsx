@@ -22,7 +22,7 @@ const stackUsage = projects.reduce<Map<string, number>>((counts, project) => {
 
 function SectionTitle({ children, id }: { children: string; id: string }) {
   return (
-    <div className="section-heading">
+    <div className="section-heading" data-reveal>
       <h2 id={id}>{children}</h2>
     </div>
   )
@@ -42,7 +42,7 @@ export function WorkExperience() {
             const status = experienceStatus[role.status]
 
             return (
-              <li key={`${role.organization}-${role.title}`}>
+              <li data-reveal key={`${role.organization}-${role.title}`}>
                 <article className="experience-entry">
                   <div className="experience-entry-meta">
                     <p>{role.period}</p>
@@ -74,7 +74,7 @@ export function TechStack() {
         <SectionTitle id="stack-heading">Tech stack</SectionTitle>
         <div className="stack-groups">
           {stackGroups.map((group) => (
-            <section aria-label={group.name} className="stack-group" key={group.name}>
+            <section aria-label={group.name} className="stack-group" data-reveal key={group.name}>
               <h3>{group.name}</h3>
               <ul>
                 {group.items.map((item) => (
@@ -106,7 +106,7 @@ export function Research() {
         <SectionTitle id="research-heading">Research</SectionTitle>
         <ol aria-label="Research roles" className="profile-compact-list">
           {profile.research.map((role) => (
-            <li key={`${role.organization}-${role.title}`}>
+            <li data-reveal key={`${role.organization}-${role.title}`}>
               <p>{role.period}</p>
               <h3>{role.title}</h3>
               <strong>{role.organization}</strong>
@@ -130,7 +130,7 @@ export function AwardsAndGrants() {
         <SectionTitle id="awards-heading">Awards and grants</SectionTitle>
         <ol aria-label="Awards and grants" className="profile-compact-list profile-awards-list">
           {profile.awards.map((award) => (
-            <li key={award.name}>
+            <li data-reveal key={award.name}>
               {award.date ? <p>{award.date}</p> : <p>Grant record</p>}
               <h3>{award.name}</h3>
               <span>{award.detail}</span>
@@ -153,7 +153,7 @@ export function Leadership() {
         <SectionTitle id="leadership-heading">Leadership</SectionTitle>
         <ol aria-label="Leadership roles" className="profile-compact-list">
           {profile.leadership.map((role) => (
-            <li key={`${role.organization}-${role.title}`}>
+            <li data-reveal key={`${role.organization}-${role.title}`}>
               <p>{role.period}</p>
               <h3>{role.title}</h3>
               <strong>{role.organization}</strong>
@@ -182,7 +182,7 @@ export function ContactSection() {
     >
       <div className="profile-section-inner profile-contact-inner">
         <SectionTitle id="contact-heading">Contact</SectionTitle>
-        <div className="contact-details">
+        <div className="contact-details" data-reveal>
           {email ? (
             <a className="contact-email" href={email.href}>
               {email.href.replace('mailto:', '')}

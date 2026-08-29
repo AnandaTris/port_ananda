@@ -19,7 +19,7 @@ export function ProjectIndex() {
       id="projects"
     >
       <div className="profile-section-inner">
-        <div className="section-heading section-heading-counted">
+        <div className="section-heading section-heading-counted" data-reveal>
           <h2 id="projects-heading">Projects</h2>
           <p className="section-count">
             <CountUp suffix=" projects" target={projects.length} />
@@ -28,7 +28,7 @@ export function ProjectIndex() {
 
         <ul className="project-grid">
           {projects.map((project) => (
-            <li key={project.slug}>
+            <li data-reveal key={project.slug}>
               <article className="project-card" data-accent={project.accent}>
                 <header className="project-card-header">
                   <div className="project-card-identity">

@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="hero" id="hero">
       <div className="hero-inner">
-        <figure className="hero-portrait">
+        <figure className="hero-portrait" data-reveal>
           <Image
             alt={`Portrait of ${profile.name}`}
             height={540}
@@ -23,9 +23,9 @@ export function Hero() {
           />
         </figure>
         <div className="hero-copy">
-          <h1 id="hero-title">{profile.name}</h1>
-          <p className="hero-tagline">{profile.location}</p>
-          <ul aria-label="Contact and profiles" className="hero-links">
+          <h1 data-reveal id="hero-title">{profile.name}</h1>
+          <p className="hero-tagline" data-reveal>{profile.location}</p>
+          <ul aria-label="Contact and profiles" className="hero-links" data-reveal>
             {profile.links.map((link) => (
               <li key={link.label}>
                 {link.href.startsWith('mailto:') ? (

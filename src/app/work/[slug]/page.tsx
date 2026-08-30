@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { revealOnLoad } from '@/components/motion/reveal-on-load'
 import { ProjectDetailPanel } from '@/components/project/ProjectDetailPanel'
 import { ProjectLogo } from '@/components/project/ProjectLogo'
 import { ProjectMediaVisual } from '@/components/project/ProjectMediaVisual'
@@ -86,11 +87,11 @@ export default async function WorkPage({ params }: WorkPageProps) {
           <Link className="text-link case-study-back" href="/#projects">
             ← Back to projects
           </Link>
-          <div className="case-study-identity" data-reveal>
+          <div className="case-study-identity" {...revealOnLoad(0)}>
             <ProjectLogo logo={project.logo} size={56} />
             <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
           </div>
-          <div className="case-study-headline" data-reveal>
+          <div className="case-study-headline" {...revealOnLoad(1)}>
             <h1>{project.name}</h1>
             <div>
               <p className="case-study-deck">{project.oneLine}</p>

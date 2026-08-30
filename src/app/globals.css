@@ -2153,6 +2153,15 @@ a {
   animation-delay: calc(var(--reveal-index, 0) * 110ms);
 }
 
+/* Above the fold there is nothing to wait for. These elements are on screen at
+   first paint, so they play the same entrance from CSS alone — no observer, no
+   hiding rule, and nothing here depends on the bundle arriving. That keeps the
+   LCP element paintable at first paint instead of at hydration. */
+.motion-ready [data-reveal-load] {
+  animation: reveal-rise 720ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(var(--reveal-index, 0) * 110ms);
+}
+
 @keyframes reveal-rise {
   from {
     opacity: 0;

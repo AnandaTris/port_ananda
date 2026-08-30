@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { revealOnLoad } from '@/components/motion/reveal-on-load'
 import { ExternalLink } from '@/components/ui/ExternalLink'
 import { profile } from '@/content/profile'
 
@@ -12,7 +13,7 @@ export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="hero" id="hero">
       <div className="hero-inner">
-        <figure className="hero-portrait" data-reveal>
+        <figure className="hero-portrait" {...revealOnLoad(0)}>
           <Image
             alt={`Portrait of ${profile.name}`}
             height={540}
@@ -23,9 +24,9 @@ export function Hero() {
           />
         </figure>
         <div className="hero-copy">
-          <h1 data-reveal id="hero-title">{profile.name}</h1>
-          <p className="hero-tagline" data-reveal>{profile.location}</p>
-          <ul aria-label="Contact and profiles" className="hero-links" data-reveal>
+          <h1 id="hero-title" {...revealOnLoad(1)}>{profile.name}</h1>
+          <p className="hero-tagline" {...revealOnLoad(2)}>{profile.location}</p>
+          <ul aria-label="Contact and profiles" className="hero-links" {...revealOnLoad(3)}>
             {profile.links.map((link) => (
               <li key={link.label}>
                 {link.href.startsWith('mailto:') ? (

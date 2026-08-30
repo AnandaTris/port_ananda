@@ -50,19 +50,20 @@ test('does not reveal a fallback born from a post-mount image failure', () => {
   const image = screen.getByRole('img', { name: mediaProject.media[0].alt })
   fireEvent.error(image)
 
-  // RevealRoot only scans the DOM once, at its own mount, before this
-  // failure happens. A fallback that asked to be revealed here would never
-  // be observed and would sit at opacity: 0 forever, so it must render with
-  // no data-reveal at all.
+  // Both entrances are already spent by the time this mounts: the hero's CSS
+  // animation played at first paint, and RevealRoot's scan for this route ran
+  // at hydration. A fallback that asked to be revealed here would be hidden by
+  // a rule nothing would ever lift, so it must carry neither attribute.
   const fallback = screen.getByRole('img', { name: 'Fix Yo Yap system diagram' })
   expect(fallback).not.toHaveAttribute('data-reveal')
+  expect(fallback).not.toHaveAttribute('data-reveal-load')
 })
 
 test("reveals the fallback when it is a project's permanent visual", () => {
   render(<ProjectMediaVisual project={noMediaProject} />)
 
-  // This fallback is server-rendered before RevealRoot's scan, so it is safe
-  // to observe and must keep revealing like every other annotated element.
+  // This fallback is server-rendered, so it is on screen at first paint and
+  // takes the same CSS entrance as the rest of the case-study hero.
   const fallback = screen.getByRole('img', { name: 'CSEShell system diagram' })
-  expect(fallback).toHaveAttribute('data-reveal')
+  expect(fallback).toHaveAttribute('data-reveal-load')
 })

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { revealOnLoad } from '@/components/motion/reveal-on-load'
 import type { Project } from '@/content/types'
 
 type ProjectMediaVisualProps = {
@@ -43,7 +44,7 @@ export function ProjectMediaVisual({ project, priority = false }: ProjectMediaVi
         className="case-study-visual case-study-media"
         data-count={visibleMedia.length}
         data-fit={fit}
-        data-reveal
+        {...revealOnLoad(2)}
       >
         {/* The pictures get their own box so a mount can shrink to them. A
             mount that also had to hold the caption would be as wide as a line
@@ -78,13 +79,14 @@ export function ProjectMediaVisual({ project, priority = false }: ProjectMediaVi
     <div
       aria-label={`${project.name} system diagram`}
       className="case-study-visual case-study-diagram project-media-fallback"
-      // The reveal observer scans the DOM once per route render. A project with
-      // no media renders this fallback then, so it is seen and reveals normally.
-      // A project whose images fail later mounts this fallback for the first
-      // time after that scan — annotating it there would hide the very panel
-      // that exists to recover from the failure, so it renders visible instead.
-      data-reveal={project.media.length === 0 ? '' : undefined}
       role="img"
+      // A project with no media renders this fallback on the server, so it is
+      // part of the hero the CSS entrance plays over. A project whose images
+      // fail mounts it for the first time after that entrance is already spent,
+      // and after the observer's scan for this route — any reveal attribute
+      // there would leave the very panel that recovers from the failure sitting
+      // at opacity 0, so it gets none and renders visible.
+      {...(project.media.length === 0 ? revealOnLoad(2) : {})}
     >
       <p className="project-media-fallback-heading">
         <span>No screenshot</span>

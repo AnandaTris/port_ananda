@@ -20,17 +20,30 @@ test('bounds the desktop hero in viewport height so the projects start above the
 })
 
 test('hides reveal targets only after JavaScript has proven it can reveal them', () => {
-  // Every rule that hides a [data-reveal] element must be scoped to
-  // .motion-ready. Unscoped, a JS failure is indistinguishable from a blank
-  // portfolio: the content is served, painted, and then never revealed.
+  // Every rule that hides a reveal element — [data-reveal] or the above-the-fold
+  // [data-reveal-load] — must be scoped to .motion-ready. Unscoped, a JS failure
+  // is indistinguishable from a blank portfolio: the content is served, painted,
+  // and then never revealed. The negative lookahead keeps `opacity: 0.94` and
+  // its kind from reading as a hiding rule; `\b` matched those too.
   const hidingRules = stylesheet
     .split('}')
-    .filter((rule) => rule.includes('[data-reveal]') && /opacity:\s*0\b/.test(rule))
+    .filter((rule) => rule.includes('[data-reveal') && /opacity:\s*0(?![.\d])/.test(rule))
 
   expect(hidingRules.length).toBeGreaterThan(0)
   for (const rule of hidingRules) {
     expect(rule).toContain('.motion-ready')
   }
+})
+
+test('plays the above-the-fold entrance from CSS with the same curve and duration', () => {
+  // The hero cannot wait for the observer: an element held at opacity 0 until
+  // hydration is not an LCP candidate. It still has to look identical, so the
+  // rule carries the approved curve and the same 720ms as every other reveal.
+  const [rule] = stylesheet.split('}').filter((chunk) => chunk.includes('[data-reveal-load]'))
+
+  expect(rule).toContain('.motion-ready [data-reveal-load]')
+  expect(rule).toContain('animation: reveal-rise 720ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards')
+  expect(rule).toContain('animation-delay: calc(var(--reveal-index, 0) * 110ms)')
 })
 
 test('reveals with the approved spring curve rather than a default ease', () => {

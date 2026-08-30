@@ -28,8 +28,12 @@ export function CountUp({ target, suffix = '' }: CountUpProps) {
         observer.disconnect()
         controls = animate(0, target, {
           duration: 1.1,
-          ease: [0.22, 1, 0.36, 1],
-          onUpdate: (latest) => setValue(Math.round(latest)),
+          // The same spring the reveals use, so the one animation that predates
+          // the motion layer stops being a stylistic outlier. The clamp is what
+          // the overshoot costs: without it the counter briefly displays a
+          // number larger than the number of projects that exist.
+          ease: [0.34, 1.56, 0.64, 1],
+          onUpdate: (latest) => setValue(Math.min(target, Math.round(latest))),
         })
       },
       { threshold: 0.4 },

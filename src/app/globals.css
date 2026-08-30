@@ -2112,12 +2112,12 @@ a {
 }
 
 .project-card {
-  transition: box-shadow 180ms ease, transform 180ms ease;
+  transition: box-shadow 380ms ease, transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .project-card:hover {
   box-shadow: var(--shadow-lift);
-  transform: translateY(-4px) rotate(-0.4deg);
+  transform: translateY(-7px) scale(1.015) rotate(-0.5deg);
 }
 
 /* The accent underline grows out of the card's own colour, so each project
@@ -2163,6 +2163,36 @@ a {
     opacity: 1;
     transform: none;
   }
+}
+
+/* The logo is the one thing on a card that belongs to the project rather than
+   to the page chrome, so it is the thing that reacts. */
+.project-logo {
+  transition: transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.project-card:hover .project-logo {
+  transform: rotate(-8deg) scale(1.12);
+}
+
+.stack-icon {
+  transition: transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stack-group li:hover > .stack-icon {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+/* Overrides the shared `transition: background 140ms ease` these two buttons
+   already carry, by coming later in the file at equal specificity. */
+.excerpt-reset,
+.excerpt-load {
+  transition: transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1), background 140ms ease;
+}
+
+.excerpt-reset:hover:not(:disabled),
+.excerpt-load:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.03);
 }
 
 @media (prefers-reduced-motion: reduce) {

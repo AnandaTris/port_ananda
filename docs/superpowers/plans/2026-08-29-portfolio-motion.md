@@ -687,8 +687,27 @@ In `src/components/project/ProjectDetailPanel.tsx`, add `data-reveal` to:
 - [ ] **Step 3: Annotate the media**
 
 In `src/components/project/ProjectMediaVisual.tsx`, add `data-reveal` to two elements:
-- the `<figure className="case-study-visual case-study-media">` (line 42)
-- the fallback, which is a `<div role="img" className="case-study-visual case-study-diagram project-media-fallback">` (line 77) — a `div`, not a `figure`
+- the `<figure className="case-study-visual case-study-media">` (line 42) — unconditionally
+- the fallback, which is a `<div role="img" className="case-study-visual case-study-diagram project-media-fallback">` (line 77) — a `div`, not a `figure` — but **conditionally**:
+
+```tsx
+data-reveal={project.media.length === 0 ? '' : undefined}
+```
+
+This component is already `'use client'` and holds `useState` for failed image sources, so the
+fallback has two distinct lives. For a project with `media: []` it is the permanent visual,
+present in the server HTML at `RevealRoot`'s one-time scan, and it must reveal. For a project
+that *has* media, it appears only when an `<Image>` errors after hydration — mounted after the
+scan, so it can never be observed, never gains `is-revealed`, and would sit at `opacity: 0`
+forever under `.motion-ready`. Annotating that case would hide the broken-image handler itself,
+which is exactly the failure the no-blank-page Global Constraint exists to prevent. The
+condition is on `project.media.length`, not on `visibleMedia.length`, precisely so it is fixed
+at render time rather than flipping when an image fails.
+
+Cover both lives in `src/components/project/ProjectMediaVisual.test.tsx` by adding tests
+alongside the existing three (do not edit those): a `media: []` project's fallback carries
+`data-reveal`, and a fallback reached by erroring an image does not. Confirm the pair fails
+against an unconditional `data-reveal` before keeping it.
 
 Reveal only — no scale-on-scroll, no parallax.
 

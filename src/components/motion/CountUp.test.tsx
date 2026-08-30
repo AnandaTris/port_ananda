@@ -40,12 +40,21 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-test('clamps the displayed count so the curve overshoot never shows more than the real total', () => {
+test('tracks the animation and clamps the curve overshoot to the real total', () => {
   const { container } = render(<CountUp target={13} />)
 
   act(() => {
     observerCallback?.([intersectingEntry()], {} as IntersectionObserver)
   })
+
+  // The component seeds its state with the target, so it already reads 13 with
+  // the animation deleted entirely. Driving a mid-flight value through first is
+  // what proves the display follows onUpdate rather than sitting on the seed.
+  act(() => {
+    capturedOnUpdate?.(7.4)
+  })
+
+  expect(container.textContent).toBe('7')
 
   // 15.7 is well past what the real spring's overshoot reaches — the point is
   // that no matter how far onUpdate overshoots, the rendered count is capped

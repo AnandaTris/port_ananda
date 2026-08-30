@@ -354,7 +354,7 @@ export const projects: readonly Project[] = [
       'No live model call or golden-set sweep has been run, and the mentor report UI is not built.',
     ],
     stack: ['Next.js', 'FastAPI', 'Python', 'TypeScript', 'Supabase', 'Postgres', 'Vitest', 'pytest'],
-    links: { live: 'https://fames.site', source: 'https://github.com/zektron001/Fames.com' },
+    links: { live: 'https://fames.site' },
     media: [
       {
         src: '/projects/fames/quest-board.png',
@@ -393,13 +393,13 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source', value: 'Public repository with CI quality gates', source: 'git' },
+      { label: 'Source', value: 'Private repository (NDA) with CI quality gates', source: 'git' },
     ],
     limitations: [
       'Steady is an educational calculator, not personalized financial advice, and some graduated CPF rules are intentionally unavailable.',
     ],
     stack: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Stripe', 'Vitest'],
-    links: { source: 'https://github.com/AnandaTris/steady' },
+    links: {},
     media: [
       {
         src: '/projects/steady/ollie-cheer.png',
@@ -598,12 +598,12 @@ export const projects: readonly Project[] = [
       },
     ],
     outcomes: [
-      { label: 'Source', value: 'Public assessment repository with screenshots and diagrams', source: 'git' },
+      { label: 'Source', value: 'Private assessment repository (NDA) with screenshots and diagrams', source: 'git' },
       { label: 'Offline checks', value: 'Core backend tests run without database credentials', source: 'test' },
     ],
     limitations: ['A configured Supabase database is required for the full application; no verified public deployment is linked.'],
     stack: ['Hono', 'React', 'TanStack Router', 'TypeScript', 'Supabase', 'Postgres', 'Vitest'],
-    links: { source: 'https://github.com/AnandaTris/Illinois-ARCS-Take-Home-Assessment' },
+    links: {},
     media: [
       {
         src: '/projects/aegis/login.png',

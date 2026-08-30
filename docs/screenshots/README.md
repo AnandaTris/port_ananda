@@ -1,7 +1,7 @@
 # Portfolio screenshots
 
 Full-page captures of every page in the portfolio, taken from a local production
-build at 1440px width on 2026-08-29. Each image is the complete page, top to
+build at 1440px width on 2026-08-30. Each image is the complete page, top to
 bottom, with all scroll-reveal animations settled.
 
 ## Home
@@ -34,8 +34,29 @@ Listed in the order they appear on the site.
 
 Build and serve the site (`npm run build`, then `npx next start --port 3789`),
 then capture each page at 1440px wide with the viewport sized to the full page
-height so nothing is downscaled. Scroll-reveal animations are `once: true`, so a
-full-height viewport settles them before capture.
+height so nothing is downscaled.
+
+Order matters, because the reveal observer uses `rootMargin: '0px 0px -8% 0px'`
+and that 8% is measured against the viewport. At a page-tall viewport it becomes
+a dead band hundreds of pixels deep, and the foot of the page never intersects:
+load at **1440x900** first, scroll to the bottom to reveal everything, then
+**resize** the viewport to the full page height and capture. Resize, never
+navigate again — a second load throws away every `is-revealed` class and the
+capture catches the page mid-reveal.
+
+Before each capture, assert that no `[data-reveal]` element is left below
+`opacity: 0.99`. That check is what catches a mistimed shot; the image itself
+looks plausible either way.
+
+Two things move once the viewport is page-tall, so re-measure `scrollHeight`
+after the resize and resize again until it stops changing. The home hero pads
+with `clamp(2.5rem, 6vh, 5.5rem)`, which reaches its ceiling at any tall
+viewport and adds 60px; capturing at the height measured on a 900px viewport
+crops that much off the footer. And on the three case studies that have one
+(`fix-yo-yap`, `carekaki`, `das-dial`), the interactive excerpt mounts itself
+when the scroll pass reaches it, which is why those images show the excerpt
+open rather than its load button. Both are properties of the page, not the
+motion layer: the same growth happens with motion off.
 
 Serve from a port you have not used before in the same browser session. The
 image optimizer sends a long `Cache-Control`, so a screenshot re-taken against

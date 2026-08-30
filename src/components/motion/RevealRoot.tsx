@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
 /**
@@ -19,8 +20,15 @@ const MAX_STAGGER_INDEX = 4
  * Whether motion happens at all was settled in <head> before the first paint.
  * If that class is absent — reduced motion, no IntersectionObserver, no
  * JavaScript — this does nothing and the page stays as the server sent it.
+ *
+ * It scans once per route. This lives in the root layout, which survives every
+ * client-side navigation, so a single scan at mount would leave the next
+ * route's targets unobserved and therefore hidden forever. `usePathname`
+ * ignores hash-only navigation, so an in-page anchor costs no rescan.
  */
 export function RevealRoot() {
+  const pathname = usePathname()
+
   useEffect(() => {
     if (!document.documentElement.classList.contains('motion-ready')) return
 
@@ -38,7 +46,7 @@ export function RevealRoot() {
           )
 
         arriving.forEach((entry, index) => {
-          const element = entry.target as HTMLElement
+          const element = entry.target as HTMLElement | SVGElement
           element.style.setProperty('--reveal-index', String(Math.min(index, MAX_STAGGER_INDEX)))
           element.classList.add('is-revealed')
           observer.unobserve(element)
@@ -54,7 +62,7 @@ export function RevealRoot() {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [pathname])
 
   return null
 }

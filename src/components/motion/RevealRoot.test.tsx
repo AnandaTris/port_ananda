@@ -1,6 +1,16 @@
 import { render } from '@testing-library/react'
 import { RevealRoot } from './RevealRoot'
 
+/*
+ * RevealRoot reads the current route from `usePathname`. The App Router hook
+ * needs a router context that no unit render provides, and the route is the
+ * one input the component has, so it is faked here and moved by hand.
+ */
+let pathname = '/'
+vi.mock('next/navigation', () => ({
+  usePathname: () => pathname,
+}))
+
 let callback: IntersectionObserverCallback | undefined
 let observed: Element[] = []
 let unobserved: Element[] = []
@@ -41,6 +51,7 @@ function addTargets(count: number) {
 }
 
 beforeEach(() => {
+  pathname = '/'
   callback = undefined
   observed = []
   unobserved = []
@@ -146,4 +157,45 @@ test('does nothing at all when the document was never marked motion-ready', () =
 
   expect(observerCount).toBe(0)
   expect(target.classList.contains('is-revealed')).toBe(false)
+})
+
+test('re-scans the DOM after a client-side navigation', () => {
+  const homeTargets = addTargets(2)
+  const { rerender } = render(<RevealRoot />)
+
+  expect(observed).toEqual(homeTargets)
+
+  // A <Link> navigation swaps the page under a layout that never unmounts, so
+  // these nodes are new and nothing has looked at them. The hiding rule already
+  // applies to them; without a second scan they stay at opacity 0 forever.
+  document.body.innerHTML = ''
+  const caseStudyTargets = addTargets(2)
+  pathname = '/work/fix-yo-yap'
+  rerender(<RevealRoot />)
+
+  expect(observed).toEqual([...homeTargets, ...caseStudyTargets])
+
+  callback?.([entryAt(caseStudyTargets[0], 100)], {} as IntersectionObserver)
+
+  expect(caseStudyTargets[0].classList.contains('is-revealed')).toBe(true)
+})
+
+test('indexes the stagger over the arriving entries alone', () => {
+  const [leaving, first, second] = addTargets(3)
+  render(<RevealRoot />)
+
+  // The leaving entry sits highest on the page, so counting over the raw batch
+  // rather than the filtered one would spend index 0 on an element that is not
+  // being revealed and delay the two that are.
+  callback?.(
+    [
+      { ...entryAt(leaving, 50), isIntersecting: false } as IntersectionObserverEntry,
+      entryAt(first, 100),
+      entryAt(second, 200),
+    ],
+    {} as IntersectionObserver,
+  )
+
+  expect(first.style.getPropertyValue('--reveal-index')).toBe('0')
+  expect(second.style.getPropertyValue('--reveal-index')).toBe('1')
 })

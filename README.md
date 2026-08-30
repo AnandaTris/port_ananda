@@ -2,6 +2,8 @@
 
 A bright, static portfolio of Ananda Triharis Maroso's product, AI, and technical-growth work. Every project has a page with three sections: Overview, Build, and Results.
 
+**Live at [portfolio-bukd.vercel.app](https://portfolio-bukd.vercel.app)** — deployed from `main`.
+
 ## Prerequisite
 
 - Node.js 22 or newer

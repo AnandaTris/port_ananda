@@ -78,7 +78,12 @@ export function ProjectMediaVisual({ project, priority = false }: ProjectMediaVi
     <div
       aria-label={`${project.name} system diagram`}
       className="case-study-visual case-study-diagram project-media-fallback"
-      data-reveal
+      // The reveal observer scans the DOM once, at mount. A project with no
+      // media renders this fallback then, so it is seen and reveals normally.
+      // A project whose images fail later mounts this fallback for the first
+      // time after that scan — annotating it there would hide the very panel
+      // that exists to recover from the failure, so it renders visible instead.
+      data-reveal={project.media.length === 0 ? '' : undefined}
       role="img"
     >
       <p className="project-media-fallback-heading">

@@ -43,3 +43,26 @@ test('uses the same immediate fallback when a project has no media', () => {
   expect(within(fallback).getByText('Command loop')).toBeInTheDocument()
   expect(within(fallback).queryByText('CSEShell')).not.toBeInTheDocument()
 })
+
+test('does not reveal a fallback born from a post-mount image failure', () => {
+  render(<ProjectMediaVisual project={mediaProject} />)
+
+  const image = screen.getByRole('img', { name: mediaProject.media[0].alt })
+  fireEvent.error(image)
+
+  // RevealRoot only scans the DOM once, at its own mount, before this
+  // failure happens. A fallback that asked to be revealed here would never
+  // be observed and would sit at opacity: 0 forever, so it must render with
+  // no data-reveal at all.
+  const fallback = screen.getByRole('img', { name: 'Fix Yo Yap system diagram' })
+  expect(fallback).not.toHaveAttribute('data-reveal')
+})
+
+test("reveals the fallback when it is a project's permanent visual", () => {
+  render(<ProjectMediaVisual project={noMediaProject} />)
+
+  // This fallback is server-rendered before RevealRoot's scan, so it is safe
+  // to observe and must keep revealing like every other annotated element.
+  const fallback = screen.getByRole('img', { name: 'CSEShell system diagram' })
+  expect(fallback).toHaveAttribute('data-reveal')
+})

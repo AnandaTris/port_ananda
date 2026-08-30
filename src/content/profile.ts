@@ -21,10 +21,10 @@ export const profile: Profile = {
       organization: 'Marsh',
       title: 'AI Research & Development Intern',
       period: 'Aug 2026 – Dec 2026',
-      status: 'incoming',
+      status: 'current',
       highlights: [
-        'I am joining the Asia Digital team to identify and scope AI use cases across generative AI, NLP, and agentic systems.',
-        'I will develop proof-of-concept prototypes with business, product, engineering, and technology stakeholders.',
+        'I work with the tech team as an AI developer on an internal AI web application that automates use cases across the insurance transactions we broker between insurer and client, so the brokering work moves with less manual handling.',
+        'I scope those use cases with the Asia Digital team across generative AI, NLP, and agentic systems, and build the prototypes — Python and Node.js against MongoDB, RAG where retrieval is actually the right tool, containerised with Docker and exercised through Postman.',
       ],
     },
     {

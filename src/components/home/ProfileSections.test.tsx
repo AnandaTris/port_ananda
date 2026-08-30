@@ -3,7 +3,7 @@ import { projects } from '@/content/projects'
 import { stackGroups } from '@/content/stack'
 import { ProfileSections } from './ProfileSections'
 
-test('groups Marsh with Incoming and preserves the professional reverse chronology', () => {
+test('marks both live internships Current and preserves the professional reverse chronology', () => {
   render(<ProfileSections />)
 
   const workExperience = screen.getByRole('list', { name: 'Work experience' })
@@ -18,7 +18,14 @@ test('groups Marsh with Incoming and preserves the professional reverse chronolo
     'Product Management Intern (R&D)',
   ])
   expect(within(roles[0]).getByText('Marsh')).toBeInTheDocument()
-  expect(within(roles[0]).getByText('Incoming')).toBeInTheDocument()
+
+  // Two internships run at the same time, so the top two entries are both
+  // Current — the badge is a state, not a ranking, and nothing about being
+  // listed second makes 8x Social finished.
+  expect(within(roles[0]).getByText('Current')).toBeInTheDocument()
+  expect(within(roles[1]).getByText('Current')).toBeInTheDocument()
+  expect(within(roles[2]).getByText('Completed')).toBeInTheDocument()
+  expect(screen.queryByText('Incoming')).not.toBeInTheDocument()
 })
 
 test('lists every stack group and counts each tool against the real projects', () => {

@@ -46,6 +46,18 @@ test('plays the above-the-fold entrance from CSS with the same curve and duratio
   expect(rule).toContain('animation-delay: calc(var(--reveal-index, 0) * 110ms)')
 })
 
+test('neutralises entrance delays under reduced motion, not just durations', () => {
+  // Reachable when the visitor turns the preference on mid-session: motion-ready
+  // is already on <html>, so a backwards-filled element would otherwise hold
+  // opacity 0 for its whole stagger delay before appearing.
+  const [blanket] = stylesheet
+    .split('}')
+    .filter((chunk) => chunk.includes('@media (prefers-reduced-motion: reduce)'))
+
+  expect(blanket).toContain('animation-delay: -1ms !important')
+  expect(blanket).toContain('transition-delay: 0s !important')
+})
+
 test('reveals with the approved spring curve rather than a default ease', () => {
   expect(stylesheet).toContain('cubic-bezier(0.34, 1.56, 0.64, 1)')
 })

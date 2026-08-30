@@ -15,6 +15,24 @@ test('leads with the name, the location, and the three public contacts', () => {
   ])
 })
 
+test('plays its entrance from CSS rather than waiting for the observer', () => {
+  const { container } = render(<Hero />)
+
+  // The hero is on screen at first paint, so the observer buys it nothing and
+  // costs it everything: an element held at opacity 0 until hydration is not an
+  // LCP candidate. These four carry the load attribute instead, in reading
+  // order, and none of them may fall back to [data-reveal].
+  const loaded = [...container.querySelectorAll('[data-reveal-load]')]
+  expect(loaded.map((element) => element.tagName)).toEqual(['FIGURE', 'H1', 'P', 'UL'])
+  expect(loaded.map((element) => element.getAttribute('style'))).toEqual([
+    '--reveal-index: 0;',
+    '--reveal-index: 1;',
+    '--reveal-index: 2;',
+    '--reveal-index: 3;',
+  ])
+  expect(container.querySelector('[data-reveal]')).toBeNull()
+})
+
 test('opens on the work rather than on a pitch', () => {
   render(<Hero />)
 

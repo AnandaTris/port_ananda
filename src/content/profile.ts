@@ -106,13 +106,11 @@ export const profile: Profile = {
     },
     {
       name: 'Baby Shark Fund Award — Fames.com',
-      detail:
-        'Second of two Baby Shark Fund grants: S$2,000; I have not recorded the award date yet.',
+      detail: 'Second of two Baby Shark Fund grants: S$2,000.',
     },
     {
       name: 'Garena Competition — Shortlisted Team, FALSE POSITIVE',
-      detail:
-        'We reached the shortlist and did not win; I have not recorded the competition edition and date yet.',
+      detail: 'We reached the shortlist and did not win.',
     },
   ],
   leadership: [

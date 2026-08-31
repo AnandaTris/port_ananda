@@ -109,6 +109,20 @@ test('renders two research roles, every award, and SENTRE leadership', () => {
   ).toBeInTheDocument()
 })
 
+test('leaves the date line off an award whose date I do not have', () => {
+  render(<ProfileSections />)
+
+  const awards = screen.getByRole('list', { name: 'Awards and grants' })
+  const entries = Array.from(awards.children) as HTMLElement[]
+
+  // A stand-in date, or a note about the date being missing, is my own
+  // bookkeeping leaking onto a CV. Where there is no date, there is no line.
+  expect(screen.queryByText(/grant record|not recorded|not yet/i)).not.toBeInTheDocument()
+  expect(entries.map((entry) => entry.querySelector(':scope > p') !== null)).toEqual(
+    profile.awards.map((award) => award.date !== undefined),
+  )
+})
+
 test('offers the approved public contact destinations and nothing else', () => {
   render(<ProfileSections />)
 

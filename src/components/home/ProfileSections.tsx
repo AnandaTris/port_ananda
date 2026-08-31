@@ -160,7 +160,7 @@ export function AwardsAndGrants() {
         <ol aria-label="Awards and grants" className="profile-compact-list profile-awards-list">
           {profile.awards.map((award) => (
             <li data-reveal key={award.name}>
-              {award.date ? <p>{award.date}</p> : <p>Grant record</p>}
+              {award.date ? <p>{award.date}</p> : null}
               <h3>{award.name}</h3>
               <span>{award.detail}</span>
             </li>

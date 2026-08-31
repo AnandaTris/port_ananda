@@ -29,6 +29,23 @@ test('marks both live internships Current and preserves the professional reverse
   expect(screen.queryByText('Incoming')).not.toBeInTheDocument()
 })
 
+test('states the weekly hours only on the role that is carried alongside another', () => {
+  render(<ProfileSections />)
+
+  const workExperience = screen.getByRole('list', { name: 'Work experience' })
+  const roles = Array.from(workExperience.children) as HTMLElement[]
+
+  // Only 8x Social runs beside a second role, so only 8x Social has hours to
+  // qualify. A commitment line on a role that needs none would read as an
+  // apology for it.
+  expect(
+    roles.map((role) => within(role).queryByText('20 hrs/week') !== null),
+  ).toEqual([false, true, false])
+
+  // Hours, never a contract type: no offer letter here says "part-time".
+  expect(screen.queryByText(/part.?time/i)).not.toBeInTheDocument()
+})
+
 test('sets each employer mark beside its organization and keeps it decorative', () => {
   render(<ProfileSections />)
 

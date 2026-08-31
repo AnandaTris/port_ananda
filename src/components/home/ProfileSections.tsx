@@ -52,7 +52,12 @@ export function WorkExperience() {
               <li data-reveal key={`${role.organization}-${role.title}`}>
                 <article className="experience-entry">
                   <div className="experience-entry-meta">
-                    <p>{role.period}</p>
+                    <div className="experience-entry-period">
+                      <p>{role.period}</p>
+                      {role.commitment ? (
+                        <p className="experience-entry-commitment">{role.commitment}</p>
+                      ) : null}
+                    </div>
                     <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
                   </div>
                   <div>

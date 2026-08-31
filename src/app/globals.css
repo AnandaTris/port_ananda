@@ -1769,6 +1769,26 @@ a {
   gap: 0.8rem;
 }
 
+/* The hours ride with the date rather than beside the badge, so the meta
+   column stays two children — on mobile it turns into `date | badge`, and a
+   third child would drop the hours onto a row of their own. */
+.experience-entry-period {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.experience-entry-period p {
+  margin: 0;
+}
+
+/* A qualifier on the period, not a second line of its own weight. */
+.experience-entry-commitment {
+  color: var(--muted-ink);
+  font-family: var(--font-label), sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
 /* Same tile recipe as a project logo: one square, the mark's own background
    clipped inside it, and a hairline so a near-white brand — 8x Social's is
    #FFFDFD — does not dissolve into the card it sits on. */

@@ -34,6 +34,7 @@ export const profile: Profile = {
       period: 'Jun 2026 – Present',
       status: 'current',
       logo: { src: '/experience/8x-social/logo.svg', fit: 'mark' },
+      commitment: '20 hrs/week',
       highlights: [
         'I own consumer product plays on a 10-week idea-to-kill-or-scale clock, from research and numeric gates through monetization, distribution, and a recommendation to founders.',
         'I ship TypeScript product work across Expo, React Native, Next.js, Supabase, payments, localization, and analytics alongside my product and growth ownership.',

@@ -88,10 +88,9 @@ export type ProfileExperience = {
   status: 'incoming' | 'current' | 'completed'
   logo: ExperienceLogo
   /**
-   * Hours, not a contract type. Two of these roles overlap on the timeline, so
-   * the one carried alongside the other says what it actually costs a week —
-   * "Part-time" would name an arrangement that was never in the offer letter.
-   * Absent means the period alone is the whole story.
+   * How the role is worked, for the case where the dates alone would mislead.
+   * Two of these overlap on the timeline, so the one carried alongside the
+   * other says so here. Absent means the period is the whole story.
    */
   commitment?: string
   highlights: readonly string[]

@@ -1769,9 +1769,9 @@ a {
   gap: 0.8rem;
 }
 
-/* The hours ride with the date rather than beside the badge, so the meta
+/* The qualifier rides with the date rather than beside the badge, so the meta
    column stays two children — on mobile it turns into `date | badge`, and a
-   third child would drop the hours onto a row of their own. */
+   third child would drop the qualifier onto a row of its own. */
 .experience-entry-period {
   display: grid;
   gap: 0.3rem;

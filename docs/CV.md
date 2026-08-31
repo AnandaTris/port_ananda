@@ -66,7 +66,7 @@ Undergraduate research grant to continue development of the RAG pipeline over
   through Postman
 
 ### Technical Growth Product Manager Intern · 8x Social
-*Jun 2026 – Present · 20 hrs/week*
+*Jun 2026 – Present · Part-time*
 
 **Product ownership**
 - Own consumer app "plays" end to end on a 10-week idea→kill/scale clock: research and

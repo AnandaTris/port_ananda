@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
 import { stackGroups } from '@/content/stack'
 import { ProfileSections } from './ProfileSections'
@@ -26,6 +27,30 @@ test('marks both live internships Current and preserves the professional reverse
   expect(within(roles[1]).getByText('Current')).toBeInTheDocument()
   expect(within(roles[2]).getByText('Completed')).toBeInTheDocument()
   expect(screen.queryByText('Incoming')).not.toBeInTheDocument()
+})
+
+test('sets each employer mark beside its organization and keeps it decorative', () => {
+  render(<ProfileSections />)
+
+  const workExperience = screen.getByRole('list', { name: 'Work experience' })
+  const roles = Array.from(workExperience.children) as HTMLElement[]
+  const marks = roles.map((role) => role.querySelector('.experience-logo'))
+
+  // Paired by position, so a logo can never drift onto the wrong employer.
+  // Decoded first: the optimiser rewrites a raster source to /_next/image and
+  // leaves a vector one alone, and both have to satisfy the same check.
+  expect(
+    marks.map((mark) => decodeURIComponent(mark?.querySelector('img')?.getAttribute('src') ?? '')),
+  ).toEqual(
+    profile.workExperience.map((role) => expect.stringContaining(role.logo.src)),
+  )
+
+  // The organization is written out in text right beside the tile, so alt text
+  // would make a screen reader announce the employer twice.
+  for (const mark of marks) {
+    expect(mark).toHaveAttribute('aria-hidden', 'true')
+    expect(mark?.querySelector('img')).toHaveAttribute('alt', '')
+  }
 })
 
 test('lists every stack group and counts each tool against the real projects', () => {

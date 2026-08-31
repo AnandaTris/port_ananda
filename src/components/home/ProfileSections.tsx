@@ -1,9 +1,16 @@
+import Image from 'next/image'
 import { StackIcon } from '@/components/home/StackIcon'
 import { ExternalLink } from '@/components/ui/ExternalLink'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { profile } from '@/content/profile'
 import { projects } from '@/content/projects'
 import { stackGroups } from '@/content/stack'
+
+/**
+ * Edge length of an employer tile. Every mark ships at 256px or as a vector, so
+ * this stays well inside the source resolution on a 3x display.
+ */
+const EXPERIENCE_LOGO_SIZE = 36
 
 const experienceStatus = {
   incoming: { label: 'Incoming', tone: 'cyan' },
@@ -49,7 +56,24 @@ export function WorkExperience() {
                     <StatusBadge tone={status.tone}>{status.label}</StatusBadge>
                   </div>
                   <div>
-                    <p className="experience-entry-organization">{role.organization}</p>
+                    <div className="experience-entry-brand">
+                      {/* Decorative: the organization is named in text right
+                          beside the tile, so alt text would only repeat it. */}
+                      <span
+                        aria-hidden="true"
+                        className={`experience-logo experience-logo-${role.logo.fit}`}
+                      >
+                        <Image
+                          alt=""
+                          height={EXPERIENCE_LOGO_SIZE}
+                          loading="eager"
+                          sizes={`${EXPERIENCE_LOGO_SIZE}px`}
+                          src={role.logo.src}
+                          width={EXPERIENCE_LOGO_SIZE}
+                        />
+                      </span>
+                      <p className="experience-entry-organization">{role.organization}</p>
+                    </div>
                     <h3>{role.title}</h3>
                     <ul>
                       {role.highlights.map((highlight) => (

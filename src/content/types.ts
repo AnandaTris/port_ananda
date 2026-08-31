@@ -63,11 +63,30 @@ export type ProfileLink = {
   href: string
 }
 
+/**
+ * The employer's own mark, copied from that company's live site rather than
+ * redrawn, and traced in `assets.ts` like every other image here. It is
+ * decorative in the page: the entry prints the organization name in text
+ * immediately beside the tile, so alt text would only say it twice.
+ */
+export type ExperienceLogo = {
+  src: string
+  /**
+   * `icon` is a published app icon: it already carries its own background and
+   * its own margin, so the tile lets it bleed to the edge. `mark` is a bare
+   * logo lifted off the company's page, drawn corner to corner in its own
+   * file — the tile has to give it the margin the icon version would have had,
+   * or the rounded corner takes a bite out of the letterforms.
+   */
+  fit: 'icon' | 'mark'
+}
+
 export type ProfileExperience = {
   organization: string
   title: string
   period: string
   status: 'incoming' | 'current' | 'completed'
+  logo: ExperienceLogo
   highlights: readonly string[]
 }
 

@@ -6,6 +6,30 @@ export type AssetProvenance = {
 }
 
 export const assetProvenance: readonly AssetProvenance[] = [
+  /*
+   * Employer marks. These are other companies' trademarks, shown only to
+   * identify where I worked, so each one is the company's own published file
+   * taken from their own domain — never a redraw and never a third-party logo
+   * service, which is how a wrong or stale mark gets onto a CV.
+   */
+  {
+    publicPath: 'experience/marsh/logo.png',
+    sourcePath: 'https://www.marsh.com/favicon.ico',
+    project: 'experience',
+    description: "Marsh's published site icon, converted from ICO to a 256px PNG (2026-08-31)",
+  },
+  {
+    publicPath: 'experience/8x-social/logo.svg',
+    sourcePath: 'https://www.8x.social/assets/brand/8x_icon.svg',
+    project: 'experience',
+    description: "8x Social's published brand icon (vector, unmodified)",
+  },
+  {
+    publicPath: 'experience/rohde-schwarz/logo.svg',
+    sourcePath: 'https://cdn.rohde-schwarz.com/pws/inred/image/layout/rus-logo-symbol.svg',
+    project: 'experience',
+    description: "Rohde & Schwarz's published logo symbol (vector, unmodified)",
+  },
   {
     publicPath: 'profile/ananda-portrait.jpg',
     sourcePath: '/Users/anandatriharismaroso/Downloads/1009596@mymail.sutd.edu.sg hh.jpg',

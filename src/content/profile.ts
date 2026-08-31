@@ -22,6 +22,7 @@ export const profile: Profile = {
       title: 'AI Research & Development Intern',
       period: 'Aug 2026 – Dec 2026',
       status: 'current',
+      logo: { src: '/experience/marsh/logo.png', fit: 'icon' },
       highlights: [
         'I work with the tech team as an AI developer on an internal AI web application that automates use cases across the insurance transactions we broker between insurer and client, so the brokering work moves with less manual handling.',
         'I scope those use cases with the Asia Digital team across generative AI, NLP, and agentic systems, and build the prototypes — Python and Node.js against MongoDB, RAG where retrieval is actually the right tool, containerised with Docker and exercised through Postman.',
@@ -32,6 +33,7 @@ export const profile: Profile = {
       title: 'Technical Growth Product Manager Intern (internal title: Play Manager)',
       period: 'Jun 2026 – Present',
       status: 'current',
+      logo: { src: '/experience/8x-social/logo.svg', fit: 'mark' },
       highlights: [
         'I own consumer product plays on a 10-week idea-to-kill-or-scale clock, from research and numeric gates through monetization, distribution, and a recommendation to founders.',
         'I ship TypeScript product work across Expo, React Native, Next.js, Supabase, payments, localization, and analytics alongside my product and growth ownership.',
@@ -42,6 +44,7 @@ export const profile: Profile = {
       title: 'Product Management Intern (R&D)',
       period: 'Sep 2025 – Jan 2026',
       status: 'completed',
+      logo: { src: '/experience/rohde-schwarz/logo.svg', fit: 'mark' },
       highlights: [
         'I bridged R&D engineers and product teams for spectrum-analyzer development.',
         'I produced six structured technical lab sheets for FPC1500 and FSH instruments.',
